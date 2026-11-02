@@ -1,0 +1,18 @@
+[build]
+  command = "node netlify-build.js"
+  publish = "public"
+
+[build.environment]
+  NODE_VERSION = "20"
+  PHP_VERSION = "8.3"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
