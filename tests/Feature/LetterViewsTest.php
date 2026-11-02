@@ -61,4 +61,3 @@ class LetterViewsTest extends TestCase
         $r9->assertOk();
     }
 }
-
