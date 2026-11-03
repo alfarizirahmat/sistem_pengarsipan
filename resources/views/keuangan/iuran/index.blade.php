@@ -11,13 +11,13 @@
             <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900">Buku Penarikan Iuran Warga (Humas)</h1>
             <p class="text-sm text-slate-600 font-medium">Iuran rutin RT untuk Posyandu, Kas RW, Dana Kematian, dan Sampah</p>
         </div>
-        <div class="flex items-center gap-2">
-            <form action="{{ route('keuangan.iuran.generate') }}" method="POST">
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+            <form action="{{ route('keuangan.iuran.generate') }}" method="POST" class="w-full sm:w-auto">
                 @csrf
                 <input type="hidden" name="bulan" value="{{ $bulan }}">
                 <input type="hidden" name="tahun" value="{{ $tahun }}">
-                <button type="submit" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-extrabold px-5 py-3 rounded-xl shadow-md transition-all active:scale-95">
-                    <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+                <button type="submit" class="inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-extrabold px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl shadow-md transition-all active:scale-95 w-full sm:w-auto">
+                    <i data-lucide="refresh-cw" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                     <span>+ GENERATE TAGIHAN BULAN INI</span>
                 </button>
             </form>

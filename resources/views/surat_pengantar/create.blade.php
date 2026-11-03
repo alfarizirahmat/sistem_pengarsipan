@@ -121,24 +121,24 @@
         </div>
 
         <!-- Tombol Pengatur Tampilan Layar (Sangat Fleksibel untuk Semua Device) -->
-        <div class="flex items-center gap-1.5 p-1.5 bg-slate-100 rounded-2xl border border-slate-200">
+        <div class="flex items-center justify-center sm:justify-start gap-1.5 p-1.5 bg-slate-100 rounded-2xl border border-slate-200 w-full sm:w-auto">
             <button type="button" @click="viewMode = 'form'"
                 :class="viewMode === 'form' ? 'bg-white text-emerald-800 shadow font-black' : 'text-slate-600 font-bold hover:text-slate-900'"
-                class="px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 transition-all">
+                class="flex-1 sm:flex-initial px-3.5 py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-all min-h-[42px]">
                 <i data-lucide="edit-3" class="w-4 h-4"></i>
                 <span>Isi Form</span>
             </button>
 
             <button type="button" @click="viewMode = 'preview'"
                 :class="viewMode === 'preview' ? 'bg-white text-emerald-800 shadow font-black' : 'text-slate-600 font-bold hover:text-slate-900'"
-                class="px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 transition-all">
+                class="flex-1 sm:flex-initial px-3.5 py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-all min-h-[42px]">
                 <i data-lucide="eye" class="w-4 h-4"></i>
                 <span>Lihat Lembar A4</span>
             </button>
 
             <button type="button" @click="viewMode = 'split'"
                 :class="viewMode === 'split' ? 'bg-white text-emerald-800 shadow font-black' : 'text-slate-600 font-bold hover:text-slate-900'"
-                class="hidden lg:flex px-3 py-2 rounded-xl text-xs items-center gap-1.5 transition-all">
+                class="hidden lg:flex px-3.5 py-2.5 rounded-xl text-xs items-center gap-1.5 transition-all min-h-[42px]">
                 <i data-lucide="columns-2" class="w-4 h-4"></i>
                 <span>Berdampingan</span>
             </button>
@@ -469,7 +469,8 @@
                 </div>
 
                 <!-- Lembar Kertas Dokumen Realistis A4 (Format Tata Naskah Dinas Pemerintah Indonesia) -->
-                <div class="bg-white text-slate-900 rounded-2xl p-4 sm:p-5 shadow-2xl border border-slate-300 font-serif text-[10.5px] leading-relaxed relative overflow-hidden">
+                <div class="overflow-x-auto pb-2">
+                    <div class="min-w-[300px] bg-white text-slate-900 rounded-2xl p-3.5 sm:p-5 shadow-2xl border border-slate-300 font-serif text-[10px] sm:text-[10.5px] leading-relaxed relative">
                     
                     <!-- KOP SURAT PEMERINTAHAN DESA / RT RESMI -->
                     <div class="flex items-center justify-between pb-2 border-b-[2px] border-black">
@@ -634,6 +635,7 @@
                         <span class="font-bold underline uppercase">( ............................................................ )</span>
                     </div>
 
+                </div>
                 </div>
 
                 <!-- Tombol Cetak dari Preview -->

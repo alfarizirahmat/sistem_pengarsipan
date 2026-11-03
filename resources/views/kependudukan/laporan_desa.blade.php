@@ -12,21 +12,21 @@
             <h1 class="text-xl font-bold text-slate-900">Format Laporan Bulanan Perkembangan Penduduk ke Desa</h1>
             <p class="text-xs text-slate-500">Menjawab kewajiban pelaporan RT setiap bulan ke Desa (Lahir, Mati, Pindah, Datang)</p>
         </div>
-        <div class="flex items-center gap-2">
-            <form action="{{ route('kependudukan.laporan-desa') }}" method="GET" class="flex items-center gap-2">
-                <select name="bulan" onchange="this.form.submit()" class="px-3 py-1.5 bg-white border border-slate-300 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-emerald-500">
+        <div class="flex flex-wrap sm:flex-nowrap items-center gap-2 w-full sm:w-auto">
+            <form action="{{ route('kependudukan.laporan-desa') }}" method="GET" class="flex items-center gap-2 flex-1 sm:flex-initial">
+                <select name="bulan" onchange="this.form.submit()" class="flex-1 sm:flex-initial px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-emerald-500">
                     @foreach([1=>'Januari', 2=>'Februari', 3=>'Maret', 4=>'April', 5=>'Mei', 6=>'Juni', 7=>'Juli', 8=>'Agustus', 9=>'September', 10=>'Oktober', 11=>'November', 12=>'Desember'] as $num => $nama)
                         <option value="{{ $num }}" {{ $bulan == $num ? 'selected' : '' }}>{{ $nama }}</option>
                     @endforeach
                 </select>
-                <select name="tahun" onchange="this.form.submit()" class="px-3 py-1.5 bg-white border border-slate-300 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-emerald-500">
+                <select name="tahun" onchange="this.form.submit()" class="flex-1 sm:flex-initial px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-emerald-500">
                     @for($y = date('Y'); $y >= date('Y') - 5; $y--)
                         <option value="{{ $y }}" {{ $tahun == $y ? 'selected' : '' }}>{{ $y }}</option>
                     @endfor
                 </select>
             </form>
 
-            <button onclick="window.print()" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-sm transition-colors">
+            <button onclick="window.print()" class="inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-sm transition-colors w-full sm:w-auto">
                 <i data-lucide="printer" class="w-4 h-4"></i>
                 <span>Cetak Laporan Desa</span>
             </button>
@@ -34,7 +34,7 @@
     </div>
 
     <!-- Lembar Dokumen Resmi Format Desa (Tampil di Layar dan Dicetak) -->
-    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 sm:p-12 print:border-none print:shadow-none print:p-0">
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 sm:p-12 print:border-none print:shadow-none print:p-0 overflow-x-auto">
         
         <!-- KOP SURAT PEMERINTAHAN DESA / RT RESMI -->
         <div class="flex items-center justify-between pb-3 border-b-[3px] border-black">

@@ -56,7 +56,8 @@
       x-data="{ 
           sidebarOpen: false, 
           desktopSidebarOpen: (localStorage.getItem('rt_sidebar_open') !== 'false') 
-      }">
+      }"
+      x-init="$watch('sidebarOpen', value => { if (value) { $nextTick(() => { lucide.createIcons(); }); } })">
 
     <div class="flex h-screen overflow-hidden bg-slate-100 relative">
         
@@ -238,40 +239,41 @@
 
         <!-- Area Konten Utama -->
         <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
-            <!-- Header Atas: Modern & Sleek -->
-            <header class="bg-white/90 backdrop-blur-md border-b border-slate-200/80 h-20 flex items-center justify-between px-4 sm:px-8 z-10 no-print sticky top-0 shadow-sm">
-                <div class="flex items-center gap-3">
+            <!-- Header Atas: Modern & Sleek (Mobile & Desktop Responsive) -->
+            <header class="bg-white/90 backdrop-blur-md border-b border-slate-200/80 h-16 sm:h-20 flex items-center justify-between px-3 sm:px-8 z-10 no-print sticky top-0 shadow-sm">
+                <div class="flex items-center gap-2 sm:gap-3 min-w-0">
                     <!-- Tombol Buka / Tutup Sidebar Desktop (Bebas diatur pengurus) -->
                     <button type="button" 
                             @click="desktopSidebarOpen = !desktopSidebarOpen; localStorage.setItem('rt_sidebar_open', desktopSidebarOpen)"
-                            class="hidden lg:inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-slate-700 bg-slate-100 hover:bg-slate-200 hover:text-slate-900 border border-slate-300 font-bold text-xs transition-all shadow-sm active:scale-95 group"
+                            class="hidden lg:inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-slate-700 bg-slate-100 hover:bg-slate-200 hover:text-slate-900 border border-slate-300 font-bold text-xs transition-all shadow-sm active:scale-95 group flex-shrink-0"
                             :title="desktopSidebarOpen ? 'Tutup sidebar agar layar lebih lebar' : 'Buka kembali sidebar menu'">
                         <i data-lucide="panel-left-close" x-show="desktopSidebarOpen" class="w-4 h-4 text-emerald-600 group-hover:scale-110 transition-transform"></i>
                         <i data-lucide="panel-left-open" x-show="!desktopSidebarOpen" class="w-4 h-4 text-emerald-600 group-hover:scale-110 transition-transform"></i>
                         <span x-text="desktopSidebarOpen ? 'Tutup Menu' : 'Buka Menu'"></span>
                     </button>
 
-                    <!-- Tombol Menu Mobile -->
-                    <button type="button" @click="sidebarOpen = true" class="lg:hidden p-2.5 rounded-xl text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 transition-colors">
+                    <!-- Tombol Menu Mobile Drawer -->
+                    <button type="button" @click="sidebarOpen = true" class="lg:hidden p-2 rounded-xl text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 transition-colors flex-shrink-0" aria-label="Buka menu navigasi">
                         <i data-lucide="menu" class="w-5 h-5"></i>
                     </button>
 
-                    <div>
-                        <h2 class="text-base sm:text-xl font-black text-slate-900 leading-tight">@yield('header_title', 'Administrasi RT 03')</h2>
-                        <p class="text-xs text-slate-500 font-semibold hidden sm:block">RT 03 / RW 02 Desa Sukamaju • Tahun {{ date('Y') }}</p>
+                    <div class="min-w-0">
+                        <h2 class="text-sm sm:text-xl font-black text-slate-900 leading-tight truncate max-w-[150px] sm:max-w-xs md:max-w-none">@yield('header_title', 'Administrasi RT 03')</h2>
+                        <p class="text-[11px] sm:text-xs text-slate-500 font-semibold hidden sm:block">RT 03 / RW 02 Desa Sukamaju • Tahun {{ date('Y') }}</p>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3">
-                    <a href="{{ route('surat-pengantar.create') }}" class="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs sm:text-sm font-black px-4 py-2.5 rounded-xl shadow-md shadow-emerald-900/20 transition-all active:scale-95">
-                        <i data-lucide="printer" class="w-4 h-4"></i>
-                        <span>+ Buat Surat Pengantar</span>
+                <div class="flex items-center gap-2 flex-shrink-0">
+                    <a href="{{ route('surat-pengantar.create') }}" class="inline-flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs sm:text-sm font-black px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl shadow-md shadow-emerald-900/20 transition-all active:scale-95 whitespace-nowrap">
+                        <i data-lucide="printer" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+                        <span class="hidden sm:inline">+ Buat Surat Pengantar</span>
+                        <span class="sm:hidden font-black">+ Surat</span>
                     </a>
                 </div>
             </header>
 
             <!-- Isi Halaman Utama -->
-            <main class="flex-1 overflow-y-auto p-4 sm:p-8 bg-slate-100/90">
+            <main class="flex-1 overflow-y-auto p-3.5 sm:p-6 lg:p-8 pb-24 lg:pb-8 bg-slate-100/90">
                 <!-- Notifikasi Berhasil -->
                 @if(session('success'))
                     <div class="mb-6 flex items-center gap-3.5 bg-emerald-50 border-2 border-emerald-400 text-emerald-950 px-5 py-4 rounded-2xl shadow-sm no-print">
@@ -321,33 +323,190 @@
         </button>
     </div>
 
-    <!-- Mobile Sidebar Backdrop & Content -->
-    <div x-cloak x-show="sidebarOpen" class="fixed inset-0 z-40 bg-slate-950/80 backdrop-blur-md lg:hidden" @click="sidebarOpen = false"></div>
-    <div x-cloak x-show="sidebarOpen" class="fixed inset-y-0 left-0 z-50 w-72 bg-slate-950 text-white p-5 flex flex-col lg:hidden transition ease-in-out duration-300">
-        <div class="flex items-center justify-between pb-4 border-b border-slate-800">
-            <span class="font-black text-white text-lg">SIP-RT 03</span>
-            <button @click="sidebarOpen = false" class="p-2 text-slate-400 hover:text-white rounded-lg">
-                <i data-lucide="x" class="w-6 h-6"></i>
+    <!-- Mobile Sticky Bottom Navigation Bar for easy thumb navigation on smartphones -->
+    <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-30 bg-white/95 backdrop-blur-md border-t border-slate-200/90 px-2 py-1.5 flex items-center justify-around shadow-[0_-4px_20px_rgba(0,0,0,0.06)] no-print">
+        <a href="{{ route('dashboard') }}" class="flex flex-col items-center justify-center py-1 px-3 rounded-xl transition-colors {{ request()->routeIs('dashboard') ? 'text-emerald-600 font-black' : 'text-slate-500 hover:text-slate-900 font-semibold' }}">
+            <i data-lucide="home" class="w-5 h-5 {{ request()->routeIs('dashboard') ? 'stroke-[2.5]' : '' }}"></i>
+            <span class="text-[10px] mt-0.5">Beranda</span>
+        </a>
+
+        <a href="{{ route('arsip.semua') }}" class="flex flex-col items-center justify-center py-1 px-3 rounded-xl transition-colors {{ request()->routeIs('arsip.*') ? 'text-emerald-600 font-black' : 'text-slate-500 hover:text-slate-900 font-semibold' }}">
+            <i data-lucide="archive" class="w-5 h-5 {{ request()->routeIs('arsip.*') ? 'stroke-[2.5]' : '' }}"></i>
+            <span class="text-[10px] mt-0.5">Arsip</span>
+        </a>
+
+        <!-- Center Prominent Quick Action Button -->
+        <a href="{{ route('surat-pengantar.create') }}" class="relative -top-3 flex flex-col items-center justify-center group" title="Buat Surat Baru">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-600 to-emerald-500 text-white flex items-center justify-center shadow-lg shadow-emerald-700/40 border-2 border-white active:scale-95 transition-transform">
+                <i data-lucide="plus" class="w-6 h-6 stroke-[3]"></i>
+            </div>
+            <span class="text-[10px] font-black text-emerald-700 mt-0.5">+ Surat</span>
+        </a>
+
+        <a href="{{ route('warga.index') }}" class="flex flex-col items-center justify-center py-1 px-3 rounded-xl transition-colors {{ request()->routeIs('warga.*') || request()->routeIs('keluarga.*') ? 'text-emerald-600 font-black' : 'text-slate-500 hover:text-slate-900 font-semibold' }}">
+            <i data-lucide="users" class="w-5 h-5 {{ request()->routeIs('warga.*') ? 'stroke-[2.5]' : '' }}"></i>
+            <span class="text-[10px] mt-0.5">Warga</span>
+        </a>
+
+        <button type="button" @click="sidebarOpen = true" class="flex flex-col items-center justify-center py-1 px-3 rounded-xl text-slate-500 hover:text-slate-900 font-semibold">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+            <span class="text-[10px] mt-0.5">Menu</span>
+        </button>
+    </nav>
+
+    <!-- Mobile Sidebar Backdrop & Slide-Over Drawer -->
+    <div x-cloak 
+         x-show="sidebarOpen" 
+         x-transition:enter="transition-opacity ease-linear duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition-opacity ease-linear duration-300"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="fixed inset-0 z-40 bg-slate-950/80 backdrop-blur-sm lg:hidden" 
+         @click="sidebarOpen = false"></div>
+
+    <div x-cloak 
+         x-show="sidebarOpen"
+         x-transition:enter="transition ease-in-out duration-300 transform"
+         x-transition:enter-start="-translate-x-full"
+         x-transition:enter-end="translate-x-0"
+         x-transition:leave="transition ease-in-out duration-300 transform"
+         x-transition:leave-start="translate-x-0"
+         x-transition:leave-end="-translate-x-full"
+         class="fixed inset-y-0 left-0 z-50 w-80 max-w-[85vw] bg-slate-950 text-white flex flex-col lg:hidden shadow-2xl border-r border-slate-800">
+        
+        <!-- Header Drawer -->
+        <div class="flex items-center justify-between px-5 h-16 border-b border-slate-800/80 bg-slate-950">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 p-0.5 flex items-center justify-center">
+                    <div class="w-full h-full bg-slate-950/40 rounded-[10px] flex items-center justify-center">
+                        <i data-lucide="archive" class="w-4 h-4 text-emerald-300"></i>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="font-black text-white text-base leading-tight">SIP-RT 03</span>
+                        <span class="text-[9px] font-black uppercase px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Pro</span>
+                    </div>
+                    <p class="text-[10px] text-slate-400">RW 02 Sukamaju</p>
+                </div>
+            </div>
+            <button @click="sidebarOpen = false" class="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-colors">
+                <i data-lucide="x" class="w-5 h-5"></i>
             </button>
         </div>
-        <div class="mt-4 space-y-2 overflow-y-auto flex-1 font-bold text-sm">
-            <a href="{{ route('surat-pengantar.create') }}" class="block p-3 rounded-2xl bg-emerald-600 text-white text-center font-black mb-4">+ BUAT SURAT WARGA</a>
-            <a href="{{ route('dashboard') }}" class="block p-3 rounded-xl text-slate-200 hover:bg-slate-800">Halaman Utama</a>
-            <a href="{{ route('arsip.semua') }}" class="block p-3 rounded-xl text-emerald-400 bg-emerald-950/40 border border-emerald-500/30">Semua Surat & Berkas (Pusat)</a>
-            <a href="{{ route('surat-pengantar.index') }}" class="block p-3 rounded-xl text-slate-200 hover:bg-slate-800">Surat Pengantar (Keluar)</a>
-            <a href="{{ route('surat-masuk.index') }}" class="block p-3 rounded-xl text-slate-200 hover:bg-slate-800">Surat Masuk (Desa/RW)</a>
-            <a href="{{ route('warga.index') }}" class="block p-3 rounded-xl text-slate-200 hover:bg-slate-800">Data Warga</a>
-            <a href="{{ route('warga.kontrak') }}" class="block p-3 rounded-xl text-amber-300 hover:bg-slate-800">Warga Kontrak</a>
-            <a href="{{ route('keluarga.index') }}" class="block p-3 rounded-xl text-slate-200 hover:bg-slate-800">Kartu Keluarga</a>
-            <a href="{{ route('kependudukan.laporan-desa') }}" class="block p-3 rounded-xl text-slate-200 hover:bg-slate-800">Laporan Desa</a>
-            <a href="{{ route('keuangan.kas.index') }}" class="block p-3 rounded-xl text-slate-200 hover:bg-slate-800">Kas RT</a>
-            <a href="{{ route('keuangan.iuran.index') }}" class="block p-3 rounded-xl text-slate-200 hover:bg-slate-800">Iuran Warga</a>
-            <a href="{{ route('keamanan.index') }}" class="block p-3 rounded-xl text-slate-200 hover:bg-slate-800">Keamanan</a>
+
+        <!-- Profil Ringkas Pengurus -->
+        <div class="p-4 bg-slate-900/70 border-b border-slate-800/80 flex items-center justify-between">
+            <div class="flex items-center gap-2.5 overflow-hidden">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center font-black text-xs text-white shadow-md flex-shrink-0">
+                    {{ substr(Auth::user()->name ?? 'RT', 0, 2) }}
+                </div>
+                <div class="min-w-0">
+                    <p class="text-xs font-black text-white truncate">{{ Auth::user()->name ?? 'Pengurus RT' }}</p>
+                    <p class="text-[10px] text-emerald-400 font-bold truncate">{{ Auth::user()->jabatan ?? 'Ketua RT 03' }}</p>
+                </div>
+            </div>
+            <form action="{{ route('logout') }}" method="POST" class="flex-shrink-0">
+                @csrf
+                <button type="submit" title="Keluar" class="p-2 text-slate-400 hover:text-rose-400 hover:bg-slate-800 rounded-xl transition-colors">
+                    <i data-lucide="log-out" class="w-4 h-4"></i>
+                </button>
+            </form>
+        </div>
+
+        <!-- Tombol Buat Surat Utama -->
+        <div class="p-4 border-b border-slate-800/80">
+            <a href="{{ route('surat-pengantar.create') }}" @click="sidebarOpen = false" class="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-black text-xs py-3 px-4 rounded-xl shadow-lg border border-emerald-400/30 active:scale-95 transition-transform">
+                <i data-lucide="plus-circle" class="w-4 h-4 text-emerald-200"></i>
+                <span>+ BUAT SURAT WARGA</span>
+            </a>
+        </div>
+
+        <!-- Menu Links Lengkap dengan Ikon -->
+        <div class="flex-1 overflow-y-auto px-4 py-3 space-y-5 text-sm">
+            <div>
+                <p class="px-2 text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Pelayanan & Arsip Surat</p>
+                <div class="space-y-1">
+                    <a href="{{ route('dashboard') }}" @click="sidebarOpen = false" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold {{ request()->routeIs('dashboard') ? 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/30' : 'text-slate-300 hover:bg-slate-900' }}">
+                        <i data-lucide="home" class="w-4 h-4 {{ request()->routeIs('dashboard') ? 'text-emerald-400' : 'text-slate-400' }}"></i>
+                        <span>Halaman Utama</span>
+                    </a>
+                    <a href="{{ route('arsip.semua') }}" @click="sidebarOpen = false" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold {{ request()->routeIs('arsip.semua') ? 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/30' : 'text-slate-300 hover:bg-slate-900' }}">
+                        <i data-lucide="folders" class="w-4 h-4 {{ request()->routeIs('arsip.semua') ? 'text-emerald-400' : 'text-slate-400' }}"></i>
+                        <span class="flex-1">Semua Surat & Berkas</span>
+                        <span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300">Pusat</span>
+                    </a>
+                    <a href="{{ route('surat-pengantar.index') }}" @click="sidebarOpen = false" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold {{ request()->routeIs('surat-pengantar.*') ? 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/30' : 'text-slate-300 hover:bg-slate-900' }}">
+                        <i data-lucide="file-text" class="w-4 h-4 {{ request()->routeIs('surat-pengantar.*') ? 'text-emerald-400' : 'text-slate-400' }}"></i>
+                        <span>Surat Pengantar (Keluar)</span>
+                    </a>
+                    <a href="{{ route('surat-masuk.index') }}" @click="sidebarOpen = false" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold {{ request()->routeIs('surat-masuk.*') ? 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/30' : 'text-slate-300 hover:bg-slate-900' }}">
+                        <i data-lucide="inbox" class="w-4 h-4 {{ request()->routeIs('surat-masuk.*') ? 'text-emerald-400' : 'text-slate-400' }}"></i>
+                        <span>Surat Masuk (Desa/RW)</span>
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <p class="px-2 text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Administrasi Warga</p>
+                <div class="space-y-1">
+                    <a href="{{ route('warga.index') }}" @click="sidebarOpen = false" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold {{ request()->routeIs('warga.index') ? 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/30' : 'text-slate-300 hover:bg-slate-900' }}">
+                        <i data-lucide="users" class="w-4 h-4 {{ request()->routeIs('warga.index') ? 'text-emerald-400' : 'text-slate-400' }}"></i>
+                        <span>Data Semua Warga</span>
+                    </a>
+                    <a href="{{ route('warga.kontrak') }}" @click="sidebarOpen = false" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold {{ request()->routeIs('warga.kontrak') ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' : 'text-amber-200/90 hover:bg-slate-900' }}">
+                        <i data-lucide="building-2" class="w-4 h-4 text-amber-400"></i>
+                        <span class="flex-1">Warga Kontrak & Kost</span>
+                        <span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-amber-500/30 text-amber-200">Pantau</span>
+                    </a>
+                    <a href="{{ route('keluarga.index') }}" @click="sidebarOpen = false" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold {{ request()->routeIs('keluarga.index') ? 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/30' : 'text-slate-300 hover:bg-slate-900' }}">
+                        <i data-lucide="folder" class="w-4 h-4 text-slate-400"></i>
+                        <span>Kartu Keluarga (KK)</span>
+                    </a>
+                    <a href="{{ route('kependudukan.laporan-desa') }}" @click="sidebarOpen = false" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold {{ request()->routeIs('kependudukan.laporan-desa') ? 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/30' : 'text-slate-300 hover:bg-slate-900' }}">
+                        <i data-lucide="file-spreadsheet" class="w-4 h-4 text-slate-400"></i>
+                        <span>Laporan Bulanan Desa</span>
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <p class="px-2 text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Keuangan & Ronda</p>
+                <div class="space-y-1">
+                    <a href="{{ route('keuangan.kas.index') }}" @click="sidebarOpen = false" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold {{ request()->routeIs('keuangan.kas.*') ? 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/30' : 'text-slate-300 hover:bg-slate-900' }}">
+                        <i data-lucide="wallet" class="w-4 h-4 text-slate-400"></i>
+                        <span>Buku Kas RT</span>
+                    </a>
+                    <a href="{{ route('keuangan.iuran.index') }}" @click="sidebarOpen = false" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold {{ request()->routeIs('keuangan.iuran.*') ? 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/30' : 'text-slate-300 hover:bg-slate-900' }}">
+                        <i data-lucide="coins" class="w-4 h-4 text-slate-400"></i>
+                        <span>Iuran Warga (Humas)</span>
+                    </a>
+                    <a href="{{ route('keamanan.index') }}" @click="sidebarOpen = false" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold {{ request()->routeIs('keamanan.*') ? 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/30' : 'text-slate-300 hover:bg-slate-900' }}">
+                        <i data-lucide="shield-check" class="w-4 h-4 text-slate-400"></i>
+                        <span>Jadwal Ronda / Kamtibmas</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Drawer Logout -->
+        <div class="p-4 border-t border-slate-800/80 bg-slate-950">
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-bold text-rose-300 hover:text-white bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 transition-colors">
+                    <i data-lucide="log-out" class="w-4 h-4"></i>
+                    <span>Keluar dari Aplikasi</span>
+                </button>
+            </form>
         </div>
     </div>
 
     <script>
-        lucide.createIcons();
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
     </script>
 </body>
 </html>

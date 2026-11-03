@@ -11,7 +11,7 @@
             <h1 class="text-xl font-bold text-slate-900">Buku Register Kartu Keluarga (KK) RT 03</h1>
             <p class="text-xs text-slate-500">Pendataan kepala keluarga, kepemilikan rumah, dan masa sewa kontrakan</p>
         </div>
-        <button type="button" @click="addKkModalOpen = true" class="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-sm transition-colors">
+        <button type="button" @click="addKkModalOpen = true" class="inline-flex items-center justify-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-sm transition-colors w-full sm:w-auto">
             <i data-lucide="plus" class="w-4 h-4"></i>
             <span>Daftarkan KK Baru</span>
         </button>

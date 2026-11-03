@@ -9,53 +9,53 @@
     <!-- 4 TOMBOL MENU UTAMA PALING BESAR & MUDAH DITEKAN (KHUSUS BAPAK-BAPAK) -->
     <div>
         <h2 class="text-xs font-extrabold uppercase tracking-wider text-slate-500 mb-3">Tindakan Cepat (Klik Menu yang Ingin Dipilih):</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             
             <!-- Tombol 1: Buat Surat (Paling Utama) -->
-            <a href="{{ route('surat-pengantar.create') }}" class="p-6 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white shadow-md hover:shadow-lg transition-all flex items-center gap-4 border-2 border-emerald-500 active:scale-95 group">
-                <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                    <i data-lucide="printer" class="w-8 h-8 text-white"></i>
+            <a href="{{ route('surat-pengantar.create') }}" class="p-4 sm:p-6 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white shadow-md hover:shadow-lg transition-all flex items-center gap-3.5 sm:gap-4 border-2 border-emerald-500 active:scale-95 group">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                    <i data-lucide="printer" class="w-7 h-7 sm:w-8 sm:h-8 text-white"></i>
                 </div>
                 <div>
-                    <span class="text-xs uppercase font-extrabold tracking-wider text-emerald-100">Pelayanan Surat</span>
-                    <h3 class="text-base sm:text-lg font-black leading-tight mt-0.5">BUAT SURAT PENGANTAR</h3>
-                    <p class="text-xs text-emerald-100 mt-1">Pakai template 1-klik</p>
+                    <span class="text-[11px] sm:text-xs uppercase font-extrabold tracking-wider text-emerald-100">Pelayanan Surat</span>
+                    <h3 class="text-sm sm:text-lg font-black leading-tight mt-0.5">BUAT SURAT PENGANTAR</h3>
+                    <p class="text-[11px] sm:text-xs text-emerald-100 mt-0.5 sm:mt-1">Pakai template 1-klik</p>
                 </div>
             </a>
 
             <!-- Tombol 2: Data Warga -->
-            <a href="{{ route('warga.index') }}" class="p-6 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all flex items-center gap-4 border-2 border-blue-500 active:scale-95 group">
-                <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                    <i data-lucide="users" class="w-8 h-8 text-white"></i>
+            <a href="{{ route('warga.index') }}" class="p-4 sm:p-6 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all flex items-center gap-3.5 sm:gap-4 border-2 border-blue-500 active:scale-95 group">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                    <i data-lucide="users" class="w-7 h-7 sm:w-8 sm:h-8 text-white"></i>
                 </div>
                 <div>
-                    <span class="text-xs uppercase font-extrabold tracking-wider text-blue-100">Kependudukan</span>
-                    <h3 class="text-base sm:text-lg font-black leading-tight mt-0.5">DATA SEMUA WARGA</h3>
-                    <p class="text-xs text-blue-100 mt-1">Cari nama, NIK & alamat</p>
+                    <span class="text-[11px] sm:text-xs uppercase font-extrabold tracking-wider text-blue-100">Kependudukan</span>
+                    <h3 class="text-sm sm:text-lg font-black leading-tight mt-0.5">DATA SEMUA WARGA</h3>
+                    <p class="text-[11px] sm:text-xs text-blue-100 mt-0.5 sm:mt-1">Cari nama, NIK & alamat</p>
                 </div>
             </a>
 
             <!-- Tombol 3: Pantau Warga Kontrak (Solusi Masalah No 7) -->
-            <a href="{{ route('warga.kontrak') }}" class="p-6 rounded-2xl bg-amber-600 hover:bg-amber-700 text-white shadow-md hover:shadow-lg transition-all flex items-center gap-4 border-2 border-amber-500 active:scale-95 group">
-                <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                    <i data-lucide="building-2" class="w-8 h-8 text-white"></i>
+            <a href="{{ route('warga.kontrak') }}" class="p-4 sm:p-6 rounded-2xl bg-amber-600 hover:bg-amber-700 text-white shadow-md hover:shadow-lg transition-all flex items-center gap-3.5 sm:gap-4 border-2 border-amber-500 active:scale-95 group">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                    <i data-lucide="building-2" class="w-7 h-7 sm:w-8 sm:h-8 text-white"></i>
                 </div>
                 <div>
-                    <span class="text-xs uppercase font-extrabold tracking-wider text-amber-100">Pengawasan</span>
-                    <h3 class="text-base sm:text-lg font-black leading-tight mt-0.5">PANTAU WARGA KONTRAK</h3>
-                    <p class="text-xs text-amber-100 mt-1">{{ $totalWargaKontrak }} warga sewa terdaftar</p>
+                    <span class="text-[11px] sm:text-xs uppercase font-extrabold tracking-wider text-amber-100">Pengawasan</span>
+                    <h3 class="text-sm sm:text-lg font-black leading-tight mt-0.5">PANTAU WARGA KONTRAK</h3>
+                    <p class="text-[11px] sm:text-xs text-amber-100 mt-0.5 sm:mt-1">{{ $totalWargaKontrak }} warga sewa terdaftar</p>
                 </div>
             </a>
 
             <!-- Tombol 4: Laporan Desa -->
-            <a href="{{ route('kependudukan.laporan-desa') }}" class="p-6 rounded-2xl bg-purple-700 hover:bg-purple-800 text-white shadow-md hover:shadow-lg transition-all flex items-center gap-4 border-2 border-purple-600 active:scale-95 group">
-                <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                    <i data-lucide="file-spreadsheet" class="w-8 h-8 text-white"></i>
+            <a href="{{ route('kependudukan.laporan-desa') }}" class="p-4 sm:p-6 rounded-2xl bg-purple-700 hover:bg-purple-800 text-white shadow-md hover:shadow-lg transition-all flex items-center gap-3.5 sm:gap-4 border-2 border-purple-600 active:scale-95 group">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                    <i data-lucide="file-spreadsheet" class="w-7 h-7 sm:w-8 sm:h-8 text-white"></i>
                 </div>
                 <div>
-                    <span class="text-xs uppercase font-extrabold tracking-wider text-purple-200">Laporan Bulanan</span>
-                    <h3 class="text-base sm:text-lg font-black leading-tight mt-0.5">CETAK LAPORAN DESA</h3>
-                    <p class="text-xs text-purple-200 mt-1">Rekap mutasi ke kantor desa</p>
+                    <span class="text-[11px] sm:text-xs uppercase font-extrabold tracking-wider text-purple-200">Laporan Bulanan</span>
+                    <h3 class="text-sm sm:text-lg font-black leading-tight mt-0.5">CETAK LAPORAN DESA</h3>
+                    <p class="text-[11px] sm:text-xs text-purple-200 mt-0.5 sm:mt-1">Rekap mutasi ke kantor desa</p>
                 </div>
             </a>
 
@@ -63,9 +63,9 @@
     </div>
 
     <!-- KARTU ANGKA RINGKASAN BESAR & JELAS -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <!-- Total Warga -->
-        <div class="bg-white rounded-2xl p-6 border-2 border-slate-200 shadow-sm">
+        <div class="bg-white rounded-2xl p-4 sm:p-6 border-2 border-slate-200 shadow-sm">
             <span class="text-xs font-extrabold uppercase text-slate-500">Jumlah Warga RT 03</span>
             <div class="flex items-baseline gap-2 mt-2">
                 <span class="text-3xl font-black text-slate-900">{{ $totalWargaAktif }}</span>
@@ -78,7 +78,7 @@
         </div>
 
         <!-- Total KK -->
-        <div class="bg-white rounded-2xl p-6 border-2 border-slate-200 shadow-sm">
+        <div class="bg-white rounded-2xl p-4 sm:p-6 border-2 border-slate-200 shadow-sm">
             <span class="text-xs font-extrabold uppercase text-slate-500">Kartu Keluarga (KK)</span>
             <div class="flex items-baseline gap-2 mt-2">
                 <span class="text-3xl font-black text-slate-900">{{ $totalKk }}</span>
@@ -92,22 +92,22 @@
         </div>
 
         <!-- Surat Pengantar Dibuat -->
-        <div class="bg-white rounded-2xl p-6 border-2 border-slate-200 shadow-sm">
+        <div class="bg-white rounded-2xl p-4 sm:p-6 border-2 border-slate-200 shadow-sm">
             <span class="text-xs font-extrabold uppercase text-slate-500">Surat Pengantar Dibuat</span>
             <div class="flex items-baseline gap-2 mt-2">
-                <span class="text-3xl font-black text-slate-900">{{ $totalSuratPengantar }}</span>
-                <span class="text-sm font-bold text-emerald-700">(+{{ $suratPengantarBulanIni }} bln ini)</span>
+                <span class="text-2xl sm:text-3xl font-black text-slate-900">{{ $totalSuratPengantar }}</span>
+                <span class="text-xs sm:text-sm font-bold text-emerald-700">(+{{ $suratPengantarBulanIni }} bln)</span>
             </div>
-            <p class="mt-3 text-xs font-semibold text-slate-500">Arsip tersimpan aman</p>
+            <p class="mt-2 text-xs font-semibold text-slate-500">Arsip tersimpan rapi</p>
         </div>
 
         <!-- Uang Kas RT -->
-        <div class="bg-white rounded-2xl p-6 border-2 border-emerald-300 shadow-sm bg-emerald-50/40">
-            <span class="text-xs font-extrabold uppercase text-emerald-900">Saldo Kas RT (Bendahara)</span>
-            <div class="mt-2 text-2xl sm:text-3xl font-black text-emerald-800">
+        <div class="bg-white rounded-2xl p-4 sm:p-6 border-2 border-emerald-300 shadow-sm bg-emerald-50/40">
+            <span class="text-xs font-extrabold uppercase text-emerald-900">Saldo Kas RT</span>
+            <div class="mt-2 text-xl sm:text-2xl font-black text-emerald-800 truncate">
                 Rp {{ number_format($saldoKas, 0, ',', '.') }}
             </div>
-            <a href="{{ route('keuangan.kas.index') }}" class="mt-3 inline-block text-xs font-extrabold text-emerald-700 underline">Buka Buku Kas RT →</a>
+            <a href="{{ route('keuangan.kas.index') }}" class="mt-2 inline-block text-xs font-extrabold text-emerald-700 underline">Buka Buku Kas RT →</a>
         </div>
     </div>
 

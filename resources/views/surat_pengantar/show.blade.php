@@ -21,8 +21,8 @@
             </div>
         </div>
 
-        <div class="flex items-center gap-3">
-            <a href="{{ route('surat-pengantar.print', $suratPengantar) }}" target="_blank" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center gap-2 active:scale-95">
+        <div class="flex items-center gap-3 w-full sm:w-auto">
+            <a href="{{ route('surat-pengantar.print', $suratPengantar) }}" target="_blank" class="w-full sm:w-auto justify-center px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center gap-2 active:scale-95">
                 <i data-lucide="printer" class="w-4 h-4"></i>
                 <span>Cetak Lembar Surat (A4)</span>
             </a>
@@ -30,7 +30,8 @@
     </div>
 
     <!-- Tampilan Langsung Lembar Surat Fisik (Format Tata Naskah Dinas Pemerintahan Indonesia) -->
-    <div class="bg-white rounded-3xl border-2 border-slate-300 shadow-xl p-8 sm:p-14 max-w-4xl mx-auto font-serif text-slate-900 relative">
+    <div class="overflow-x-auto pb-2">
+        <div class="min-w-[310px] bg-white rounded-3xl border-2 border-slate-300 shadow-xl p-4 sm:p-14 max-w-4xl mx-auto font-serif text-slate-900 relative">
         
         <!-- Watermark Arsip Digital Resmi -->
         <div class="absolute top-6 right-6 border border-emerald-300 bg-emerald-50/70 text-emerald-800 px-3 py-1.5 rounded-xl font-sans text-xs font-bold flex items-center gap-2">
@@ -253,6 +254,7 @@
             <p class="font-bold underline uppercase tracking-wider">( ............................................................ )</p>
         </div>
 
+    </div>
     </div>
 
 </div>

@@ -21,13 +21,13 @@
             </div>
         </div>
 
-        <div class="flex items-center gap-2">
-            <a href="{{ route('surat-masuk.print', $suratMasuk) }}" target="_blank" class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center gap-2 active:scale-95">
+        <div class="flex flex-wrap sm:flex-nowrap items-center gap-2 w-full sm:w-auto">
+            <a href="{{ route('surat-masuk.print', $suratMasuk) }}" target="_blank" class="flex-1 sm:flex-initial justify-center px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center gap-2 active:scale-95 whitespace-nowrap">
                 <i data-lucide="printer" class="w-4 h-4"></i>
                 <span>Cetak Lembar Disposisi</span>
             </a>
             @if($suratMasuk->file_lampiran)
-                <a href="{{ asset('storage/' . $suratMasuk->file_lampiran) }}" target="_blank" download class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center gap-2 active:scale-95">
+                <a href="{{ asset('storage/' . $suratMasuk->file_lampiran) }}" target="_blank" download class="flex-1 sm:flex-initial justify-center px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center gap-2 active:scale-95 whitespace-nowrap">
                     <i data-lucide="download" class="w-4 h-4"></i>
                     <span>Unduh Berkas Scan</span>
                 </a>
@@ -39,7 +39,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         <!-- KOLOM KIRI: LEMBAR DISPOSISI RESMI RT (7 KOLOM - FORMAT TATA NASKAH DINAS PEMERINTAHAN) -->
-        <div class="lg:col-span-7 bg-white rounded-3xl border border-slate-300 shadow-xl p-6 sm:p-8 space-y-5 font-serif text-slate-900">
+        <div class="lg:col-span-7 bg-white rounded-3xl border border-slate-300 shadow-xl p-4 sm:p-8 space-y-5 font-serif text-slate-900 overflow-x-auto">
             
             <!-- KOP SURAT KEDINASAN -->
             <div class="flex items-center justify-between pb-2 border-b-[2px] border-black">

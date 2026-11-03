@@ -12,14 +12,15 @@
             <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900">Buku Induk Warga RT 03</h1>
             <p class="text-sm text-slate-600 font-medium">Data seluruh warga, status tempat tinggal (Tetap vs Kontrak), dan status kependudukan</p>
         </div>
-        <div class="flex items-center gap-2">
-            <a href="{{ route('warga.kontrak') }}" class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white text-xs sm:text-sm font-extrabold px-4 py-2.5 rounded-xl shadow-sm transition-all">
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+            <a href="{{ route('warga.kontrak') }}" class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 sm:gap-2 bg-amber-500 hover:bg-amber-600 text-white text-xs sm:text-sm font-extrabold px-3 sm:px-4 py-2.5 rounded-xl shadow-sm transition-all whitespace-nowrap">
                 <i data-lucide="building-2" class="w-4 h-4"></i>
                 <span>Warga Kontrak</span>
             </a>
-            <a href="{{ route('warga.create') }}" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-extrabold px-4 py-2.5 rounded-xl shadow-sm transition-all">
+            <a href="{{ route('warga.create') }}" class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 sm:gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-extrabold px-3 sm:px-4 py-2.5 rounded-xl shadow-sm transition-all whitespace-nowrap">
                 <i data-lucide="user-plus" class="w-4 h-4"></i>
-                <span>+ Tambah Warga Baru</span>
+                <span class="hidden sm:inline">+ Tambah Warga Baru</span>
+                <span class="sm:hidden font-black">+ Warga</span>
             </a>
         </div>
     </div>

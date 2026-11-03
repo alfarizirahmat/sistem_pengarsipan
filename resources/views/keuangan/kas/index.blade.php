@@ -12,8 +12,8 @@
             <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900">Buku Kas Keuangan RT 03</h1>
             <p class="text-sm text-slate-600 font-medium">Pengelolaan dana kas RT, pemasukan iuran warga, dan pengeluaran operasional</p>
         </div>
-        <button type="button" @click="catatKasModalOpen = true" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-extrabold px-5 py-3 rounded-xl shadow-md transition-all active:scale-95">
-            <i data-lucide="plus-circle" class="w-5 h-5"></i>
+        <button type="button" @click="catatKasModalOpen = true" class="inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-extrabold px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl shadow-md transition-all active:scale-95 w-full sm:w-auto">
+            <i data-lucide="plus-circle" class="w-4 h-4 sm:w-5 sm:h-5"></i>
             <span>+ CATAT TRANSAKSI KAS BARU</span>
         </button>
     </div>
