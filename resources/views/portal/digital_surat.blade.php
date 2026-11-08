@@ -63,7 +63,7 @@
     </div>
 
     <!-- BANNER VERIFIKASI KEABSAHAN (NON-PRINT) -->
-    <div class="max-w-3xl mx-auto mb-6 no-print">
+    <div class="max-w-3xl mx-auto mb-6 no-print space-y-4">
         @if($suratPengantar->status === 'selesai')
             <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 flex items-center justify-between gap-3 shadow-xs">
                 <div class="flex items-center gap-3">
@@ -83,6 +83,41 @@
                     <p class="font-bold text-sm">Status: Menunggu Validasi Pengurus</p>
                     <p class="text-xs text-amber-700">Permohonan surat sedang diperiksa oleh Pengurus RT 005. Silakan cek kembali dalam waktu dekat.</p>
                 </div>
+            </div>
+        @endif
+
+        @if($suratPengantar->file_dokumen)
+            @php
+                $ext = strtolower(pathinfo($suratPengantar->file_dokumen, PATHINFO_EXTENSION));
+            @endphp
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="file-check" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-900">Berkas Dokumen Asli dari Pengurus RT</h3>
+                            <p class="text-xs text-slate-500">Dokumen surat resmi yang telah diunggah oleh Pak RT</p>
+                        </div>
+                    </div>
+
+                    <a href="{{ asset($suratPengantar->file_dokumen) }}" target="_blank" download
+                       class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-colors shadow-2xs">
+                        <i data-lucide="download" class="w-4 h-4"></i>
+                        <span>Unduh Dokumen Asli</span>
+                    </a>
+                </div>
+
+                @if(in_array($ext, ['png', 'jpg', 'jpeg', 'webp']))
+                    <div class="p-2 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-center max-h-[600px] overflow-hidden">
+                        <img src="{{ asset($suratPengantar->file_dokumen) }}" alt="Dokumen Surat RT" class="max-h-[580px] w-auto object-contain rounded-lg shadow-sm">
+                    </div>
+                @elseif($ext === 'pdf')
+                    <div class="border border-slate-200 rounded-xl overflow-hidden h-[500px]">
+                        <iframe src="{{ asset($suratPengantar->file_dokumen) }}" class="w-full h-full rounded-lg" frameborder="0"></iframe>
+                    </div>
+                @endif
             </div>
         @endif
     </div>

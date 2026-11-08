@@ -84,28 +84,28 @@
         </div>
     </div>
 
-    <!-- JIKA ADA BERKAS DOKUMEN YANG DIUNGGAH OLEH PAK RT -->
     @if($suratPengantar->file_dokumen)
+        <!-- JIKA ADA DOKUMEN ASLI YANG DIUNGGAH OLEH PAK RT -->
         <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-sm space-y-4">
-            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
                 <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+                    <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0">
                         <i data-lucide="file-check" class="w-5 h-5"></i>
                     </div>
                     <div>
-                        <h2 class="text-sm font-bold text-slate-900">Berkas Dokumen Surat yang Diunggah</h2>
-                        <p class="text-xs text-slate-500">Berkas dokumen surat resmi dari Pak RT</p>
+                        <h2 class="text-sm font-bold text-slate-900">Berkas Dokumen Asli yang Diunggah</h2>
+                        <p class="text-xs text-slate-500">Berkas surat resmi yang siap dicek dan diunduh oleh warga</p>
                     </div>
                 </div>
 
-                <a href="{{ asset($suratPengantar->file_dokumen) }}" target="_blank" 
-                   class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-colors shadow-2xs">
+                <a href="{{ asset($suratPengantar->file_dokumen) }}" target="_blank" download
+                   class="inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-colors shadow-2xs">
                     <i data-lucide="download" class="w-4 h-4"></i>
                     <span>Unduh Dokumen Asli</span>
                 </a>
             </div>
 
-            <!-- Preview Dokumen -->
+            <!-- Preview Dokumen Asli -->
             @php
                 $ext = strtolower(pathinfo($suratPengantar->file_dokumen, PATHINFO_EXTENSION));
             @endphp
@@ -114,11 +114,23 @@
                     <img src="{{ asset($suratPengantar->file_dokumen) }}" alt="Dokumen Surat" class="max-h-[580px] w-auto object-contain rounded-lg shadow-sm">
                 </div>
             @elseif($ext === 'pdf')
-                <div class="border border-slate-200 rounded-xl overflow-hidden h-[500px]">
+                <div class="border border-slate-200 rounded-xl overflow-hidden h-[550px]">
                     <iframe src="{{ asset($suratPengantar->file_dokumen) }}" class="w-full h-full" frameborder="0"></iframe>
                 </div>
             @endif
         </div>
+
+        <!-- Detail Teks Lembar Surat (Disembunyikan dalam Accordion agar Rapi) -->
+        <details class="bg-white rounded-2xl border border-slate-200 p-4 transition-all group">
+            <summary class="text-xs font-bold text-slate-700 cursor-pointer flex items-center justify-between list-none">
+                <span class="flex items-center gap-2">
+                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400"></i>
+                    <span>Lihat Format Naskah Teks Digital Surat</span>
+                </span>
+                <span class="text-[11px] text-blue-600 group-open:hidden">Buka &darr;</span>
+                <span class="text-[11px] text-slate-400 hidden group-open:inline">Tutup &uarr;</span>
+            </summary>
+            <div class="pt-4 border-t border-slate-100 mt-3">
     @endif
 
     <!-- Tampilan Langsung Lembar Surat Fisik (Format Tata Naskah Dinas Pemerintahan Indonesia) -->
@@ -345,6 +357,11 @@
 
     </div>
     </div>
+
+    @if($suratPengantar->file_dokumen)
+            </div>
+        </details>
+    @endif
 
 </div>
 @endsection
