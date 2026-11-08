@@ -47,24 +47,23 @@
 
             <!-- Teks Kop Resmi Berjenjang -->
             <div class="flex-1 text-center px-2">
-                <h3 class="text-xs sm:text-sm font-bold uppercase tracking-widest text-black leading-tight">PEMERINTAH KABUPATEN BOGOR</h3>
-                <h4 class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-black leading-tight">KECAMATAN CILODONG</h4>
-                <h4 class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-black leading-tight">DESA SUKAMAJU</h4>
-                <h2 class="text-base sm:text-lg font-black uppercase tracking-wider text-black leading-tight mt-0.5">RUKUN TETANGGA 03 / RUKUN WARGA 02</h2>
+                <h3 class="text-xs sm:text-sm font-bold uppercase tracking-widest text-black leading-tight">PENGURUS RUKUN TETANGGA 005 / RUKUN WARGA 013</h3>
+                <h4 class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-black leading-tight">PERUMAHAN BUMI MUTIARA INDAH II</h4>
+                <h2 class="text-base sm:text-lg font-black uppercase tracking-wider text-black leading-tight mt-0.5">REKAPITULASI LAPORAN DATA WARGA & KEPENDUDUKAN</h2>
                 <p class="text-[10px] text-black font-sans mt-0.5 leading-tight">
-                    Sekretariat: Jl. Kenanga No. 12 RT 03/RW 02 Desa Sukamaju, Kec. Cilodong, Kab. Bogor 16413
+                    Sekretariat: Perumahan Bumi Mutiara Indah II Blok B3 No. 12 RT 005 / RW 013
                 </p>
                 <p class="text-[9px] text-black font-sans leading-tight">
-                    Pos-el: rt03rw02.sukamaju@desa.id | Laman: sukamaju.desa.id | Kontak: 0812-3456-7890
+                    Pos-el: rt005rw013@bumimutiara.id | Kontak: 0812-3456-7890
                 </p>
             </div>
 
             <!-- Monogram RT Kanan -->
             <div class="w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0 hidden sm:flex items-center justify-center">
                 <div class="w-12 h-12 rounded-full border-2 border-black flex flex-col items-center justify-center text-[7px] font-black uppercase leading-none">
-                    <span>RT 03</span>
-                    <span class="text-[6px] font-normal my-0.5">RW 02</span>
-                    <span>SUKAMAJU</span>
+                    <span>RT 005</span>
+                    <span class="text-[6px] font-normal my-0.5">RW 013</span>
+                    <span>BMI II</span>
                 </div>
             </div>
         </div>
@@ -75,7 +74,7 @@
             <h4 class="text-sm sm:text-base font-extrabold uppercase underline tracking-wide text-slate-900">
                 LAPORAN PERKEMBANGAN PENDUDUK BULAN {{ strtoupper([1=>'Januari', 2=>'Februari', 3=>'Maret', 4=>'April', 5=>'Mei', 6=>'Juni', 7=>'Juli', 8=>'Agustus', 9=>'September', 10=>'Oktober', 11=>'November', 12=>'Desember'][$bulan] ?? '') }} TAHUN {{ $tahun }}
             </h4>
-            <p class="text-xs text-slate-600 mt-1">Diserahkan kepada: Pemerintah Desa Sukamaju</p>
+            <p class="text-xs text-slate-600 mt-1">Diserahkan kepada: Pemerintah Kelurahan / Desa Setempat</p>
         </div>
 
         <!-- Tabel Rekapitulasi Angka Perkembangan Penduduk -->
@@ -193,19 +192,19 @@
         <div class="grid grid-cols-2 gap-8 text-center text-xs text-slate-800 pt-4">
             <div>
                 <p>Mengetahui,</p>
-                <p class="font-bold">Kepala Desa Sukamaju</p>
+                <p class="font-bold">Lurah / Kepala Desa Setempat</p>
                 <div class="h-20"></div>
                 <p class="font-bold underline">( .................................................... )</p>
                 <p class="text-[11px] text-slate-500">NIP. -</p>
             </div>
             <div>
-                <p>Sukamaju, {{ Carbon\Carbon::now()->translatedFormat('d F Y') }}</p>
-                <p class="font-bold">Ketua RT 03 / RW 02</p>
+                <p>Bumi Mutiara Indah II, {{ Carbon\Carbon::now()->translatedFormat('d F Y') }}</p>
+                <p class="font-bold">Ketua RT 005 / RW 013</p>
                 <div class="h-20 flex items-center justify-center">
                     <span class="text-[11px] text-slate-400 italic font-mono">[Cap Stempel & TTD]</span>
                 </div>
                 <p class="font-bold underline">HARTONO</p>
-                <p class="text-[11px] text-slate-500">Ketua RT 03 Desa Sukamaju</p>
+                <p class="text-[11px] text-slate-500">Ketua RT 005 Perumahan Bumi Mutiara Indah II</p>
             </div>
         </div>
 

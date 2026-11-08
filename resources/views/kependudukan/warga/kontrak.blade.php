@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Pengawasan Warga Kontrak & Kost RT 03')
+@section('title', 'Pengawasan Warga Kontrak & Kost RT 005')
 @section('header_title', 'Pengawasan Warga Kontrak & Kost')
 
 @section('content')
@@ -74,7 +74,7 @@
         </div>
         @empty
         <div class="col-span-2 bg-white rounded-2xl p-8 text-center text-slate-400 font-bold border-2 border-slate-200">
-            Belum ada keluarga kontrak yang terdaftar di RT 03.
+            Belum ada keluarga kontrak yang terdaftar di RT 005.
         </div>
         @endforelse
     </div>

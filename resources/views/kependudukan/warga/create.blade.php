@@ -9,7 +9,7 @@
     <div class="flex items-center justify-between">
         <div>
             <h1 class="text-xl font-bold text-slate-900">Pendaftaran Data Warga Baru</h1>
-            <p class="text-xs text-slate-500">Mencatat warga baru, bayi lahir, maupun warga pindahan/kontrak ke RT 03 / RW 02</p>
+            <p class="text-xs text-slate-500">Mencatat warga baru, bayi lahir, maupun warga pindahan/kontrak ke RT 005 / RW 013 Perumahan Bumi Mutiara Indah II</p>
         </div>
         <a href="{{ route('warga.index') }}" class="text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1">
             <i data-lucide="arrow-left" class="w-4 h-4"></i>

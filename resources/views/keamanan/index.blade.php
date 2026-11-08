@@ -24,25 +24,25 @@
                 <i data-lucide="shield-check" class="w-6 h-6 text-emerald-600"></i>
                 <h2 class="text-base sm:text-lg font-black text-slate-900">JADWAL REGU RONDA MALAM (23:00 - 04:30 WIB)</h2>
             </div>
-            <span class="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-lg">Pos Kamling Utama RT 03</span>
+            <span class="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-lg">Pos Keamanan Utama RT 005</span>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs sm:text-sm">
             <div class="p-4 bg-slate-50 rounded-2xl border-2 border-slate-200">
                 <span class="font-black text-slate-900 text-sm block mb-2 text-blue-900">Senin & Selasa (Regu 1)</span>
-                <p class="text-slate-700 font-bold leading-relaxed">• Bambang Sudibyo (Koord)<br>• Agus Santoso<br>• Warga Blok A (No 1-6)</p>
+                <p class="text-slate-700 font-bold leading-relaxed">• Bambang Sudibyo (Koord)<br>• Agus Santoso<br>• Warga Blok A</p>
             </div>
             <div class="p-4 bg-slate-50 rounded-2xl border-2 border-slate-200">
                 <span class="font-black text-slate-900 text-sm block mb-2 text-cyan-900">Rabu & Kamis (Regu 2)</span>
-                <p class="text-slate-700 font-bold leading-relaxed">• Eko Prasetyo (Koord)<br>• Rudi Kurniawan<br>• Warga Blok B (No 7-12)</p>
+                <p class="text-slate-700 font-bold leading-relaxed">• Eko Prasetyo (Koord)<br>• Rudi Kurniawan<br>• Warga Blok B</p>
             </div>
             <div class="p-4 bg-slate-50 rounded-2xl border-2 border-slate-200">
                 <span class="font-black text-slate-900 text-sm block mb-2 text-amber-900">Jumat & Sabtu (Regu 3)</span>
-                <p class="text-slate-700 font-bold leading-relaxed">• Dedi Iskandar (Koord)<br>• Ahmad Faisal<br>• Warga Kontrak & Kost Gang 2</p>
+                <p class="text-slate-700 font-bold leading-relaxed">• Dedi Iskandar (Koord)<br>• Ahmad Faisal<br>• Warga Blok C & Rumah Hunian</p>
             </div>
             <div class="p-4 bg-emerald-50 rounded-2xl border-2 border-emerald-300 text-emerald-950">
                 <span class="font-black text-sm block mb-2 text-emerald-900">Malam Minggu (Regu Gabungan)</span>
-                <p class="font-bold leading-relaxed">• Semua Pengurus RT<br>• Pemuda Karang Taruna<br>• Patroli Keliling Lingkungan</p>
+                <p class="font-bold leading-relaxed">• Semua Pengurus RT<br>• Pemuda Warga BMI II<br>• Patroli Keliling Lingkungan</p>
             </div>
         </div>
     </div>
@@ -160,7 +160,7 @@
                         <textarea name="keterangan" rows="3" required placeholder="Uraikan kondisi keamanan, jam patroli, atau catatan situasi..." class="w-full px-3.5 py-2.5 bg-slate-50 border-2 border-slate-300 rounded-xl text-sm font-medium"></textarea>
                     </div>
 
-                    <input type="hidden" name="lokasi" value="Lingkungan RT 03">
+                    <input type="hidden" name="lokasi" value="Perumahan Bumi Mutiara Indah II RT 005 / RW 013">
                     <input type="hidden" name="status" value="kondusif">
 
                     <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">

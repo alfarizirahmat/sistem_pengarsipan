@@ -7,13 +7,13 @@
 <div class="space-y-6" 
      x-data="{ 
         jenisSurat: '{{ old('jenis_surat', 'kehilangan_dokumen') }}',
-        keperluan: `{{ old('keperluan', 'Sebagai pengantar permohonan penerbitan kembali KTP Elektronik dan Kartu Keluarga (KK) ke Kantor Desa / Disdukcapil dikarenakan dokumen asli rusak / hilang terendam musibah banjir bandang di wilayah RT 03.') }}`,
+        keperluan: `{{ old('keperluan', 'Sebagai pengantar permohonan penerbitan kembali KTP Elektronik dan Kartu Keluarga (KK) ke Kantor Desa / Disdukcapil dikarenakan dokumen asli rusak / hilang.') }}`,
         dokumenHilang: `{{ old('dokumen_hilang', 'KTP Elektronik dan Kartu Keluarga (KK) Asli') }}`,
         selectedTemplate: 'banjir',
         nomorSurat: '{{ old('nomor_surat', $autoNomorSurat) }}',
         tanggalSurat: '{{ old('tanggal_surat', date('Y-m-d')) }}',
         penandatanganNama: '{{ old('penandatangan_nama', 'Hartono') }}',
-        penandatanganJabatan: '{{ old('penandatangan_jabatan', 'Ketua RT 03') }}',
+        penandatanganJabatan: '{{ old('penandatangan_jabatan', 'Ketua RT 005') }}',
         ttdJenis: '{{ old('tanda_tangan_jenis', 'foto') }}',
         selectedWargaId: '{{ old('warga_id', $selectedWargaId) }}',
         viewMode: (window.innerWidth >= 1024 ? 'split' : 'form'),
@@ -48,23 +48,23 @@
             if (type === 'banjir') {
                 this.jenisSurat = 'kehilangan_dokumen';
                 this.dokumenHilang = 'KTP Elektronik dan Kartu Keluarga (KK) Asli';
-                this.keperluan = 'Sebagai pengantar permohonan penerbitan kembali KTP Elektronik dan Kartu Keluarga (KK) ke Kantor Desa / Disdukcapil dikarenakan dokumen asli rusak / hilang terendam musibah banjir bandang di wilayah RT 03.';
+                this.keperluan = 'Sebagai pengantar permohonan penerbitan kembali KTP Elektronik dan Kartu Keluarga (KK) ke Kantor Desa / Disdukcapil dikarenakan dokumen asli rusak / hilang.';
             } else if (type === 'ktp') {
                 this.jenisSurat = 'ktp_baru';
                 this.dokumenHilang = '';
-                this.keperluan = 'Sebagai pengantar permohonan perekaman dan penerbitan Kartu Tanda Penduduk Elektronik (KTP-el) baru ke Kantor Desa Sukamaju / Kantor Kecamatan.';
+                this.keperluan = 'Sebagai pengantar permohonan perekaman dan penerbitan Kartu Tanda Penduduk Elektronik (KTP-el) baru ke Kantor Kelurahan / Kecamatan.';
             } else if (type === 'kk') {
                 this.jenisSurat = 'perubahan_kk';
                 this.dokumenHilang = '';
-                this.keperluan = 'Sebagai pengantar permohonan pembaruan susunan anggota keluarga pada Kartu Keluarga (KK) dan penerbitan Akta Kelahiran anak ke Kantor Desa Sukamaju.';
+                this.keperluan = 'Sebagai pengantar permohonan pembaruan susunan anggota keluarga pada Kartu Keluarga (KK) dan penerbitan Akta Kelahiran anak ke Kantor Kelurahan.';
             } else if (type === 'domisili') {
                 this.jenisSurat = 'keterangan_domisili';
                 this.dokumenHilang = '';
-                this.keperluan = 'Surat Keterangan bahwa yang bersangkutan adalah benar warga yang berdomisili dan tinggal menetap di lingkungan RT 03 / RW 02 Desa Sukamaju untuk keperluan administrasi pekerjaan / perbankan.';
+                this.keperluan = 'Surat Keterangan bahwa yang bersangkutan adalah benar warga yang berdomisili dan tinggal menetap di lingkungan RT 005 / RW 013 Perumahan Bumi Mutiara Indah II untuk keperluan administrasi pekerjaan / perbankan.';
             } else if (type === 'pindah') {
                 this.jenisSurat = 'pindah_domisili';
                 this.dokumenHilang = '';
-                this.keperluan = 'Sebagai pengantar permohonan Surat Keterangan Pindah Domisili Tempat Tinggal dari lingkungan RT 03 / RW 02 Desa Sukamaju ke alamat tempat tinggal baru.';
+                this.keperluan = 'Sebagai pengantar permohonan Surat Keterangan Pindah Domisili Tempat Tinggal dari lingkungan RT 005 / RW 013 Perumahan Bumi Mutiara Indah II ke alamat tempat tinggal baru.';
             } else if (type === 'sktm') {
                 this.jenisSurat = 'sktm';
                 this.dokumenHilang = '';
@@ -72,11 +72,11 @@
             } else if (type === 'sku') {
                 this.jenisSurat = 'sku';
                 this.dokumenHilang = '';
-                this.keperluan = 'Surat Keterangan Usaha (SKU) bahwa yang bersangkutan benar memiliki usaha aktif di lingkungan RT 03 / RW 02 untuk keperluan pengajuan permodalan / perbankan.';
+                this.keperluan = 'Surat Keterangan Usaha (SKU) bahwa yang bersangkutan benar memiliki usaha aktif di lingkungan RT 005 / RW 013 Perumahan Bumi Mutiara Indah II untuk keperluan pengajuan permodalan / perbankan.';
             } else if (type === 'mati') {
                 this.jenisSurat = 'kematian';
                 this.dokumenHilang = '';
-                this.keperluan = 'Surat Keterangan Kematian untuk pengurusan Akta Kematian dan keperluan administrasi pemakaman di Kantor Desa Sukamaju.';
+                this.keperluan = 'Surat Keterangan Kematian untuk pengurusan Akta Kematian dan keperluan administrasi pemakaman.';
             }
         },
 
@@ -203,7 +203,7 @@
                         <span class="text-2xl group-hover:scale-110 transition-transform">🏠</span>
                         <div>
                             <div class="font-extrabold text-xs leading-tight">Ket. Domisili</div>
-                            <div class="text-[10px] opacity-80">Tinggal di RT 03</div>
+                            <div class="text-[10px] opacity-80">Tinggal di RT 005</div>
                         </div>
                     </button>
 
@@ -265,10 +265,10 @@
                     <div>
                         <select name="warga_id" required x-model="selectedWargaId" @change="updateWargaData()"
                             class="w-full px-4 py-3 bg-slate-50 border-2 border-slate-300 rounded-2xl text-sm font-bold text-slate-900 focus:outline-none focus:ring-4 focus:ring-emerald-100 focus:border-emerald-600 transition-all">
-                            <option value="">-- Klik untuk memilih nama warga RT 03 --</option>
+                            <option value="">-- Klik untuk memilih nama warga RT 005 --</option>
                             @foreach($wargas as $w)
                                 <option value="{{ $w->id }}" {{ (old('warga_id', $selectedWargaId) == $w->id) ? 'selected' : '' }}>
-                                    {{ $w->nama_lengkap }} (NIK: {{ $w->nik }}) - {{ $w->keluarga->alamat ?? 'RT 03' }} [{{ ucfirst($w->status_tinggal) }}]
+                                    {{ $w->nama_lengkap }} (NIK: {{ $w->nik }}) - {{ $w->keluarga->alamat ?? 'Perumahan Bumi Mutiara Indah II' }} [{{ ucfirst($w->status_tinggal) }}]
                                 </option>
                             @endforeach
                         </select>
@@ -380,7 +380,7 @@
                             <input type="radio" name="ttd_radio" value="qrcode" @click="ttdJenis = 'qrcode'" class="sr-only">
                             <span class="text-2xl mb-1">🛡️</span>
                             <span class="text-xs font-black text-slate-900">QR Code Verifikasi</span>
-                            <span class="text-[11px] text-slate-500 mt-1">Gunakan kode barcode token sah terverifikasi RT 03.</span>
+                            <span class="text-[11px] text-slate-500 mt-1">Gunakan kode barcode token sah terverifikasi RT 005 / RW 013.</span>
                         </label>
                     </div>
 
@@ -483,17 +483,17 @@
 
                         <!-- Teks Jenjang Pemerintahan -->
                         <div class="flex-1 text-center px-1">
-                            <h4 class="text-[9px] font-bold uppercase tracking-widest text-black leading-none">PEMERINTAH KABUPATEN BOGOR</h4>
-                            <h5 class="text-[8px] font-bold uppercase tracking-wider text-black leading-none mt-0.5">KECAMATAN CILODONG • DESA SUKAMAJU</h5>
-                            <h3 class="text-xs font-black uppercase tracking-wider text-black leading-tight mt-0.5">RUKUN TETANGGA 03 / RUKUN WARGA 02</h3>
-                            <p class="text-[7.5px] italic text-slate-700 font-sans leading-none mt-0.5">Sekretariat: Jl. Kenanga No. 12 RT 03/RW 02 Desa Sukamaju 16413</p>
+                            <h4 class="text-[9px] font-bold uppercase tracking-widest text-black leading-none">RUKUN TETANGGA 005 / RUKUN WARGA 013</h4>
+                            <h5 class="text-[8px] font-bold uppercase tracking-wider text-black leading-none mt-0.5">PERUMAHAN BUMI MUTIARA INDAH II</h5>
+                            <h3 class="text-xs font-black uppercase tracking-wider text-black leading-tight mt-0.5">PELAYANAN SURAT PENGANTAR WARGA</h3>
+                            <p class="text-[7.5px] italic text-slate-700 font-sans leading-none mt-0.5">Sekretariat: Perumahan Bumi Mutiara Indah II Blok B3 No. 12 RT 005 / RW 013</p>
                         </div>
 
                         <!-- Monogram RT Kanan -->
                         <div class="w-10 h-10 flex-shrink-0 hidden sm:flex items-center justify-center">
                             <div class="w-8 h-8 rounded-full border border-black flex flex-col items-center justify-center text-[5.5px] font-black uppercase leading-none">
-                                <span>RT 03</span>
-                                <span>RW 02</span>
+                                <span>RT 005</span>
+                                <span>RW 013</span>
                             </div>
                         </div>
                     </div>
@@ -506,7 +506,7 @@
                     </div>
 
                     <p class="text-[9.5px] mb-2 text-justify indent-4 leading-relaxed">
-                        Yang bertanda tangan di bawah ini Ketua Rukun Tetangga (RT) 03 Rukun Warga (RW) 02 Desa Sukamaju, Kecamatan Cilodong, Kabupaten Bogor, menerangkan bahwa:
+                        Yang bertanda tangan di bawah ini Ketua Rukun Tetangga (RT) 005 Rukun Warga (RW) 013 Perumahan Bumi Mutiara Indah II, menerangkan bahwa:
                     </p>
 
                     <!-- Identitas Warga Live Preview (Format Naskah Dinas Lengkap) -->
@@ -554,12 +554,12 @@
                         <div class="grid grid-cols-12">
                             <span class="col-span-5 text-slate-600 font-medium">9. Alamat KTP / Domisili</span>
                             <span class="col-span-1">:</span>
-                            <span class="col-span-6" x-text="selectedWargaData && selectedWargaData.keluarga ? selectedWargaData.keluarga.alamat : 'RT 03 / RW 02 Desa Sukamaju'"></span>
+                            <span class="col-span-6" x-text="selectedWargaData && selectedWargaData.keluarga ? selectedWargaData.keluarga.alamat : 'Perumahan Bumi Mutiara Indah II, RT 005 / RW 013'"></span>
                         </div>
                     </div>
 
                     <p class="text-[9.5px] my-2 text-justify indent-4 leading-relaxed">
-                        Bahwa orang yang namanya tersebut di atas adalah benar warga yang berdomisili sah di lingkungan RT 03 / RW 02 Desa Sukamaju, dan surat pengantar ini diberikan untuk keperluan:
+                        Bahwa orang yang namanya tersebut di atas adalah benar warga yang berdomisili sah di lingkungan RT 005 / RW 013 Perumahan Bumi Mutiara Indah II, dan surat pengantar ini diberikan untuk keperluan:
                     </p>
 
                     <div class="p-2 bg-slate-50 border-l-2 border-black my-2 italic text-[9.5px] text-slate-900 rounded-r font-semibold">
@@ -585,16 +585,16 @@
                         </div>
                         
                         <div class="relative">
-                            <span x-text="'Sukamaju, ' + tanggalSurat"></span><br>
-                            <strong x-text="penandatanganJabatan + ' Sukamaju,'"></strong>
+                            <span x-text="'Bumi Mutiara Indah II, ' + tanggalSurat"></span><br>
+                            <strong x-text="penandatanganJabatan + ','"></strong>
                             
                             <!-- Cap Stempel & Signature Preview -->
                             <div class="h-16 my-1 flex items-center justify-center relative">
                                 <!-- Cap Stempel Dinas RT Violet Resmi -->
-                                <div class="w-14 h-14 rounded-full border border-dashed border-indigo-900 text-indigo-900 text-[5.5px] font-bold flex flex-col items-center justify-center rotate-[-12deg] bg-indigo-50/50 absolute z-0 pointer-events-none">
-                                    <span>* PEMERINTAH DESA *</span>
-                                    <span class="font-black text-[7px]">RT 03 / RW 02</span>
-                                    <span>DESA SUKAMAJU</span>
+                                <div class="w-14 h-14 rounded-full border border-dashed border-indigo-900 text-indigo-900 text-[5px] font-bold flex flex-col items-center justify-center rotate-[-12deg] bg-indigo-50/50 absolute z-0 pointer-events-none">
+                                    <span>* PENGURUS RT *</span>
+                                    <span class="font-black text-[6.5px]">RT 005 / RW 013</span>
+                                    <span>BUMI MUTIARA INDAH II</span>
                                 </div>
 
                                 <!-- Foto TTD Live Preview -->
@@ -626,11 +626,11 @@
                         </div>
                     </div>
 
-                    <!-- Mengetahui RW 02 -->
+                    <!-- Mengetahui RW 013 -->
                     <div class="text-center text-[8.5px] pt-3 mt-2 border-t border-dotted border-slate-300">
-                        <span>Mengetahui, Ketua RW 02 Desa Sukamaju:</span>
+                        <span>Mengetahui, Ketua RW 013 Perumahan Bumi Mutiara Indah II:</span>
                         <div class="h-8 flex items-end justify-center">
-                            <span class="text-[7.5px] text-slate-400 italic">[ Tanda Tangan & Cap RW 02 ]</span>
+                            <span class="text-[7.5px] text-slate-400 italic">[ Tanda Tangan & Cap RW 013 ]</span>
                         </div>
                         <span class="font-bold underline uppercase">( ............................................................ )</span>
                     </div>

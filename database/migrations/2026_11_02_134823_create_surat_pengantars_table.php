@@ -22,7 +22,7 @@ return new class extends Migration
             $table->date('berlaku_sampai')->nullable();
             $table->unsignedSmallInteger('tahun_arsip')->index(); // mendukung pengarsipan 10+ tahun
             $table->string('penandatangan_nama');
-            $table->string('penandatangan_jabatan')->default('Ketua RT 03');
+            $table->string('penandatangan_jabatan')->default('Ketua RT 005');
             $table->string('status')->default('selesai');
             $table->string('lokasi_arsip_fisik')->nullable(); // sinkron dengan arsip fisik manual
             $table->text('catatan')->nullable();

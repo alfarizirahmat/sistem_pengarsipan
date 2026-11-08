@@ -62,24 +62,22 @@
 
             <!-- Teks Kop Resmi Berjenjang -->
             <div class="flex-1 text-center px-2">
-                <h3 class="text-xs sm:text-sm font-bold uppercase tracking-widest text-black leading-tight">PEMERINTAH KABUPATEN BOGOR</h3>
-                <h4 class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-black leading-tight">KECAMATAN CILODONG</h4>
-                <h4 class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-black leading-tight">DESA SUKAMAJU</h4>
-                <h2 class="text-base sm:text-lg font-black uppercase tracking-wider text-black leading-tight mt-0.5">RUKUN TETANGGA 03 / RUKUN WARGA 02</h2>
-                <p class="text-[10px] text-black font-sans mt-0.5 leading-tight">
-                    Sekretariat: Jl. Kenanga No. 12 RT 03/RW 02 Desa Sukamaju, Kec. Cilodong, Kab. Bogor 16413
+                <h4 class="text-xs sm:text-sm font-bold uppercase tracking-widest text-black leading-tight">PENGURUS RUKUN TETANGGA 005 / RUKUN WARGA 013</h4>
+                <h2 class="text-base sm:text-lg font-black uppercase tracking-wider text-black leading-tight mt-0.5">PERUMAHAN BUMI MUTIARA INDAH II</h2>
+                <p class="text-[10px] sm:text-xs text-black font-sans mt-0.5 leading-tight">
+                    Sekretariat: Perumahan Bumi Mutiara Indah II, RT 005 / RW 013
                 </p>
-                <p class="text-[9px] text-black font-sans leading-tight">
-                    Pos-el: rt03rw02.sukamaju@desa.id | Laman: sukamaju.desa.id | Kontak: 0812-3456-7890
+                <p class="text-[9px] sm:text-[10px] text-black font-sans leading-tight">
+                    Sistem Informasi Pendataan dan Pelayanan Warga Berbasis Web | Kode Verifikasi: {{ $suratPengantar->qr_token }}
                 </p>
             </div>
 
             <!-- Monogram RT Kanan (Keseimbangan Kop) -->
             <div class="w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0 hidden sm:flex items-center justify-center">
                 <div class="w-12 h-12 rounded-full border-2 border-black flex flex-col items-center justify-center text-[7px] font-black uppercase leading-none">
-                    <span>RT 03</span>
-                    <span class="text-[6px] font-normal my-0.5">RW 02</span>
-                    <span>SUKAMAJU</span>
+                    <span>RT 005</span>
+                    <span class="text-[6px] font-normal my-0.5">RW 013</span>
+                    <span>BMI II</span>
                 </div>
             </div>
         </div>
@@ -93,7 +91,7 @@
 
         <!-- Paragraf Pembuka Baku -->
         <p class="text-sm text-justify mb-3 leading-relaxed indent-8">
-            Yang bertanda tangan di bawah ini Ketua Rukun Tetangga (RT) 03 Rukun Warga (RW) 02 Desa Sukamaju, Kecamatan Cilodong, Kabupaten Bogor, dengan ini menerangkan bahwa:
+            Yang bertanda tangan di bawah ini Ketua Rukun Tetangga (RT) 005 Rukun Warga (RW) 013 Perumahan Bumi Mutiara Indah II, dengan ini menerangkan bahwa:
         </p>
 
         <!-- Tabel Identitas Lengkap Pemohon (Standar Naskah Dinas Desa) -->
@@ -158,13 +156,13 @@
                         <td class="py-0.5">10.</td>
                         <td class="py-0.5">Status Tempat Tinggal</td>
                         <td class="py-0.5">:</td>
-                        <td class="py-0.5 font-medium">{{ ucfirst($suratPengantar->warga->status_tinggal) }} di Lingkungan RT 03</td>
+                        <td class="py-0.5 font-medium">{{ ucfirst($suratPengantar->warga->status_tinggal) }} di Lingkungan RT 005 / RW 013</td>
                     </tr>
                     <tr class="align-top">
                         <td class="py-0.5">11.</td>
                         <td class="py-0.5">Alamat KTP / Domisili</td>
                         <td class="py-0.5">:</td>
-                        <td class="py-0.5">{{ $suratPengantar->warga->keluarga->alamat ?? 'RT 03 / RW 02 Desa Sukamaju, Kec. Cilodong, Kab. Bogor' }}</td>
+                        <td class="py-0.5">{{ $suratPengantar->warga->keluarga->alamat ?? 'Perumahan Bumi Mutiara Indah II, RT 005 / RW 013' }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -172,7 +170,7 @@
 
         <!-- Paragraf Pernyataan & Keperluan Baku -->
         <p class="text-sm text-justify mb-2 leading-relaxed indent-8">
-            Bahwa orang yang namanya tersebut di atas adalah benar-benar warga yang bertempat tinggal dan berdomisili sah di lingkungan Rukun Tetangga (RT) 03 Rukun Warga (RW) 02 Desa Sukamaju, Kecamatan Cilodong, Kabupaten Bogor.
+            Bahwa orang yang namanya tersebut di atas adalah benar-benar warga yang bertempat tinggal dan berdomisili sah di lingkungan Rukun Tetangga (RT) 005 Rukun Warga (RW) 013 Perumahan Bumi Mutiara Indah II.
         </p>
 
         <p class="text-sm text-justify mb-2 leading-relaxed indent-8">
@@ -206,8 +204,8 @@
             </div>
 
             <div>
-                <p class="mb-0.5 text-xs">Sukamaju, {{ $suratPengantar->tanggal_surat->translatedFormat('d F Y') }}</p>
-                <p class="font-bold text-xs uppercase tracking-wider">{{ $suratPengantar->penandatangan_jabatan }} Sukamaju,</p>
+                <p class="mb-0.5 text-xs">Bumi Mutiara Indah II, {{ $suratPengantar->tanggal_surat->translatedFormat('d F Y') }}</p>
+                <p class="font-bold text-xs uppercase tracking-wider">{{ $suratPengantar->penandatangan_jabatan }} RT 005 / RW 013,</p>
 
                 <!-- Area Tanda Tangan & Cap Stempel RT (Tinta Violet Resmi) -->
                 <div class="h-24 flex items-center justify-center relative my-1">
@@ -215,9 +213,9 @@
                     @if(in_array($suratPengantar->tanda_tangan_jenis, ['digital', 'foto']) && $suratPengantar->tanda_tangan_digital && ! $suratPengantar->is_pdf_signature)
                         <!-- Stempel Dinas RT Cap Ungu Violet Resmi Pemerintahan -->
                         <div class="w-20 h-20 rounded-full border-2 border-indigo-900 text-indigo-900 text-[6.5px] font-bold flex flex-col items-center justify-center rotate-[-12deg] bg-indigo-50/30 absolute z-0 select-none opacity-90">
-                            <span class="tracking-widest uppercase text-[6px]">★ PEMERINTAH DESA ★</span>
-                            <span class="font-black text-[9px] my-0.5">RT 03 / RW 02</span>
-                            <span class="tracking-wider uppercase text-[6px]">DESA SUKAMAJU</span>
+                            <span class="tracking-widest uppercase text-[6px]">★ PENGURUS RT ★</span>
+                            <span class="font-black text-[9px] my-0.5">RT 005 / RW 013</span>
+                            <span class="tracking-wider uppercase text-[5.5px]">BUMI MUTIARA INDAH II</span>
                         </div>
                         <!-- Gambar Foto / Scan TTD Asli -->
                         <img src="{{ $suratPengantar->tanda_tangan_url }}" alt="Foto Tanda Tangan Ketua RT" class="h-16 max-w-[160px] object-contain relative z-10 mx-auto">
@@ -229,8 +227,8 @@
                             </div>
                             <div class="text-left text-[8.5px] leading-tight">
                                 <div class="font-bold text-emerald-900">TTD PDF TERVERIFIKASI</div>
-                                <div class="font-mono text-[7.5px] text-slate-700">{{ $suratPengantar->qr_token ?? 'RT03-VALID' }}</div>
-                                <div class="text-[7.5px] text-slate-500">Berkas Sah RT 03</div>
+                                <div class="font-mono text-[7.5px] text-slate-700">{{ $suratPengantar->qr_token ?? 'BMI2-VALID' }}</div>
+                                <div class="text-[7.5px] text-slate-500">Berkas Sah RT 005 / RW 013</div>
                             </div>
                         </div>
                     @elseif($suratPengantar->tanda_tangan_jenis === 'qrcode' || $suratPengantar->qr_token)
@@ -246,8 +244,8 @@
                             </div>
                             <div class="text-left text-[8.5px] leading-tight">
                                 <div class="font-bold text-slate-900">TTD ELEKTRONIK SAH</div>
-                                <div class="font-mono text-[7.5px] text-slate-700">{{ $suratPengantar->qr_token ?? 'RT03-VALID' }}</div>
-                                <div class="text-[7.5px] text-slate-500">Terdaftar RT 03 Sukamaju</div>
+                                <div class="font-mono text-[7.5px] text-slate-700">{{ $suratPengantar->qr_token ?? 'BMI2-VALID' }}</div>
+                                <div class="text-[7.5px] text-slate-500">RT 005 RW 013 Bumi Mutiara Indah II</div>
                             </div>
                         </div>
                     @else
@@ -267,12 +265,12 @@
             </div>
         </div>
 
-        <!-- Pengesahan Mengetahui Ketua RW 02 (Standar Surat Pengantar Wilayah Desa) -->
+        <!-- Pengesahan Mengetahui Ketua RW 013 -->
         <div class="text-center text-sm pt-6 mt-4 border-t border-dotted border-slate-300">
             <p class="text-xs">Mengetahui,</p>
-            <p class="font-bold text-xs uppercase tracking-wider">Ketua Rukun Warga (RW) 02 Desa Sukamaju</p>
+            <p class="font-bold text-xs uppercase tracking-wider">Ketua Rukun Warga (RW) 013 Perumahan Bumi Mutiara Indah II</p>
             <div class="h-16 flex items-end justify-center pb-1">
-                <span class="text-[9px] text-slate-400 italic">[ Tanda Tangan & Cap RW 02 ]</span>
+                <span class="text-[9px] text-slate-400 italic">[ Tanda Tangan & Cap RW 013 ]</span>
             </div>
             <p class="font-bold underline uppercase tracking-wider">( ............................................................ )</p>
         </div>

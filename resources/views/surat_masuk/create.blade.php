@@ -39,7 +39,7 @@
                 <!-- Instansi Pengirim -->
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Instansi / Pihak Pengirim <span class="text-rose-500">*</span></label>
-                    <input type="text" name="pengirim" value="{{ old('pengirim') }}" required placeholder="Contoh: Pemerintah Desa Sukamaju / Pengurus RW 02"
+                    <input type="text" name="pengirim" value="{{ old('pengirim') }}" required placeholder="Contoh: Pemerintah Kelurahan / Pengurus RW 013"
                         class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-emerald-500">
                 </div>
 

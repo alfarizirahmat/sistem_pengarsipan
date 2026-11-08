@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="id" class="h-full bg-slate-950">
+<html lang="id" class="h-full bg-slate-100">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Masuk Sistem - SIP-RT 03 Desa Sukamaju</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masuk Pengurus - RT 005 / RW 013 Perumahan Bumi Mutiara Indah II</title>
     
     <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -29,45 +29,40 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         [x-cloak] { display: none !important; }
-        /* Smooth scrolling on all devices */
-        html { scroll-behavior: smooth; }
     </style>
 </head>
-<body class="min-h-screen bg-slate-950 text-slate-100 font-sans antialiased flex flex-col justify-between py-6 px-4 sm:px-6 relative overflow-x-hidden selection:bg-emerald-500 selection:text-white" 
+<body class="min-h-screen bg-slate-100 text-slate-800 font-sans antialiased flex flex-col justify-between py-8 px-4 sm:px-6" 
       x-data="{ tab: 'quick', showPassword: false }">
-
-    <!-- Ambient Subtle Background Glow (Mobile-Safe) -->
-    <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[340px] sm:w-[600px] h-[250px] sm:h-[400px] bg-gradient-to-b from-emerald-600/20 via-teal-500/10 to-transparent blur-3xl pointer-events-none -z-10"></div>
-    <div class="fixed bottom-0 right-0 w-64 sm:w-96 h-64 sm:h-96 bg-emerald-700/10 blur-3xl pointer-events-none -z-10"></div>
 
     <!-- Header & Brand Logo -->
     <header class="w-full max-w-xl mx-auto text-center pt-2 pb-4">
-        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-bold tracking-wide uppercase mb-3 shadow-inner">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>Aplikasi Resmi Pengurus RT 03 / RW 02</span>
-        </div>
-        
+        <a href="{{ route('portal.warga') }}" class="inline-flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-blue-700 mb-4 transition-colors">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <span>Kembali ke Portal Publik Warga</span>
+        </a>
+
         <div class="flex items-center justify-center gap-3">
-            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-400 p-0.5 shadow-xl shadow-emerald-950/60 flex items-center justify-center flex-shrink-0">
-                <div class="w-full h-full bg-slate-950/40 rounded-[14px] flex items-center justify-center backdrop-blur-sm">
-                    <i data-lucide="archive" class="w-6 h-6 sm:w-7 sm:h-7 text-emerald-300"></i>
-                </div>
+            <div class="w-12 h-12 rounded-xl bg-blue-700 text-white flex items-center justify-center font-bold text-xl shadow-sm flex-shrink-0">
+                <i data-lucide="building-2" class="w-6 h-6"></i>
             </div>
             <div class="text-left">
-                <h1 class="text-xl sm:text-2xl font-black text-white tracking-tight leading-tight">SIP-RT 03 DIGITAL</h1>
-                <p class="text-xs sm:text-sm text-slate-400 font-medium">Desa Sukamaju • Administrasi & Arsip Surat</p>
+                <h1 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-tight">RT 005 / RW 013</h1>
+                <p class="text-xs sm:text-sm text-slate-500 font-medium">Perumahan Bumi Mutiara Indah II</p>
             </div>
         </div>
+        <p class="text-xs text-slate-500 mt-2 font-medium">
+            Perancangan Sistem Informasi Pendataan dan Pelayanan Warga Berbasis Web
+        </p>
     </header>
 
-    <!-- Main Login Card (Fully Responsive for All Screen Sizes) -->
+    <!-- Main Login Card -->
     <main class="w-full max-w-xl mx-auto my-auto">
-        <div class="bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-3xl shadow-2xl p-5 sm:p-8 relative">
+        <div class="bg-white border border-slate-200 rounded-3xl shadow-sm p-6 sm:p-8">
             
             <!-- Notifikasi Error -->
             @if($errors->any())
-                <div class="mb-5 bg-rose-950/70 border border-rose-800 text-rose-200 text-xs sm:text-sm p-4 rounded-2xl flex items-start gap-3">
-                    <i data-lucide="alert-circle" class="w-5 h-5 text-rose-400 flex-shrink-0 mt-0.5"></i>
+                <div class="mb-5 bg-red-50 border border-red-200 text-red-900 text-xs sm:text-sm p-4 rounded-xl flex items-start gap-3">
+                    <i data-lucide="alert-circle" class="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5"></i>
                     <div>
                         <strong class="font-bold block">Gagal Masuk:</strong>
                         <span>{{ $errors->first() }}</span>
@@ -75,121 +70,120 @@
                 </div>
             @endif
 
-            <!-- Tab Switcher (Touch-friendly 44px) -->
-            <div class="flex p-1.5 bg-slate-950/80 border border-slate-800 rounded-2xl mb-6">
+            <!-- Tab Switcher -->
+            <div class="flex p-1 bg-slate-100 rounded-xl mb-6">
                 <button type="button" @click="tab = 'quick'" 
-                        :class="tab === 'quick' ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-black shadow-md shadow-emerald-950/50' : 'text-slate-400 font-bold hover:text-white'"
-                        class="flex-1 py-3 text-xs sm:text-sm rounded-xl transition-all flex items-center justify-center gap-2">
-                    <i data-lucide="zap" class="w-4 h-4 text-emerald-300"></i>
-                    <span>1-Klik Masuk Pengurus</span>
+                        :class="tab === 'quick' ? 'bg-white text-blue-700 font-bold shadow-xs' : 'text-slate-500 font-medium hover:text-slate-800'"
+                        class="flex-1 py-2.5 text-xs sm:text-sm rounded-lg transition-all flex items-center justify-center gap-2">
+                    <i data-lucide="zap" class="w-4 h-4"></i>
+                    <span>Pilih Akun Pengurus</span>
                 </button>
                 <button type="button" @click="tab = 'manual'" 
-                        :class="tab === 'manual' ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-black shadow-md shadow-emerald-950/50' : 'text-slate-400 font-bold hover:text-white'"
-                        class="flex-1 py-3 text-xs sm:text-sm rounded-xl transition-all flex items-center justify-center gap-2">
-                    <i data-lucide="key-round" class="w-4 h-4 text-emerald-300"></i>
+                        :class="tab === 'manual' ? 'bg-white text-blue-700 font-bold shadow-xs' : 'text-slate-500 font-medium hover:text-slate-800'"
+                        class="flex-1 py-2.5 text-xs sm:text-sm rounded-lg transition-all flex items-center justify-center gap-2">
+                    <i data-lucide="key-round" class="w-4 h-4"></i>
                     <span>Masuk Manual (Email)</span>
                 </button>
             </div>
 
-            <!-- TAB 1: 1-Klik Masuk Pengurus (Touch Cards) -->
-            <div x-show="tab === 'quick'" class="space-y-3">
-                <div class="text-center pb-1">
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Pilih Profil Pengurus untuk Langsung Masuk:</p>
-                    <p class="text-[11px] text-emerald-400 font-medium">Bapak-bapak tidak perlu repot mengetik password, cukup klik nama di bawah</p>
+            <!-- TAB 1: 1-Klik Masuk Pengurus -->
+            <div x-show="tab === 'quick'" class="space-y-2.5">
+                <div class="text-center pb-2">
+                    <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Pilih Profil Pengurus untuk Masuk Langsung:</p>
                 </div>
 
                 <!-- 1. Ketua RT -->
-                <a href="{{ route('quick-login', 'ketua_rt') }}" class="group block p-3.5 sm:p-4 rounded-2xl bg-slate-950/60 hover:bg-emerald-950/40 border border-slate-800 hover:border-emerald-500/80 transition-all duration-200 active:scale-98">
+                <a href="{{ route('quick-login', 'ketua_rt') }}" class="group block p-3.5 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 transition-all">
                     <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3 sm:gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-xl shadow-lg shadow-emerald-950/40 flex-shrink-0">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-blue-700 text-white flex items-center justify-center text-lg font-bold flex-shrink-0">
                                 👑
                             </div>
                             <div>
-                                <div class="text-sm sm:text-base font-black text-white group-hover:text-emerald-400 transition-colors">
+                                <div class="text-sm font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
                                     Bapak Hartono
-                                    <span class="ml-1 text-[10px] font-black uppercase text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded-full border border-emerald-500/30">Ketua RT</span>
+                                    <span class="ml-1 text-[10px] font-bold uppercase text-blue-800 bg-blue-100 px-2 py-0.5 rounded-full">Ketua RT 005</span>
                                 </div>
-                                <div class="text-xs text-slate-400 mt-0.5">Tanda Tangan Surat, Pantau Warga & Laporan Desa</div>
+                                <div class="text-xs text-slate-500 mt-0.5">Pengesahan Surat, Rekap Penduduk &amp; Laporan Desa</div>
                             </div>
                         </div>
-                        <i data-lucide="arrow-right" class="w-5 h-5 text-slate-500 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all flex-shrink-0"></i>
+                        <i data-lucide="arrow-right" class="w-4 h-4 text-slate-400 group-hover:text-blue-700 group-hover:translate-x-1 transition-all flex-shrink-0"></i>
                     </div>
                 </a>
 
                 <!-- 2. Sekretaris -->
-                <a href="{{ route('quick-login', 'sekretaris') }}" class="group block p-3.5 sm:p-4 rounded-2xl bg-slate-950/60 hover:bg-blue-950/40 border border-slate-800 hover:border-blue-500/80 transition-all duration-200 active:scale-98">
+                <a href="{{ route('quick-login', 'sekretaris') }}" class="group block p-3.5 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 transition-all">
                     <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3 sm:gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-xl shadow-lg shadow-blue-950/40 flex-shrink-0">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-indigo-700 text-white flex items-center justify-center text-lg font-bold flex-shrink-0">
                                 📝
                             </div>
                             <div>
-                                <div class="text-sm sm:text-base font-black text-white group-hover:text-blue-400 transition-colors">
+                                <div class="text-sm font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
                                     Bapak Ahmad Faisal
-                                    <span class="ml-1 text-[10px] font-black uppercase text-blue-300 bg-blue-500/20 px-2 py-0.5 rounded-full border border-blue-500/30">Sekretaris</span>
+                                    <span class="ml-1 text-[10px] font-bold uppercase text-indigo-800 bg-indigo-100 px-2 py-0.5 rounded-full">Sekretaris</span>
                                 </div>
-                                <div class="text-xs text-slate-400 mt-0.5">Pembuat Arsip Surat, Catat Surat Masuk & Data Warga</div>
+                                <div class="text-xs text-slate-500 mt-0.5">Pembuatan Surat, Agenda Surat Masuk &amp; Buku Warga</div>
                             </div>
                         </div>
-                        <i data-lucide="arrow-right" class="w-5 h-5 text-slate-500 group-hover:text-blue-400 group-hover:translate-x-1 transition-all flex-shrink-0"></i>
+                        <i data-lucide="arrow-right" class="w-4 h-4 text-slate-400 group-hover:text-blue-700 group-hover:translate-x-1 transition-all flex-shrink-0"></i>
                     </div>
                 </a>
 
                 <!-- 3. Bendahara -->
-                <a href="{{ route('quick-login', 'bendahara') }}" class="group block p-3.5 sm:p-4 rounded-2xl bg-slate-950/60 hover:bg-amber-950/40 border border-slate-800 hover:border-amber-500/80 transition-all duration-200 active:scale-98">
+                <a href="{{ route('quick-login', 'bendahara') }}" class="group block p-3.5 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 transition-all">
                     <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3 sm:gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-600 to-yellow-400 flex items-center justify-center text-xl shadow-lg shadow-amber-950/40 flex-shrink-0">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-emerald-700 text-white flex items-center justify-center text-lg font-bold flex-shrink-0">
                                 💰
                             </div>
                             <div>
-                                <div class="text-sm sm:text-base font-black text-white group-hover:text-amber-400 transition-colors">
+                                <div class="text-sm font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
                                     Ibu Hj. Siti Nurjanah
-                                    <span class="ml-1 text-[10px] font-black uppercase text-amber-300 bg-amber-500/20 px-2 py-0.5 rounded-full border border-amber-500/30">Bendahara</span>
+                                    <span class="ml-1 text-[10px] font-bold uppercase text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">Bendahara</span>
                                 </div>
-                                <div class="text-xs text-slate-400 mt-0.5">Buku Kas Keuangan RT, Saldo Kas Masuk & Keluar</div>
+                                <div class="text-xs text-slate-500 mt-0.5">Buku Kas Keuangan RT, Saldo Kas Masuk &amp; Keluar</div>
                             </div>
                         </div>
-                        <i data-lucide="arrow-right" class="w-5 h-5 text-slate-500 group-hover:text-amber-400 group-hover:translate-x-1 transition-all flex-shrink-0"></i>
+                        <i data-lucide="arrow-right" class="w-4 h-4 text-slate-400 group-hover:text-blue-700 group-hover:translate-x-1 transition-all flex-shrink-0"></i>
                     </div>
                 </a>
 
                 <!-- 4. Humas -->
-                <a href="{{ route('quick-login', 'humas') }}" class="group block p-3.5 sm:p-4 rounded-2xl bg-slate-950/60 hover:bg-purple-950/40 border border-slate-800 hover:border-purple-500/80 transition-all duration-200 active:scale-98">
+                <a href="{{ route('quick-login', 'humas') }}" class="group block p-3.5 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 transition-all">
                     <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3 sm:gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-purple-600 to-pink-400 flex items-center justify-center text-xl shadow-lg shadow-purple-950/40 flex-shrink-0">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-purple-700 text-white flex items-center justify-center text-lg font-bold flex-shrink-0">
                                 📢
                             </div>
                             <div>
-                                <div class="text-sm sm:text-base font-black text-white group-hover:text-purple-400 transition-colors">
+                                <div class="text-sm font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
                                     Bapak Rudi Kurniawan
-                                    <span class="ml-1 text-[10px] font-black uppercase text-purple-300 bg-purple-500/20 px-2 py-0.5 rounded-full border border-purple-500/30">Humas</span>
+                                    <span class="ml-1 text-[10px] font-bold uppercase text-purple-800 bg-purple-100 px-2 py-0.5 rounded-full">Humas</span>
                                 </div>
-                                <div class="text-xs text-slate-400 mt-0.5">Penarikan Iuran Bulanan (Posyandu, RW, Kematian, Sampah)</div>
+                                <div class="text-xs text-slate-500 mt-0.5">Penarikan Iuran Warga Bulanan per Rumah</div>
                             </div>
                         </div>
-                        <i data-lucide="arrow-right" class="w-5 h-5 text-slate-500 group-hover:text-purple-400 group-hover:translate-x-1 transition-all flex-shrink-0"></i>
+                        <i data-lucide="arrow-right" class="w-4 h-4 text-slate-400 group-hover:text-blue-700 group-hover:translate-x-1 transition-all flex-shrink-0"></i>
                     </div>
                 </a>
 
                 <!-- 5. Keamanan -->
-                <a href="{{ route('quick-login', 'keamanan') }}" class="group block p-3.5 sm:p-4 rounded-2xl bg-slate-950/60 hover:bg-cyan-950/40 border border-slate-800 hover:border-cyan-500/80 transition-all duration-200 active:scale-98">
+                <a href="{{ route('quick-login', 'keamanan') }}" class="group block p-3.5 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 transition-all">
                     <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3 sm:gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-500 flex items-center justify-center text-xl shadow-lg shadow-cyan-950/40 flex-shrink-0">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-amber-700 text-white flex items-center justify-center text-lg font-bold flex-shrink-0">
                                 🛡️
                             </div>
                             <div>
-                                <div class="text-sm sm:text-base font-black text-white group-hover:text-cyan-400 transition-colors">
+                                <div class="text-sm font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
                                     Bapak Agus Santoso
-                                    <span class="ml-1 text-[10px] font-black uppercase text-cyan-300 bg-cyan-500/20 px-2 py-0.5 rounded-full border border-cyan-500/30">Keamanan</span>
+                                    <span class="ml-1 text-[10px] font-bold uppercase text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full">Keamanan</span>
                                 </div>
-                                <div class="text-xs text-slate-400 mt-0.5">Jadwal Siskamling Ronda Malam & Laporan Bencana / Banjir</div>
+                                <div class="text-xs text-slate-500 mt-0.5">Jadwal Ronda Malam, Tamu 1x24 Jam &amp; Siskamling</div>
                             </div>
                         </div>
-                        <i data-lucide="arrow-right" class="w-5 h-5 text-slate-500 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all flex-shrink-0"></i>
+                        <i data-lucide="arrow-right" class="w-4 h-4 text-slate-400 group-hover:text-blue-700 group-hover:translate-x-1 transition-all flex-shrink-0"></i>
                     </div>
                 </a>
             </div>
@@ -199,54 +193,50 @@
                 <form action="{{ route('login.submit') }}" method="POST" class="space-y-4">
                     @csrf
                     <div>
-                        <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Alamat Email Pengurus:</label>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Alamat Email Pengurus:</label>
                         <div class="relative">
-                            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-                                <i data-lucide="mail" class="w-5 h-5"></i>
-                            </span>
-                            <input type="email" name="email" value="{{ old('email', 'rt@rt03.test') }}" required
-                                class="w-full pl-11 pr-4 py-3.5 bg-slate-950/80 border border-slate-700 rounded-2xl text-sm sm:text-base text-white placeholder-slate-500 focus:outline-none focus:ring-4 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all">
+                            <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                            <input type="email" name="email" value="{{ old('email', 'rt@bumimutiara.id') }}" required
+                                class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all">
                         </div>
                     </div>
 
                     <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">Kata Sandi:</label>
-                            <button type="button" @click="showPassword = !showPassword" class="text-xs text-emerald-400 hover:text-emerald-300 font-semibold">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Kata Sandi:</label>
+                            <button type="button" @click="showPassword = !showPassword" class="text-xs text-blue-700 hover:underline font-semibold">
                                 <span x-text="showPassword ? 'Sembunyikan' : 'Perlihatkan'"></span>
                             </button>
                         </div>
                         <div class="relative">
-                            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-                                <i data-lucide="lock" class="w-5 h-5"></i>
-                            </span>
+                            <i data-lucide="lock" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
                             <input :type="showPassword ? 'text' : 'password'" name="password" value="password" required
-                                class="w-full pl-11 pr-4 py-3.5 bg-slate-950/80 border border-slate-700 rounded-2xl text-sm sm:text-base text-white placeholder-slate-500 focus:outline-none focus:ring-4 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all">
+                                class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all">
                         </div>
                     </div>
 
                     <div class="pt-2">
                         <button type="submit" 
-                            class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-sm sm:text-base shadow-xl shadow-emerald-950/60 border border-emerald-400/30 transition-all active:scale-95 flex items-center justify-center gap-2">
-                            <i data-lucide="log-in" class="w-5 h-5"></i>
-                            <span>MASUK KE SISTEM RT</span>
+                            class="w-full py-3 px-6 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-sm shadow-xs transition-colors flex items-center justify-center gap-2">
+                            <i data-lucide="log-in" class="w-4 h-4"></i>
+                            <span>Masuk ke Meja Kerja Pengurus</span>
                         </button>
                     </div>
                 </form>
-
-                <!-- Informasi Bantuan Akun Standar -->
-                <div class="p-4 bg-slate-950/60 rounded-2xl border border-slate-800 text-xs text-slate-400 space-y-1">
-                    <strong class="text-slate-300 font-bold block">Contoh Akun Pengurus:</strong>
-                    <p>Ketua RT: <code class="text-emerald-400 font-mono">rt@rt03.test</code> (Sandi: <code class="text-slate-300 font-mono">password</code>)</p>
-                    <p>Sekretaris: <code class="text-blue-400 font-mono">sekretaris@rt03.test</code></p>
-                </div>
             </div>
 
         </div>
     </main>
 
+    <!-- Footer -->
+    <footer class="w-full max-w-xl mx-auto text-center text-xs text-slate-500 pt-6">
+        <p>RT 005 RW 013 Perumahan Bumi Mutiara Indah II &copy; {{ date('Y') }}</p>
+    </footer>
+
     <script>
-        lucide.createIcons();
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
     </script>
 </body>
 </html>

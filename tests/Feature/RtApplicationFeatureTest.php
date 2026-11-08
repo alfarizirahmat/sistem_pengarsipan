@@ -25,7 +25,8 @@ class RtApplicationFeatureTest extends TestCase
         $response = $this->get('/login');
 
         $response->assertStatus(200);
-        $response->assertSee('SIP-RT 03');
+        $response->assertSee('RT 005 / RW 013');
+        $response->assertSee('Perumahan Bumi Mutiara Indah II');
     }
 
     public function test_quick_login_works_for_ketua_rt(): void
@@ -43,9 +44,10 @@ class RtApplicationFeatureTest extends TestCase
         $response = $this->actingAs($user)->get('/dashboard');
 
         $response->assertStatus(200);
-        $response->assertSee('Halaman Utama Pengurus RT 03');
-        $response->assertSee('Warga Kontrak');
-        $response->assertSee('Kas RT');
+        $response->assertSee('RT 005 / RW 013');
+        $response->assertSee('Perumahan Bumi Mutiara Indah II');
+        $response->assertSee('Pelayanan Surat Pengantar');
+        $response->assertSee('Buku Induk Kependudukan');
     }
 
     public function test_warga_index_can_be_filtered(): void
@@ -77,7 +79,7 @@ class RtApplicationFeatureTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('LAPORAN PERKEMBANGAN PENDUDUK');
-        $response->assertSee('Pemerintah Desa Sukamaju');
+        $response->assertSee('Perumahan Bumi Mutiara Indah II');
     }
 
     public function test_surat_pengantar_can_be_created_and_printed(): void
@@ -86,14 +88,14 @@ class RtApplicationFeatureTest extends TestCase
         $warga = Warga::aktif()->first();
 
         $postData = [
-            'nomor_surat' => '999/RT.03/RW.02/XI/2026',
+            'nomor_surat' => '999/RT.005/RW.013/XI/2026',
             'warga_id' => $warga->id,
             'jenis_surat' => 'kehilangan_dokumen',
-            'keperluan' => 'Pengantar pengurusan KTP dan KK hilang akibat banjir bandang di RT 03',
+            'keperluan' => 'Pengantar pengurusan KTP dan KK hilang akibat banjir bandang di RT 005',
             'dokumen_hilang' => 'KTP dan Kartu Keluarga',
             'tanggal_surat' => '2026-11-02',
             'penandatangan_nama' => 'Hartono',
-            'penandatangan_jabatan' => 'Ketua RT 03',
+            'penandatangan_jabatan' => 'Ketua RT 005',
             'lokasi_arsip_fisik' => 'Ordner 2026',
         ];
 
@@ -102,11 +104,11 @@ class RtApplicationFeatureTest extends TestCase
         $response->assertRedirect();
 
         $this->assertDatabaseHas('surat_pengantars', [
-            'nomor_surat' => '999/RT.03/RW.02/XI/2026',
+            'nomor_surat' => '999/RT.005/RW.013/XI/2026',
             'warga_id' => $warga->id,
         ]);
 
-        $surat = SuratPengantar::where('nomor_surat', '999/RT.03/RW.02/XI/2026')->first();
+        $surat = SuratPengantar::where('nomor_surat', '999/RT.005/RW.013/XI/2026')->first();
 
         $printResponse = $this->actingAs($user)->get('/surat-pengantar/'.$surat->id.'/print');
         $printResponse->assertStatus(200);
@@ -121,9 +123,8 @@ class RtApplicationFeatureTest extends TestCase
         $response = $this->actingAs($user)->get('/surat-pengantar');
 
         $response->assertStatus(200);
-        $response->assertSee('Buku Arsip Surat Pengantar RT');
-        $response->assertSee('LIHAT SURAT');
-        $response->assertSee('Pratinjau Berkas Dokumen Resmi RT 03');
+        $response->assertSee('Pelayanan Surat Pengantar Warga');
+        $response->assertSee('Buku Register Surat');
     }
 
     public function test_surat_masuk_can_be_viewed_and_printed_as_lembar_disposisi(): void
@@ -221,6 +222,79 @@ class RtApplicationFeatureTest extends TestCase
         $this->assertDatabaseHas('kas_rts', [
             'nominal' => 500000,
             'keterangan' => 'Donasi warga untuk kegiatan RT',
+        ]);
+    }
+
+    public function test_portal_warga_is_accessible_publicly(): void
+    {
+        $response = $this->get('/');
+
+        $response->assertStatus(200);
+        $response->assertSee('Portal Pelayanan Mandiri Warga');
+        $response->assertSee('RT 005 / RW 013');
+        $response->assertSee('Perumahan Bumi Mutiara Indah II');
+    }
+
+    public function test_portal_warga_can_track_letter_with_code(): void
+    {
+        $surat = SuratPengantar::where('status', 'selesai')->first();
+
+        $response = $this->get('/?kode='.$surat->qr_token);
+
+        $response->assertStatus(200);
+        $response->assertSee($surat->qr_token);
+        $response->assertSee('Hasil Pelacakan Surat Warga');
+        $response->assertSee('Surat Sah');
+    }
+
+    public function test_portal_warga_can_view_digital_letter(): void
+    {
+        $surat = SuratPengantar::where('status', 'selesai')->first();
+
+        $response = $this->get('/surat-digital/'.$surat->qr_token);
+
+        $response->assertStatus(200);
+        $response->assertSee('SURAT PENGANTAR');
+        $response->assertSee('Dokumen Terverifikasi');
+        $response->assertSee($surat->warga->nama_lengkap);
+        $response->assertSee($surat->qr_token);
+    }
+
+    public function test_citizen_can_apply_for_surat_pengantar_online(): void
+    {
+        $warga = Warga::first();
+
+        $postData = [
+            'warga_id' => $warga->id,
+            'jenis_surat' => 'keterangan_domisili',
+            'keperluan' => 'Pengurusan rekening tabungan bank syariah warga',
+            'no_whatsapp' => '081234567890',
+        ];
+
+        $response = $this->post('/ajukan-surat', $postData);
+
+        $response->assertRedirect();
+        $response->assertSessionHas('success_token');
+
+        $this->assertDatabaseHas('surat_pengantars', [
+            'warga_id' => $warga->id,
+            'status' => 'menunggu_validasi',
+            'keperluan' => 'Pengurusan rekening tabungan bank syariah warga',
+        ]);
+    }
+
+    public function test_pengurus_can_validate_citizen_application(): void
+    {
+        $ketua = User::where('role', 'ketua_rt')->first();
+        $suratPending = SuratPengantar::where('status', 'menunggu_validasi')->first();
+
+        $response = $this->actingAs($ketua)->post('/surat-pengantar/'.$suratPending->id.'/validasi');
+
+        $response->assertRedirect();
+
+        $this->assertDatabaseHas('surat_pengantars', [
+            'id' => $suratPending->id,
+            'status' => 'selesai',
         ]);
     }
 }

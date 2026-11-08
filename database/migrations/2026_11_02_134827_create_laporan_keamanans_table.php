@@ -16,7 +16,7 @@ return new class extends Migration
             $table->date('tanggal');
             $table->string('kategori'); // ronda_malam, kondusifitas, tamu_menginap, banjir_musibah, gangguan, lainnya
             $table->string('judul');
-            $table->string('lokasi')->default('Lingkungan RT 03');
+            $table->string('lokasi')->default('Perumahan Bumi Mutiara Indah II RT 005 / RW 013');
             $table->text('petugas_ronda')->nullable();
             $table->text('keterangan');
             $table->string('status')->default('kondusif'); // kondusif, perlu_tindakan, proses, selesai

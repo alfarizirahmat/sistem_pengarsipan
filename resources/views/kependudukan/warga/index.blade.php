@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Data Warga RT 03')
-@section('header_title', 'Buku Induk Data Warga RT 03')
+@section('title', 'Data Warga RT 005')
+@section('header_title', 'Buku Induk Data Warga RT 005')
 
 @section('content')
 <div class="space-y-6" x-data="{ mutasiModalOpen: false, selectedWarga: null, selectedWargaNama: '', mutasiAction: 'pindah' }">
@@ -9,7 +9,7 @@
     <!-- Header Actions -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-            <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900">Buku Induk Warga RT 03</h1>
+            <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900">Buku Induk Warga RT 005</h1>
             <p class="text-sm text-slate-600 font-medium">Data seluruh warga, status tempat tinggal (Tetap vs Kontrak), dan status kependudukan</p>
         </div>
         <div class="flex items-center gap-2 w-full sm:w-auto">
@@ -92,7 +92,7 @@
                             <div class="text-xs text-slate-500 font-bold mt-1">{{ $w->usia }} tahun</div>
                         </td>
                         <td class="px-5 py-4">
-                            <div class="text-slate-900 font-bold">{{ $w->keluarga->alamat ?? 'RT 03' }}</div>
+                            <div class="text-slate-900 font-bold">{{ $w->keluarga->alamat ?? 'Perumahan Bumi Mutiara Indah II' }}</div>
                             <div class="text-xs text-slate-500 font-medium">{{ $w->status_hubungan_keluarga }} • {{ $w->pekerjaan }}</div>
                         </td>
                         <td class="px-5 py-4 whitespace-nowrap">
@@ -175,7 +175,7 @@
                     <div>
                         <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">Status Kependudukan Baru:</label>
                         <select name="status_kependudukan" x-model="mutasiAction" class="w-full px-3 py-2.5 bg-slate-50 border-2 border-slate-300 rounded-xl text-sm font-bold focus:ring-4 focus:ring-emerald-200">
-                            <option value="pindah">Pindah Keluar dari RT 03</option>
+                            <option value="pindah">Pindah Keluar dari RT 005</option>
                             <option value="meninggal">Meninggal Dunia</option>
                             <option value="aktif">Kembali Aktif Berdomisili</option>
                         </select>

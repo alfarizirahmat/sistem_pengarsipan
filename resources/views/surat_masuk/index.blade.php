@@ -213,9 +213,9 @@
                     <div class="min-w-[300px] max-w-3xl mx-auto bg-white p-4 sm:p-10 rounded-2xl shadow border border-slate-300 text-slate-900 font-serif leading-relaxed">
                     <!-- Kop RT -->
                     <div class="text-center pb-2 border-b-2 border-double border-black">
-                        <h2 class="text-base font-black uppercase tracking-widest leading-tight">PENGURUS RUKUN TETANGGA 03 / RUKUN WARGA 02</h2>
-                        <h3 class="text-xs font-bold uppercase tracking-wider leading-tight">DESA SUKAMAJU KECAMATAN SETEMPAT</h3>
-                        <p class="text-[10px] italic text-slate-600 font-sans mt-0.5">Sekretariat: Jl. Kenanga No. 12 RT 03 / RW 02, Desa Sukamaju</p>
+                        <h2 class="text-base font-black uppercase tracking-widest leading-tight">PENGURUS RUKUN TETANGGA 005 / RUKUN WARGA 013</h2>
+                        <h3 class="text-xs font-bold uppercase tracking-wider leading-tight">PERUMAHAN BUMI MUTIARA INDAH II</h3>
+                        <p class="text-[10px] italic text-slate-600 font-sans mt-0.5">Sekretariat: Perumahan Bumi Mutiara Indah II Blok B3 No. 12 RT 005 / RW 013</p>
                     </div>
 
                     <div class="text-center my-4">
@@ -261,7 +261,7 @@
                     <!-- Kotak Disposisi & Tindak Lanjut -->
                     <div class="border-2 border-blue-600 p-4 mb-4 bg-blue-50/50 rounded-xl font-sans">
                         <span class="text-xs font-black uppercase tracking-wider text-blue-900 block mb-1">
-                            Instruksi Disposisi / Tindak Lanjut Ketua RT 03:
+                            Instruksi Disposisi / Tindak Lanjut Ketua RT 005:
                         </span>
                         <div class="text-sm font-bold text-blue-950 italic p-3 bg-white rounded-lg border border-blue-200" x-text="activeSurat && activeSurat.disposisi ? activeSurat.disposisi : 'Diteruskan ke seksi terkait.'">
                         </div>
@@ -274,10 +274,10 @@
                             <strong class="text-slate-900" x-text="activeSurat ? activeSurat.lokasi_arsip_fisik : 'Ordner RT'"></strong>
                         </div>
                         <div class="text-center font-serif">
-                            <span class="text-[11px]" x-text="activeSurat ? 'Sukamaju, ' + activeSurat.tanggal_terima.substring(0, 10) : ''"></span><br>
-                            <strong class="text-xs">Ketua RT 03 / RW 02</strong>
+                            <span class="text-[11px]" x-text="activeSurat ? 'Bumi Mutiara Indah II, ' + activeSurat.tanggal_terima.substring(0, 10) : ''"></span><br>
+                            <strong class="text-xs">Ketua RT 005 / RW 013</strong>
                             <div class="h-12 flex items-center justify-center">
-                                <span class="text-[8px] text-blue-800 font-bold">[ CAP STEMPEL RT 03 ]</span>
+                                <span class="text-[8px] text-blue-800 font-bold">[ CAP STEMPEL RT 005 ]</span>
                             </div>
                             <strong class="underline block uppercase font-bold">HARTONO</strong>
                         </div>

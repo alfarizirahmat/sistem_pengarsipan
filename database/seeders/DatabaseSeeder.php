@@ -21,46 +21,46 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. Akun Pengurus RT (Sesuai Struktur Seksi di Jawaban No 2)
+        // 1. Akun Pengurus RT (RT 005 / RW 013 Perumahan Bumi Mutiara Indah II)
         $users = [
             [
                 'name' => 'Bapak Hartono (Ketua RT)',
-                'email' => 'rt@rt03.test',
+                'email' => 'rt@bumimutiara.id',
                 'password' => Hash::make('password'),
                 'role' => 'ketua_rt',
-                'jabatan' => 'Ketua RT 03',
+                'jabatan' => 'Ketua RT 005',
                 'phone' => '081234567890',
             ],
             [
                 'name' => 'Bapak Ahmad Faisal (Sekretaris)',
-                'email' => 'sekretaris@rt03.test',
+                'email' => 'sekretaris@bumimutiara.id',
                 'password' => Hash::make('password'),
                 'role' => 'sekretaris',
-                'jabatan' => 'Sekretaris RT 03',
+                'jabatan' => 'Sekretaris RT 005',
                 'phone' => '081234567891',
             ],
             [
                 'name' => 'Ibu Hj. Siti Nurjanah (Bendahara)',
-                'email' => 'bendahara@rt03.test',
+                'email' => 'bendahara@bumimutiara.id',
                 'password' => Hash::make('password'),
                 'role' => 'bendahara',
-                'jabatan' => 'Bendahara RT 03',
+                'jabatan' => 'Bendahara RT 005',
                 'phone' => '081234567892',
             ],
             [
                 'name' => 'Bapak Rudi Kurniawan (Humas)',
-                'email' => 'humas@rt03.test',
+                'email' => 'humas@bumimutiara.id',
                 'password' => Hash::make('password'),
                 'role' => 'humas',
-                'jabatan' => 'Seksi Humas RT 03',
+                'jabatan' => 'Seksi Humas RT 005',
                 'phone' => '081234567893',
             ],
             [
                 'name' => 'Bapak Agus Santoso (Keamanan)',
-                'email' => 'keamanan@rt03.test',
+                'email' => 'keamanan@bumimutiara.id',
                 'password' => Hash::make('password'),
                 'role' => 'keamanan',
-                'jabatan' => 'Seksi Keamanan & Ronda RT 03',
+                'jabatan' => 'Seksi Keamanan & Ronda RT 005',
                 'phone' => '081234567894',
             ],
         ];
@@ -69,47 +69,47 @@ class DatabaseSeeder extends Seeder
             User::updateOrCreate(['email' => $u['email']], $u);
         }
 
-        // 2. Data Keluarga (Tetap & Kontrak) - Menjawab No 7 kendala warga ngontrak
+        // 2. Data Keluarga (Tetap & Kontrak) - RT 005 / RW 013 Perumahan Bumi Mutiara Indah II
         $kk1 = Keluarga::create([
             'nomor_kk' => '3201011203850001',
             'kepala_keluarga' => 'Bambang Sudibyo',
-            'alamat' => 'Jl. Kenanga No. 12, RT 03 / RW 02',
-            'rt' => '03',
-            'rw' => '02',
+            'alamat' => 'Perumahan Bumi Mutiara Indah II Blok B3 No. 12, RT 005 / RW 013',
+            'rt' => '005',
+            'rw' => '013',
             'status_tempat_tinggal' => 'tetap',
-            'keterangan' => 'Rumah milik sendiri, tinggal sejak tahun 2012',
+            'keterangan' => 'Rumah milik sendiri, tinggal sejak tahun 2018',
         ]);
 
         $kk2 = Keluarga::create([
             'nomor_kk' => '3201011508900002',
             'kepala_keluarga' => 'Dedi Iskandar',
-            'alamat' => 'Jl. Kenanga Gang 2 No. 5B (Kontrakan Ibu Hj. Siti)',
-            'rt' => '03',
-            'rw' => '02',
+            'alamat' => 'Perumahan Bumi Mutiara Indah II Blok B2 No. 5B (Kontrakan Ibu Hj. Siti)',
+            'rt' => '005',
+            'rw' => '013',
             'status_tempat_tinggal' => 'kontrak',
             'nama_pemilik_kontrakan' => 'Ibu Hj. Siti Nurjanah',
             'kontak_pemilik_kontrakan' => '081234567892',
             'tgl_mulai_tinggal' => Carbon::now()->subMonths(6),
             'tgl_selesai_kontrak' => Carbon::now()->addMonths(6),
-            'keterangan' => 'Warga ngontrak tahunan, karyawan pabrik swasta',
+            'keterangan' => 'Warga ngontrak tahunan, karyawan swasta',
         ]);
 
         $kk3 = Keluarga::create([
             'nomor_kk' => '3201012004920003',
             'kepala_keluarga' => 'Eko Prasetyo',
-            'alamat' => 'Jl. Melati No. 8, RT 03 / RW 02',
-            'rt' => '03',
-            'rw' => '02',
+            'alamat' => 'Perumahan Bumi Mutiara Indah II Blok A1 No. 8, RT 005 / RW 013',
+            'rt' => '005',
+            'rw' => '013',
             'status_tempat_tinggal' => 'tetap',
-            'keterangan' => 'Warga tetap, baru memiliki bayi bulan lalu',
+            'keterangan' => 'Warga tetap, baru dikaruniai putri bulan lalu',
         ]);
 
         $kk4 = Keluarga::create([
             'nomor_kk' => '3201010101800004',
             'kepala_keluarga' => 'Wahyu Hidayat',
-            'alamat' => 'Jl. Dahlia No. 15, RT 03 / RW 02',
-            'rt' => '03',
-            'rw' => '02',
+            'alamat' => 'Perumahan Bumi Mutiara Indah II Blok C4 No. 15, RT 005 / RW 013',
+            'rt' => '005',
+            'rw' => '013',
             'status_tempat_tinggal' => 'kontrak',
             'nama_pemilik_kontrakan' => 'Bapak Hartono',
             'kontak_pemilik_kontrakan' => '081234567890',
@@ -237,32 +237,32 @@ class DatabaseSeeder extends Seeder
             'keterangan_mutasi' => 'Pindah domisili ke Kabupaten Karawang',
         ]);
 
-        // 4. Data Surat Pengantar (Menjawab No 1, 6, 8, 9, 10, 11)
+        // 4. Data Surat Pengantar (Pelayanan Surat & Validasi Warga)
         $sampleSignature = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAACgCAYAAAAisjrVAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAFhElEQVR4nO3dUW7bOBQFUKfoArKrLCvIsrKr7CDzM5m6HsmWKYl87/EcoB8BipiiFF5dSm0uFwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACANi+jB9DL6+fH9/XXX2/v0xw7wBl+jR4AADlNESC37QOA/aYIkCVCBWCfaQMEgH0ECABNygeIrSqAc5QPkHuEC0C7qQMEgHalA8Q/HgQ4T+kAAeA8AgSAJtMFyO02lgfpAG3KBojnHwDnKhsgAJxLgADQpOS2zpbtK1tcAPtoIAA0ESAANBEgADT5PXoAR/NsYyzzD/OYtoH4B4XHM4cwl2kDhD6ECtRVKkBsn4wjKGA+pQKEMR4Ft3CBmqYOEAsdQLupA4T9bBvCvMoEiIWsv3tzrt1BfWUCpAoLLZCFAAno9fPjO3qQbGl8WgjUViJA9mxfRVnklkIj6oJruxC4XIoESGUZ2ggwJwESwJaAiBIiz7aPKA0POJ4ACejr7f1l7ZdgjVyAbV3FI5AZKX2AHLGoRb1LXjuWKOPbKur8Zjb6ZgIulwIBkt2jAIzSRrSPOLK8bEF9AiSJkW1EeMRw76ZBiDBC6gCZbWGL0kZa2Mbax3wRUeoAya41AHu2kdlCOpq1m4OlmwkhQ28C5F/Zfhh7tJGjwyPbHI+2Nj9CnCgESHJV3tTij2dah1BmpLQBkn1r5cjxn9FGss9vVloHmaQNEP7vqDZyZni4Y172TOtY+ju33+vo8cESAXKlwg9i5je1ZqV1kFXKC/TMO+QeWze9todaFqZRY5txsTw6OMwpvWkghT3bRixA/WgdVCBAJuBNrTj2POt4pMIWLLkIkM5G3eU/aiO9xzXjYqd1UE26ADl7oau+sG2ZLwvasc5sHUvf8/azj/z+cC1dgLDfGQtX6ziuv6642GkdVCZAOor2kHrp80ePqYqerWPpM27HcubnMa9UARJtAa7gekEzn8fQOphFqgDpZcY7uFGLW6W5Htk6lj7z+uvM80pcv0cPYBbaU133Fmfnmco0EIbLeLe89vrzjwgvKmScV3JJ00DcwRPBlkXYtcks0gRIZsIvt6137hHP69fb+8v1+F8/P74jjpOcbGGtUP/7ijbfj7aorkXYroIRUjQQd/D0krltrKnSQq6PIeP4K0oRIJkJv+1GLXTPtB3nr6+1cyNMYhAgTGm20MjWQp45P8JkHAFyR7YfOh6ruEVVxRHPvYRJX+EnePQW0J7PHz32rI6et9naxj3RrsnWc/Ns2Iw+zqo0EEoSGrHtbYLPholmco7wEzn6jkkDGaN17mxRPTbquuwR6ppJX6EbSOYFOPPYs9E24up9bjSTvkJPWJRFuGUcUcae1aP5Exr7nH19RmuCmsk5QjcQ5rX2Bly0hYk/Ioe6ZnKO0BMT5S7+2XFEGXd2La91muvtjrhOI4fGFprJPmEbiEWYrY3DtdFflSaomewTdgKiBcgz44k29sz8ethz7bmu78l+fjSTbaY86BZbf9CExzl+5tV8HsvLCo8Jk3XTHOheAoSqlq7ZKltURxMmfwv7DAQYw3OndZ6Z/K3cAZ1lS7PQPshKaOwzazMpcRC9PLtfXOUioT4vKxxnpjCxhQX8t4h5WWG/mba5Ug12tHsNQ/sA7qnYTDQQgA5am0nkIPk1egCZ7HlHHuDH19v7y8+f0WPZQwM5gO0roNWe37Q4mgABCCJbmAgQgIAy7GSEH+BWGdIaqC/Dwn8UD9EBaCJAAGgiQABoMs1e3ZH8v0EAGkgTQQEgQA4jVIDZCBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAtvsHi3ErT/W5y6IAAAAASUVORK5CYII=';
 
-        // Surat 1: Pengantar Kehilangan Dokumen Akibat Banjir (Menjawab No 9 & 10)
+        // Surat 1: Surat Selesai (Bisa di-track warga dengan token BMI2-SURAT-8849)
         SuratPengantar::create([
-            'nomor_surat' => '014/RT.03/RW.02/X/2026',
+            'nomor_surat' => '470/014/RT.005-RW.013/X/2026',
             'warga_id' => $warga1->id,
             'jenis_surat' => 'kehilangan_dokumen',
-            'keperluan' => 'Surat Pengantar untuk pengurusan kembali KTP Elektronik dan Kartu Keluarga (KK) ke Kantor Desa / Disdukcapil dikarenakan dokumen asli rusak dan hanyut terendam musibah banjir bandang.',
+            'keperluan' => 'Surat Pengantar untuk pengurusan kembali KTP Elektronik dan Kartu Keluarga (KK) ke Kantor Kelurahan / Disdukcapil dikarenakan dokumen asli hilang/rusak.',
             'dokumen_hilang' => 'KTP Elektronik & Kartu Keluarga (Asli)',
             'tanggal_surat' => Carbon::now()->subDays(15),
             'berlaku_sampai' => Carbon::now()->addDays(15),
             'tahun_arsip' => 2026,
             'penandatangan_nama' => 'Hartono',
-            'penandatangan_jabatan' => 'Ketua RT 03',
+            'penandatangan_jabatan' => 'Ketua RT 005',
             'tanda_tangan_jenis' => 'digital',
             'tanda_tangan_digital' => $sampleSignature,
-            'qr_token' => 'RT03-DIGI-8849',
+            'qr_token' => 'BMI2-SURAT-8849',
             'status' => 'selesai',
             'lokasi_arsip_fisik' => 'Ordner Pelayanan Warga 2026 / Lemari A-1',
-            'catatan' => 'Warga terdampak banjir luapan sungai RT 03',
+            'catatan' => 'Pengurusan dokumen warga Perumahan Bumi Mutiara Indah II',
         ]);
 
-        // Surat 2: Perubahan Data Kartu Keluarga karena Kelahiran (Menjawab No 10)
+        // Surat 2: Surat Selesai QR Code (Bisa di-track warga dengan token BMI2-QR-9201)
         SuratPengantar::create([
-            'nomor_surat' => '015/RT.03/RW.02/XI/2026',
+            'nomor_surat' => '470/015/RT.005-RW.013/XI/2026',
             'warga_id' => $warga5->id,
             'jenis_surat' => 'perubahan_kk',
             'keperluan' => 'Pengantar permohonan pembaruan susunan anggota keluarga pada Kartu Keluarga (KK) dan penerbitan Akta Kelahiran atas kelahiran anak bernama Alisha Putri Prasetyo.',
@@ -271,17 +271,36 @@ class DatabaseSeeder extends Seeder
             'berlaku_sampai' => Carbon::now()->addDays(25),
             'tahun_arsip' => 2026,
             'penandatangan_nama' => 'Hartono',
-            'penandatangan_jabatan' => 'Ketua RT 03',
+            'penandatangan_jabatan' => 'Ketua RT 005',
             'tanda_tangan_jenis' => 'qrcode',
-            'qr_token' => 'RT03-QR-9201',
+            'qr_token' => 'BMI2-QR-9201',
             'status' => 'selesai',
             'lokasi_arsip_fisik' => 'Ordner Pelayanan Warga 2026 / Lemari A-1',
             'catatan' => 'Lampiran: Surat Keterangan Lahir dari Bidan',
         ]);
 
-        // Surat 3: Arsip Masa Lalu (Tahun 2024) membuktikan pencatatan 10 tahun (Menjawab No 8 & 11)
+        // Surat 3: Permohonan Baru Masuk dari Warga via Portal (Menunggu Validasi Pengurus - Token BMI2-K89X12)
         SuratPengantar::create([
-            'nomor_surat' => '008/RT.03/RW.02/VI/2024',
+            'nomor_surat' => '470/016/RT.005-RW.013/XI/2026',
+            'warga_id' => $warga4->id,
+            'jenis_surat' => 'keterangan_domisili',
+            'keperluan' => 'Permohonan surat pengantar domisili sementara untuk perpanjangan kontrak kerja dan pembukaan rekening bank perumahan.',
+            'dokumen_hilang' => null,
+            'tanggal_surat' => Carbon::now(),
+            'berlaku_sampai' => Carbon::now()->addDays(30),
+            'tahun_arsip' => 2026,
+            'penandatangan_nama' => 'Hartono',
+            'penandatangan_jabatan' => 'Ketua RT 005',
+            'tanda_tangan_jenis' => 'digital',
+            'qr_token' => 'BMI2-K89X12',
+            'status' => 'menunggu_validasi',
+            'lokasi_arsip_fisik' => 'Meja Pelayanan Online',
+            'catatan' => 'Diajukan mandiri oleh warga melalui Web Portal BMI II',
+        ]);
+
+        // Surat 4: Arsip Masa Lalu (Tahun 2024)
+        SuratPengantar::create([
+            'nomor_surat' => '470/008/RT.005-RW.013/VI/2024',
             'warga_id' => $warga1->id,
             'jenis_surat' => 'keterangan_domisili',
             'keperluan' => 'Surat Keterangan Domisili Tempat Tinggal untuk keperluan pendaftaran sekolah putra pertama.',
@@ -289,8 +308,9 @@ class DatabaseSeeder extends Seeder
             'berlaku_sampai' => Carbon::create(2024, 7, 15),
             'tahun_arsip' => 2024,
             'penandatangan_nama' => 'Hartono',
-            'penandatangan_jabatan' => 'Ketua RT 03',
+            'penandatangan_jabatan' => 'Ketua RT 005',
             'tanda_tangan_jenis' => 'manual',
+            'qr_token' => 'BMI2-ARSIP-2024',
             'status' => 'selesai',
             'lokasi_arsip_fisik' => 'Bantex Arsip 2024 / Kotak Arsip B',
         ]);
@@ -298,24 +318,24 @@ class DatabaseSeeder extends Seeder
         // 5. Data Surat Masuk (Menjawab No 6 & 8)
         SuratMasuk::create([
             'nomor_agenda' => 'SM-2026-001',
-            'nomor_surat_pengirim' => '140/045/Pem-Des/2026',
-            'pengirim' => 'Pemerintah Desa Sukamaju',
+            'nomor_surat_pengirim' => '140/045/Pem-Kel/2026',
+            'pengirim' => 'Pemerintah Kelurahan / Desa',
             'perihal' => 'Instruksi Pemutakhiran Data Perkembangan Penduduk dan Warga Kontrak Triwulan IV',
-            'ringkasan_isi' => 'Pemerintah Desa meminta seluruh RT melaporkan perkembangan jumlah warga, mutasi lahir/meninggal/pindah, dan mendata warga penyewa/kontrakan.',
+            'ringkasan_isi' => 'Pemerintah Kelurahan meminta seluruh RT melaporkan perkembangan jumlah warga, mutasi lahir/meninggal/pindah, dan mendata warga penyewa/kontrakan.',
             'tanggal_surat' => Carbon::now()->subDays(20),
             'tanggal_terima' => Carbon::now()->subDays(18),
             'tahun_arsip' => 2026,
-            'lokasi_arsip_fisik' => 'Ordner Surat Masuk Desa 2026 / Sekat 1',
+            'lokasi_arsip_fisik' => 'Ordner Surat Masuk 2026 / Sekat 1',
             'disposisi' => 'Diteruskan ke Sekretaris untuk rekapitulasi data penduduk',
             'file_lampiran' => 'surat_masuk/surat_edaran_desa.png',
         ]);
 
         SuratMasuk::create([
             'nomor_agenda' => 'SM-2026-002',
-            'nomor_surat_pengirim' => '012/RW.02/X/2026',
-            'pengirim' => 'Pengurus RW 02',
+            'nomor_surat_pengirim' => '012/RW.013/X/2026',
+            'pengirim' => 'Pengurus RW 013',
             'perihal' => 'Peningkatan Jadwal Ronda Siskamling dan Kesiapsiagaan Musim Hujan',
-            'ringkasan_isi' => 'Himbauan kepada Ketua RT 03 dan Seksi Keamanan untuk mengaktifkan ronda malam dan membersihkan saluran drainase pencegah banjir.',
+            'ringkasan_isi' => 'Himbauan kepada Ketua RT 005 dan Seksi Keamanan untuk mengaktifkan ronda malam dan membersihkan saluran drainase pencegah banjir di lingkungan Bumi Mutiara Indah II.',
             'tanggal_surat' => Carbon::now()->subDays(14),
             'tanggal_terima' => Carbon::now()->subDays(12),
             'tahun_arsip' => 2026,
@@ -418,23 +438,23 @@ class DatabaseSeeder extends Seeder
             'tanggal' => Carbon::now()->subDays(1),
             'kategori' => 'ronda_malam',
             'judul' => 'Kegiatan Siskamling Regu A Malam Minggu',
-            'lokasi' => 'Pos Ronda Utama RT 03',
+            'lokasi' => 'Pos Keamanan Gerbang Utama Perumahan Bumi Mutiara Indah II',
             'petugas_ronda' => 'Agus Santoso, Bambang Sudibyo, Dedi Iskandar',
-            'keterangan' => 'Patroli lingkungan pukul 23:00, 01:30, dan 04:00. Pintu gerbang gang dikunci pukul 23:00. Kondisi aman dan terkendali.',
+            'keterangan' => 'Patroli lingkungan Blok A sampai Blok C pukul 23:00, 01:30, dan 04:00. Pintu portal ditutup pukul 23:00. Kondisi aman dan terkendali.',
             'status' => 'kondusif',
-            'tindakan' => 'Pemeriksaan rutin setiap 2 jam',
+            'tindakan' => 'Pemeriksaan rutin keliling perumahan setiap 2 jam',
             'pelapor' => 'Agus Santoso',
         ]);
 
         LaporanKeamanan::create([
             'tanggal' => Carbon::now()->subDays(8),
             'kategori' => 'banjir_musibah',
-            'judul' => 'Genangan Air Akibat Hujan Deras di Gang Kenanga',
-            'lokasi' => 'Jl. Kenanga Gang 2 RT 03',
+            'judul' => 'Pembersihan Saluran Drainase Blok B Mencegah Genangan',
+            'lokasi' => 'Perumahan Bumi Mutiara Indah II Blok B2 RT 005',
             'petugas_ronda' => 'Regu Keamanan & Warga Gotong Royong',
-            'keterangan' => 'Air menggenang setinggi 20cm akibat sampah menyumbat parit. Dilakukan kerja bakti pembersihan darurat.',
+            'keterangan' => 'Kerja bakti pembersihan daun dan endapan pasir di saluran drainase utama menjelang musim hujan.',
             'status' => 'selesai',
-            'tindakan' => 'Saluran air berhasil dinormalkan bersama warga',
+            'tindakan' => 'Saluran drainase air berfungsi normal dan lancar',
             'pelapor' => 'Agus Santoso',
         ]);
     }

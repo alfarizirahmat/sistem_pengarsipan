@@ -6,23 +6,35 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KeamananController;
 use App\Http\Controllers\KependudukanController;
 use App\Http\Controllers\KeuanganController;
+use App\Http\Controllers\PortalWargaController;
 use App\Http\Controllers\SuratMasukController;
 use App\Http\Controllers\SuratPengantarController;
 use Illuminate\Support\Facades\Route;
 
-// Autentikasi Pengurus RT
+// ==========================================
+// 1. PORTAL PUBLIK PELAYANAN & SURAT WARGA
+// ==========================================
+Route::get('/', [PortalWargaController::class, 'index'])->name('portal.warga');
+Route::post('/ajukan-surat', [PortalWargaController::class, 'ajukanSurat'])->name('portal.ajukan');
+Route::get('/surat-digital/{token}', [PortalWargaController::class, 'digitalSurat'])->name('portal.digital');
+
+// ==========================================
+// 2. AUTENTIKASI PENGURUS RT
+// ==========================================
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 Route::get('/quick-login/{role}', [AuthController::class, 'quickLogin'])->name('quick-login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Area Pengurus RT (Terproteksi)
+// ==========================================
+// 3. MEJA KERJA ADMINISTRASI PENGURUS RT
+// ==========================================
 Route::middleware('auth')->group(function () {
-    // Dashboard Utama RT
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    // Pusat Pelayanan & Register Pengurus RT
+    Route::get('/pengurus', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard', [DashboardController::class, 'index']);
 
-    // Modul Kependudukan & Laporan Desa (Menjawab No 5, 7, 10)
+    // Modul Kependudukan: Register Warga & KK (Sesuai LRS & ERD)
     Route::prefix('kependudukan')->group(function () {
         Route::get('/warga', [KependudukanController::class, 'index'])->name('warga.index');
         Route::get('/warga/kontrak', [KependudukanController::class, 'wargaKontrak'])->name('warga.kontrak');
@@ -36,33 +48,31 @@ Route::middleware('auth')->group(function () {
         Route::get('/keluarga', [KependudukanController::class, 'keluargaIndex'])->name('keluarga.index');
         Route::post('/keluarga', [KependudukanController::class, 'keluargaStore'])->name('keluarga.store');
 
-        // Rekap Bulanan Perkembangan Penduduk ke Kantor Desa (Menjawab No 5 & 10)
         Route::get('/laporan-desa', [KependudukanController::class, 'laporanDesa'])->name('kependudukan.laporan-desa');
     });
 
-    // Modul Pelayanan & Pengarsipan Surat Pengantar Keluar (Menjawab No 1, 6, 8, 9, 10, 11)
+    // Modul Pelayanan & Pengarsipan Surat Pengantar Keluar
     Route::get('/arsip-surat', [ArsipSuratController::class, 'index'])->name('arsip.semua');
     Route::resource('surat-pengantar', SuratPengantarController::class)->except(['edit', 'update']);
+    Route::post('surat-pengantar/{suratPengantar}/validasi', [SuratPengantarController::class, 'validasi'])->name('surat-pengantar.validasi');
     Route::get('surat-pengantar/{suratPengantar}/print', [SuratPengantarController::class, 'print'])->name('surat-pengantar.print');
 
-    // Modul Buku Agenda Surat Masuk (Menjawab No 6 & 8)
+    // Modul Buku Agenda Surat Masuk
     Route::resource('surat-masuk', SuratMasukController::class)->only(['index', 'create', 'store', 'show', 'destroy']);
     Route::get('surat-masuk/{suratMasuk}/print', [SuratMasukController::class, 'print'])->name('surat-masuk.print');
 
-    // Modul Keuangan: Iuran Warga (Humas) & Kas RT (Bendahara) (Menjawab No 2)
+    // Modul Keuangan: Iuran Warga & Buku Kas RT (Sesuai LRS & ERD)
     Route::prefix('keuangan')->group(function () {
-        // Iuran Warga (Posyandu, RW, Kematian, Sampah)
         Route::get('/iuran', [KeuanganController::class, 'iuranIndex'])->name('keuangan.iuran.index');
         Route::post('/iuran/generate', [KeuanganController::class, 'generateIuran'])->name('keuangan.iuran.generate');
         Route::post('/iuran/{iuran}/bayar', [KeuanganController::class, 'bayarIuran'])->name('keuangan.iuran.bayar');
 
-        // Kas RT (Pemasukan, Pengeluaran, Saldo)
         Route::get('/kas', [KeuanganController::class, 'kasIndex'])->name('keuangan.kas.index');
         Route::post('/kas', [KeuanganController::class, 'kasStore'])->name('keuangan.kas.store');
         Route::delete('/kas/{kas}', [KeuanganController::class, 'kasDestroy'])->name('keuangan.kas.destroy');
     });
 
-    // Modul Ronda & Keamanan Lingkungan (Seksi Keamanan) (Menjawab No 2 & 9)
+    // Modul Ronda & Keamanan Lingkungan (Sesuai LRS & ERD)
     Route::prefix('keamanan')->group(function () {
         Route::get('/', [KeamananController::class, 'index'])->name('keamanan.index');
         Route::post('/', [KeamananController::class, 'store'])->name('keamanan.store');

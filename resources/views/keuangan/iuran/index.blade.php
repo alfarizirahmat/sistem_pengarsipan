@@ -43,12 +43,12 @@
         </div>
 
         <div class="bg-white rounded-2xl p-6 border-2 border-slate-200 shadow-sm">
-            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500">Tarif Iuran Warga RT 03:</span>
+            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500">Tarif Iuran Warga RT 005:</span>
             <div class="text-xs font-bold text-slate-800 space-y-1 mt-2">
                 <div>• Posyandu Balita: <strong>Rp 5.000</strong></div>
-                <div>• Kas RW 02: <strong>Rp 10.000</strong></div>
+                <div>• Kas RW 013: <strong>Rp 10.000</strong></div>
                 <div>• Dana Kematian: <strong>Rp 10.000</strong></div>
-                <div>• Sampah Lingkungan: <strong>Rp 15.000</strong></div>
+                <div>• Sampah & Kebersihan Lingkungan: <strong>Rp 15.000</strong></div>
                 <div class="pt-1 border-t border-slate-200 text-emerald-700">Total: <strong>Rp 40.000 / KK / Bulan</strong></div>
             </div>
         </div>

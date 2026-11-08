@@ -49,15 +49,15 @@
                     </svg>
                 </div>
                 <div class="flex-1 text-center px-1">
-                    <h4 class="text-[9px] font-bold uppercase tracking-widest text-black leading-none">PEMERINTAH KABUPATEN BOGOR</h4>
-                    <h5 class="text-[8px] font-bold uppercase tracking-wider text-black leading-none mt-0.5">KECAMATAN CILODONG • DESA SUKAMAJU</h5>
-                    <h3 class="text-xs font-black uppercase tracking-wider text-black leading-tight mt-0.5">RUKUN TETANGGA 03 / RUKUN WARGA 02</h3>
-                    <p class="text-[7.5px] italic text-slate-700 font-sans leading-none mt-0.5">Sekretariat: Jl. Kenanga No. 12 RT 03/RW 02 Desa Sukamaju 16413</p>
+                    <h4 class="text-[9px] font-bold uppercase tracking-widest text-black leading-none">RUKUN TETANGGA 005 / RUKUN WARGA 013</h4>
+                    <h5 class="text-[8px] font-bold uppercase tracking-wider text-black leading-none mt-0.5">PERUMAHAN BUMI MUTIARA INDAH II</h5>
+                    <h3 class="text-xs font-black uppercase tracking-wider text-black leading-tight mt-0.5">BUKU AGENDA DISPOSISI SURAT</h3>
+                    <p class="text-[7.5px] italic text-slate-700 font-sans leading-none mt-0.5">Sekretariat: Perumahan Bumi Mutiara Indah II Blok B3 No. 12 RT 005 / RW 013</p>
                 </div>
                 <div class="w-10 h-10 flex-shrink-0 hidden sm:flex items-center justify-center">
                     <div class="w-8 h-8 rounded-full border border-black flex flex-col items-center justify-center text-[5.5px] font-black uppercase leading-none">
-                        <span>RT 03</span>
-                        <span>RW 02</span>
+                        <span>RT 005</span>
+                        <span>RW 013</span>
                     </div>
                 </div>
             </div>
@@ -117,7 +117,7 @@
                         <td colspan="2" class="p-2 align-top">
                             <span class="text-[9.5px] text-slate-600 uppercase block font-sans font-bold">Ringkasan Pokok Isi Surat:</span>
                             <p class="text-xs text-justify mt-1 leading-relaxed">
-                                {{ $suratMasuk->ringkasan_isi ?: 'Surat kedinasan resmi mengenai administrasi lingkungan RT 03. Berkas fisik lengkap tersimpan dalam lemari arsip.' }}
+                                {{ $suratMasuk->ringkasan_isi ?: 'Surat kedinasan resmi mengenai administrasi lingkungan RT 005 / RW 013 Perumahan Bumi Mutiara Indah II. Berkas fisik lengkap tersimpan dalam lemari arsip.' }}
                             </p>
                         </td>
                     </tr>
@@ -155,7 +155,7 @@
                     </tr>
                     <tr>
                         <td colspan="2" class="p-2.5 bg-slate-50">
-                            <span class="text-[9.5px] text-slate-700 uppercase block font-sans font-bold mb-1">Catatan / Arahan Disposisi Ketua RT 03:</span>
+                            <span class="text-[9.5px] text-slate-700 uppercase block font-sans font-bold mb-1">Catatan / Arahan Disposisi Ketua RT 005:</span>
                             <p class="text-xs italic leading-relaxed text-slate-900 font-semibold">
                                 "{{ $suratMasuk->disposisi ?: 'Diteruskan sesuai tugas dan fungsi seksi kepengurusan terkait.' }}"
                             </p>
@@ -172,13 +172,13 @@
                     <p class="text-[10px] text-slate-500 mt-0.5">Tahun Buku: {{ $suratMasuk->tahun_arsip }}</p>
                 </div>
                 <div class="text-center">
-                    <p class="text-[10px]">Sukamaju, {{ $suratMasuk->tanggal_terima->translatedFormat('d F Y') }}</p>
-                    <p class="font-bold text-[11px] uppercase">Ketua RT 03 / RW 02,</p>
+                    <p class="text-[10px]">Bumi Mutiara Indah II, {{ $suratMasuk->tanggal_terima->translatedFormat('d F Y') }}</p>
+                    <p class="font-bold text-[11px] uppercase">Ketua RT 005 / RW 013,</p>
                     <div class="h-12 flex items-center justify-center relative my-0.5">
                         <div class="w-12 h-12 rounded-full border border-indigo-900 text-indigo-900 text-[5px] font-bold flex flex-col items-center justify-center rotate-[-10deg] bg-indigo-50/40">
-                            <span>* PEMERINTAH *</span>
-                            <span class="font-black text-[6.5px]">RT 03 / RW 02</span>
-                            <span>SUKAMAJU</span>
+                            <span>* PENGURUS RT *</span>
+                            <span class="font-black text-[6.5px]">RT 005 / RW 013</span>
+                            <span>BUMI MUTIARA INDAH II</span>
                         </div>
                     </div>
                     <p class="font-bold underline uppercase text-xs">( HARTONO )</p>

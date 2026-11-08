@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Data Kartu Keluarga (KK) RT 03')
+@section('title', 'Data Kartu Keluarga (KK) RT 005')
 @section('header_title', 'Administrasi Kartu Keluarga (KK)')
 
 @section('content')
@@ -8,7 +8,7 @@
 
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-            <h1 class="text-xl font-bold text-slate-900">Buku Register Kartu Keluarga (KK) RT 03</h1>
+            <h1 class="text-xl font-bold text-slate-900">Buku Register Kartu Keluarga (KK) RT 005</h1>
             <p class="text-xs text-slate-500">Pendataan kepala keluarga, kepemilikan rumah, dan masa sewa kontrakan</p>
         </div>
         <button type="button" @click="addKkModalOpen = true" class="inline-flex items-center justify-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-sm transition-colors w-full sm:w-auto">
@@ -117,18 +117,18 @@
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Alamat Rumah / Gang <span class="text-rose-500">*</span></label>
-                        <input type="text" name="alamat" required placeholder="Contoh: Jl. Kenanga No. 12" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-emerald-500">
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Alamat Rumah / Blok <span class="text-rose-500">*</span></label>
+                        <input type="text" name="alamat" required placeholder="Contoh: Perumahan Bumi Mutiara Indah II Blok B3 No. 12" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-emerald-500">
                     </div>
 
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="block text-xs font-bold text-slate-700 uppercase mb-1">RT</label>
-                            <input type="text" name="rt" value="03" required class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-emerald-500">
+                            <input type="text" name="rt" value="005" required class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-emerald-500">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-700 uppercase mb-1">RW</label>
-                            <input type="text" name="rw" value="02" required class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-emerald-500">
+                            <input type="text" name="rw" value="013" required class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-emerald-500">
                         </div>
                     </div>
 

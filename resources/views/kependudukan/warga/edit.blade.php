@@ -9,7 +9,7 @@
     <div class="flex items-center justify-between">
         <div>
             <h1 class="text-xl font-bold text-slate-900">Perbarui Data: {{ $warga->nama_lengkap }}</h1>
-            <p class="text-xs text-slate-500">Perubahan identitas, domisili, atau status kependudukan warga RT 03</p>
+            <p class="text-xs text-slate-500">Perubahan identitas, domisili, atau status kependudukan warga RT 005 / RW 013</p>
         </div>
         <a href="{{ route('warga.index') }}" class="text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1">
             <i data-lucide="arrow-left" class="w-4 h-4"></i>

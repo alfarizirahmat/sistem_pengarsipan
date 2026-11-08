@@ -21,18 +21,24 @@ class SuratPengantarController extends Controller
         $search = $request->query('search');
         $tahun = $request->query('tahun');
         $jenis = $request->query('jenis');
+        $status = $request->query('status');
 
         $query = SuratPengantar::with('warga.keluarga');
 
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('nomor_surat', 'like', "%{$search}%")
+                    ->orWhere('qr_token', 'like', "%{$search}%")
                     ->orWhere('keperluan', 'like', "%{$search}%")
                     ->orWhereHas('warga', function ($w) use ($search) {
                         $w->where('nama_lengkap', 'like', "%{$search}%")
                             ->orWhere('nik', 'like', "%{$search}%");
                     });
             });
+        }
+
+        if ($status) {
+            $query->where('status', $status);
         }
 
         if ($tahun) {
@@ -43,7 +49,11 @@ class SuratPengantarController extends Controller
             $query->where('jenis_surat', $jenis);
         }
 
-        $surats = $query->latest('tanggal_surat')->paginate(15)->withQueryString();
+        $surats = $query->latest('created_at')->paginate(15)->withQueryString();
+
+        $totalSurat = SuratPengantar::count();
+        $totalMenunggu = SuratPengantar::where('status', 'menunggu_validasi')->count();
+        $totalSelesai = SuratPengantar::where('status', 'selesai')->count();
 
         // Daftar tahun yang tersedia untuk filter arsip 10 tahun
         $daftarTahun = SuratPengantar::select('tahun_arsip')
@@ -51,7 +61,17 @@ class SuratPengantarController extends Controller
             ->orderByDesc('tahun_arsip')
             ->pluck('tahun_arsip');
 
-        return view('surat_pengantar.index', compact('surats', 'daftarTahun', 'search', 'tahun', 'jenis'));
+        return view('surat_pengantar.index', compact(
+            'surats',
+            'daftarTahun',
+            'search',
+            'tahun',
+            'jenis',
+            'status',
+            'totalSurat',
+            'totalMenunggu',
+            'totalSelesai'
+        ));
     }
 
     /**
@@ -73,7 +93,7 @@ class SuratPengantarController extends Controller
             ->whereYear('tanggal_surat', $currentYear)
             ->count() + 1;
 
-        $autoNomorSurat = sprintf('470/%03d/RT.03-RW.02/%s/%d', $countThisMonth, $bulanRomawi[$currentMonth] ?? 'XI', $currentYear);
+        $autoNomorSurat = sprintf('470/%03d/RT.005-RW.013/%s/%d', $countThisMonth, $bulanRomawi[$currentMonth] ?? 'XI', $currentYear);
 
         return view('surat_pengantar.create', compact('wargas', 'selectedWargaId', 'autoNomorSurat'));
     }
@@ -122,14 +142,33 @@ class SuratPengantarController extends Controller
             $validated['tanda_tangan_digital'] = null;
         }
 
-        if (in_array($validated['tanda_tangan_jenis'], ['digital', 'qrcode', 'foto', 'pdf', 'upload'])) {
-            $validated['qr_token'] = 'RT03-'.strtoupper(Str::random(8));
+        if (in_array($validated['tanda_tangan_jenis'], ['digital', 'qrcode', 'foto', 'pdf', 'upload']) || empty($validated['qr_token'] ?? null)) {
+            $validated['qr_token'] = 'BMI2-'.strtoupper(Str::random(6));
         }
 
         $surat = SuratPengantar::create($validated);
 
         return redirect()->route('surat-pengantar.show', $surat)
-            ->with('success', 'Surat pengantar nomor '.$surat->nomor_surat.' berhasil dibuat dan siap dicetak!');
+            ->with('success', 'Surat pengantar nomor '.$surat->nomor_surat.' berhasil dibuat dengan Kode Warga: '.$surat->qr_token);
+    }
+
+    /**
+     * Validasi dan Sahkan Surat Permohonan Warga
+     */
+    public function validasi(Request $request, SuratPengantar $suratPengantar): RedirectResponse
+    {
+        $user = $request->user();
+        $token = $suratPengantar->qr_token ?: ('BMI2-'.strtoupper(Str::random(6)));
+
+        $suratPengantar->update([
+            'status' => 'selesai',
+            'penandatangan_nama' => $user->name,
+            'penandatangan_jabatan' => $user->jabatan ?: 'Ketua RT 005',
+            'qr_token' => $token,
+            'tanda_tangan_jenis' => $suratPengantar->tanda_tangan_jenis ?: 'qrcode',
+        ]);
+
+        return redirect()->back()->with('success', 'Surat berhasil divalidasi & disahkan! Berikan Kode Warga: '.$token.' kepada pemohon.');
     }
 
     /**

@@ -62,24 +62,23 @@
 
             <!-- Teks Kop Resmi Berjenjang -->
             <div class="flex-1 text-center px-2">
-                <h3 class="text-xs sm:text-sm font-bold uppercase tracking-widest text-black leading-tight">PEMERINTAH KABUPATEN BOGOR</h3>
-                <h4 class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-black leading-tight">KECAMATAN CILODONG</h4>
-                <h4 class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-black leading-tight">DESA SUKAMAJU</h4>
-                <h2 class="text-base sm:text-lg font-black uppercase tracking-wider text-black leading-tight mt-0.5">RUKUN TETANGGA 03 / RUKUN WARGA 02</h2>
+                <h3 class="text-xs sm:text-sm font-bold uppercase tracking-widest text-black leading-tight">PENGURUS RUKUN TETANGGA 005 / RUKUN WARGA 013</h3>
+                <h4 class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-black leading-tight">PERUMAHAN BUMI MUTIARA INDAH II</h4>
+                <h2 class="text-base sm:text-lg font-black uppercase tracking-wider text-black leading-tight mt-0.5">LEMBAR DISPOSISI AGENDA SURAT MASUK</h2>
                 <p class="text-[10px] text-black font-sans mt-0.5 leading-tight">
-                    Sekretariat: Jl. Kenanga No. 12 RT 03/RW 02 Desa Sukamaju, Kec. Cilodong, Kab. Bogor 16413
+                    Sekretariat: Perumahan Bumi Mutiara Indah II Blok B3 No. 12 RT 005 / RW 013
                 </p>
                 <p class="text-[9px] text-black font-sans leading-tight">
-                    Pos-el: rt03rw02.sukamaju@desa.id | Kontak: 0812-3456-7890
+                    Pos-el: rt005rw013@bumimutiara.id | Kontak: 0812-3456-7890
                 </p>
             </div>
 
             <!-- Monogram RT Kanan -->
             <div class="w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0 hidden sm:flex items-center justify-center">
                 <div class="w-12 h-12 rounded-full border-2 border-black flex flex-col items-center justify-center text-[7px] font-black uppercase leading-none">
-                    <span>RT 03</span>
-                    <span class="text-[6px] font-normal my-0.5">RW 02</span>
-                    <span>SUKAMAJU</span>
+                    <span>RT 005</span>
+                    <span class="text-[6px] font-normal my-0.5">RW 013</span>
+                    <span>BMI II</span>
                 </div>
             </div>
         </div>
@@ -149,7 +148,7 @@
                     <td colspan="2" class="p-2.5 align-top">
                         <span class="text-[10px] text-slate-600 uppercase block font-sans font-bold">Ringkasan Pokok Isi Surat :</span>
                         <p class="text-xs text-justify mt-1 leading-relaxed">
-                            {{ $suratMasuk->ringkasan_isi ?: 'Surat kedinasan resmi mengenai administrasi lingkungan RT 03. Berkas fisik lengkap tersimpan dalam lemari arsip.' }}
+                            {{ $suratMasuk->ringkasan_isi ?: 'Surat kedinasan resmi mengenai administrasi lingkungan RT 005 / RW 013 Perumahan Bumi Mutiara Indah II. Berkas fisik lengkap tersimpan dalam lemari arsip.' }}
                         </p>
                     </td>
                 </tr>
@@ -204,7 +203,7 @@
                 <!-- Catatan / Arahan Khusus Ketua RT -->
                 <tr>
                     <td colspan="2" class="p-3 align-top bg-slate-50">
-                        <span class="text-[10px] text-slate-700 uppercase block font-sans font-bold mb-1">Catatan / Arahan Khusus Ketua RT 03 :</span>
+                        <span class="text-[10px] text-slate-700 uppercase block font-sans font-bold mb-1">Catatan / Arahan Khusus Ketua RT 005 :</span>
                         <p class="text-xs italic font-serif leading-relaxed">
                             "{{ $suratMasuk->disposisi ?: 'Segera koordinasikan sesuai bidang kerja masing-masing seksi dan dokumentasikan dalam buku arsip RT.' }}"
                         </p>
@@ -217,7 +216,7 @@
         <div class="grid grid-cols-2 gap-6 text-sm pt-2">
             <div class="border border-black p-3 font-sans text-xs">
                 <strong class="block uppercase text-black mb-1 font-bold">Penyimpanan Berkas Fisik:</strong>
-                <p class="font-bold text-slate-900 font-mono">{{ $suratMasuk->lokasi_arsip_fisik ?: 'Ordner Surat Masuk RT 03' }}</p>
+                <p class="font-bold text-slate-900 font-mono">{{ $suratMasuk->lokasi_arsip_fisik ?: 'Ordner Surat Masuk RT 005' }}</p>
                 <p class="text-slate-600 mt-1">Buku Agenda Tahun: {{ $suratMasuk->tahun_arsip }}</p>
                 @if($suratMasuk->file_lampiran)
                     <p class="text-emerald-800 font-bold mt-2">✓ Berkas Scan Digital Tersimpan Resmi di Sistem</p>
@@ -225,15 +224,15 @@
             </div>
 
             <div class="text-center font-serif">
-                <p class="text-xs">Sukamaju, {{ $suratMasuk->tanggal_terima->translatedFormat('d F Y') }}</p>
-                <p class="font-bold text-xs uppercase tracking-wider">Ketua RT 03 / RW 02 Sukamaju,</p>
+                <p class="text-xs">Bumi Mutiara Indah II, {{ $suratMasuk->tanggal_terima->translatedFormat('d F Y') }}</p>
+                <p class="font-bold text-xs uppercase tracking-wider">Ketua RT 005 / RW 013,</p>
                 
                 <div class="h-20 flex items-center justify-center relative my-1">
                     <!-- Stempel Dinas Violet Resmi -->
-                    <div class="w-16 h-16 rounded-full border-2 border-indigo-900 text-indigo-900 text-[6px] font-bold flex flex-col items-center justify-center rotate-[-10deg] bg-indigo-50/40 opacity-90">
-                        <span>★ PEMERINTAH DESA ★</span>
-                        <span class="font-black text-[8px] my-0.5">RT 03 / RW 02</span>
-                        <span>DESA SUKAMAJU</span>
+                    <div class="w-16 h-16 rounded-full border-2 border-indigo-900 text-indigo-900 text-[5px] font-bold flex flex-col items-center justify-center rotate-[-10deg] bg-indigo-50/40 opacity-90">
+                        <span>★ PENGURUS RT ★</span>
+                        <span class="font-black text-[6.5px] my-0.5">RT 005 / RW 013</span>
+                        <span>BUMI MUTIARA INDAH II</span>
                     </div>
                 </div>
 

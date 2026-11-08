@@ -9,7 +9,7 @@
     <!-- Header & Tombol Tambah Kas -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-            <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900">Buku Kas Keuangan RT 03</h1>
+            <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900">Buku Kas Keuangan RT 005</h1>
             <p class="text-sm text-slate-600 font-medium">Pengelolaan dana kas RT, pemasukan iuran warga, dan pengeluaran operasional</p>
         </div>
         <button type="button" @click="catatKasModalOpen = true" class="inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-extrabold px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl shadow-md transition-all active:scale-95 w-full sm:w-auto">
@@ -26,7 +26,7 @@
             <div class="text-3xl font-black text-white mt-2">
                 Rp {{ number_format($saldoTotalAllTime, 0, ',', '.') }}
             </div>
-            <p class="text-xs text-emerald-100 font-medium mt-2">Uang kas siap pakai RT 03 / RW 02</p>
+            <p class="text-xs text-emerald-100 font-medium mt-2">Uang kas siap pakai RT 005 / RW 013</p>
         </div>
 
         <!-- Total Pemasukan -->

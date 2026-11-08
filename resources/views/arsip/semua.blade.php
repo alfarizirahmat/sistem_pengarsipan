@@ -254,15 +254,15 @@
                                 </svg>
                             </div>
                             <div class="flex-1 text-center px-1">
-                                <h4 class="text-[9px] font-bold uppercase tracking-widest text-black leading-none">PEMERINTAH KABUPATEN BOGOR</h4>
-                                <h5 class="text-[8px] font-bold uppercase tracking-wider text-black leading-none mt-0.5">KECAMATAN CILODONG • DESA SUKAMAJU</h5>
-                                <h3 class="text-xs font-black uppercase tracking-wider text-black leading-tight mt-0.5">RUKUN TETANGGA 03 / RUKUN WARGA 02</h3>
-                                <p class="text-[7.5px] italic text-slate-700 font-sans leading-none mt-0.5">Sekretariat: Jl. Kenanga No. 12 RT 03/RW 02 Desa Sukamaju 16413</p>
+                                <h4 class="text-[9px] font-bold uppercase tracking-widest text-black leading-none">RUKUN TETANGGA 005 / RUKUN WARGA 013</h4>
+                                <h5 class="text-[8px] font-bold uppercase tracking-wider text-black leading-none mt-0.5">PERUMAHAN BUMI MUTIARA INDAH II</h5>
+                                <h3 class="text-xs font-black uppercase tracking-wider text-black leading-tight mt-0.5">BUKU ARSIP SURAT RESMI</h3>
+                                <p class="text-[7.5px] italic text-slate-700 font-sans leading-none mt-0.5">Sekretariat: Perumahan Bumi Mutiara Indah II Blok B3 No. 12 RT 005 / RW 013</p>
                             </div>
                             <div class="w-10 h-10 flex-shrink-0 hidden sm:flex items-center justify-center">
                                 <div class="w-8 h-8 rounded-full border border-black flex flex-col items-center justify-center text-[5.5px] font-black uppercase leading-none">
-                                    <span>RT 03</span>
-                                    <span>RW 02</span>
+                                    <span>RT 005</span>
+                                    <span>RW 013</span>
                                 </div>
                             </div>
                         </div>
@@ -275,7 +275,7 @@
                         </div>
 
                         <p class="text-xs sm:text-sm text-justify mb-3">
-                            Yang bertanda tangan di bawah ini, Ketua Rukun Tetangga (RT) 03 / RW 02 Desa Sukamaju menerangkan bahwa:
+                            Yang bertanda tangan di bawah ini, Ketua Rukun Tetangga (RT) 005 / RW 013 Perumahan Bumi Mutiara Indah II menerangkan bahwa:
                         </p>
 
                         <!-- Identitas Warga -->
@@ -294,12 +294,12 @@
                                 <div class="grid grid-cols-12">
                                     <span class="col-span-4 text-slate-500">Alamat Domisili</span>
                                     <span class="col-span-1">:</span>
-                                    <span class="col-span-7" x-text="activeLetter.warga.keluarga ? activeLetter.warga.keluarga.alamat : 'RT 03 / RW 02 Desa Sukamaju'"></span>
+                                    <span class="col-span-7" x-text="activeLetter.warga.keluarga ? activeLetter.warga.keluarga.alamat : 'Perumahan Bumi Mutiara Indah II, RT 005 / RW 013'"></span>
                                 </div>
                                 <div class="grid grid-cols-12">
                                     <span class="col-span-4 text-slate-500">Status Tinggal</span>
                                     <span class="col-span-1">:</span>
-                                    <span class="col-span-7 capitalize font-semibold text-emerald-800" x-text="activeLetter.warga.status_tinggal + ' di RT 03'"></span>
+                                    <span class="col-span-7 capitalize font-semibold text-emerald-800" x-text="activeLetter.warga.status_tinggal + ' di RT 005 / RW 013'"></span>
                                 </div>
                             </div>
                         </template>
@@ -328,17 +328,17 @@
                                 <p class="font-bold underline uppercase" x-text="activeLetter.pihak"></p>
                             </div>
                             <div>
-                                <p class="mb-0.5 text-xs" x-text="'Sukamaju, ' + activeLetter.tanggal_formatted"></p>
+                                <p class="mb-0.5 text-xs" x-text="'Bumi Mutiara Indah II, ' + activeLetter.tanggal_formatted"></p>
                                 <p class="font-bold text-xs uppercase" x-text="activeLetter.penandatangan_jabatan"></p>
 
                                 <div class="h-20 flex items-center justify-center relative my-1">
                                     <!-- Foto TTD -->
                                     <template x-if="activeLetter.tanda_tangan_url">
                                         <div class="relative flex items-center justify-center">
-                                            <div class="w-16 h-16 rounded-full border-2 border-emerald-800 text-emerald-800 text-[6px] font-bold flex flex-col items-center justify-center rotate-[-12deg] bg-emerald-50/50 absolute z-0 opacity-80 pointer-events-none">
+                                            <div class="w-16 h-16 rounded-full border-2 border-indigo-900 text-indigo-900 text-[5px] font-bold flex flex-col items-center justify-center rotate-[-12deg] bg-indigo-50/50 absolute z-0 opacity-80 pointer-events-none">
                                                 <span>★ PENGURUS RT ★</span>
-                                                <span class="font-black text-[8px]">RT 03 / RW 02</span>
-                                                <span>DESA SUKAMAJU</span>
+                                                <span class="font-black text-[6.5px]">RT 005 / RW 013</span>
+                                                <span>BUMI MUTIARA INDAH II</span>
                                             </div>
                                             <img :src="activeLetter.tanda_tangan_url" class="h-14 max-w-[130px] object-contain relative z-10" alt="Foto TTD">
                                         </div>
@@ -381,8 +381,8 @@
                         <div class="overflow-x-auto pb-2">
                             <div class="min-w-[300px] max-w-3xl mx-auto bg-white p-4 sm:p-10 rounded-2xl shadow border border-slate-300 text-slate-900 font-serif leading-relaxed">
                             <div class="text-center pb-2 border-b-2 border-double border-black">
-                                <h2 class="text-base font-black uppercase tracking-widest leading-tight">PENGURUS RUKUN TETANGGA 03 / RW 02</h2>
-                                <h3 class="text-xs font-bold uppercase tracking-wider leading-tight">DESA SUKAMAJU KECAMATAN SETEMPAT</h3>
+                                <h2 class="text-base font-black uppercase tracking-widest leading-tight">PENGURUS RUKUN TETANGGA 005 / RW 013</h2>
+                                <h3 class="text-xs font-bold uppercase tracking-wider leading-tight">PERUMAHAN BUMI MUTIARA INDAH II</h3>
                             </div>
 
                             <div class="text-center my-3">
