@@ -1,38 +1,24 @@
 @extends('layouts.app')
 
-@section('title', 'Meja Kerja Pengurus RT 005')
+@section('title', 'Portal Pengurus RT 005')
 
 @section('content')
-<div class="space-y-6">
+<div class="max-w-6xl mx-auto space-y-6 sm:space-y-8 py-2 sm:py-4">
 
-    <!-- IDENTITAS MEJA KERJA RESMI PENGURUS -->
-    <div class="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-            <div class="flex items-center gap-2 mb-1">
-                <span class="text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-200">
-                    Meja Pelayanan &amp; Pendataan
-                </span>
-                <span class="text-xs text-slate-400">&bull;</span>
-                <span class="text-xs text-slate-500 font-medium">RT 005 / RW 013 Perumahan Bumi Mutiara Indah II</span>
-            </div>
-            <h1 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-                Sistem Informasi Pendataan dan Pelayanan Warga
-            </h1>
-            <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl leading-relaxed">
-                Selamat bertugas, <strong>{{ auth()->user()->name ?? 'Bapak Pengurus' }}</strong> ({{ auth()->user()->jabatan ?? 'Ketua RT 005' }}). Kelola pelayanan surat pengantar, pendataan kependudukan, iuran &amp; kas RT, serta keamanan lingkungan secara terpadu.
-            </p>
+    <!-- HEADER RINGKAS & BERSIH -->
+    <div class="text-center space-y-2">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-xs font-bold">
+            <i data-lucide="building-2" class="w-3.5 h-3.5"></i>
+            <span>RT 005 / RW 013 &bull; Perumahan Bumi Mutiara Indah II</span>
         </div>
-
-        <div class="flex items-center gap-2 flex-shrink-0">
-            <a href="{{ route('surat-pengantar.create') }}" class="inline-flex items-center gap-2 bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl shadow-xs transition-colors">
-                <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                <span>+ Buat Surat Pengantar</span>
-            </a>
-            <a href="{{ route('portal.warga') }}" target="_blank" class="inline-flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs px-3.5 py-2.5 rounded-xl transition-colors">
-                <i data-lucide="globe" class="w-4 h-4"></i>
-                <span>Cek Portal</span>
-            </a>
-        </div>
+        
+        <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            Meja Pengurus RT 005
+        </h1>
+        
+        <p class="text-xs sm:text-sm text-slate-500 max-w-lg mx-auto">
+            Selamat datang, <strong>{{ auth()->user()->name ?? 'Bapak Pengurus' }}</strong> ({{ auth()->user()->jabatan ?? 'Ketua RT 005' }}). Pilih menu di bawah ini untuk mengelola data dan pelayanan:
+        </p>
     </div>
 
     @php
@@ -42,314 +28,323 @@
             ->get();
     @endphp
 
-    <!-- PERHATIAN: AJUAN SURAT DARI WARGA (JIKA ADA) -->
+    <!-- NOTIFIKASI AJUAN SURAT DARI WARGA (JIKA ADA PERMOHONAN MASUK) -->
     @if($pendingSurats->count() > 0)
-        <div class="bg-amber-50/70 border-2 border-amber-300 rounded-2xl p-5 shadow-xs">
-            <div class="flex items-center justify-between pb-3 border-b border-amber-200 mb-3">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="bell-ring" class="w-4 h-4 animate-bounce"></i>
+        <a href="{{ route('surat-pengantar.index', ['status' => 'menunggu_validasi']) }}" 
+           class="group block bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-all active:scale-[0.99]">
+            <div class="flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="bell-ring" class="w-5 h-5 text-white animate-bounce"></i>
                     </div>
                     <div>
-                        <h2 class="font-extrabold text-slate-900 text-sm">
-                            Permohonan Surat dari Warga Menunggu Pengesahan ({{ $pendingSurats->count() }})
-                        </h2>
-                        <p class="text-xs text-amber-900">Warga mengajukan permohonan melalui portal online. Silakan periksa dan klik "Sahkan" di bawah ini.</p>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] font-black uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded-md">Perlu Diproses</span>
+                            <span class="text-xs font-bold text-amber-100">{{ $pendingSurats->count() }} Permohonan Surat Baru Masuk</span>
+                        </div>
+                        <p class="text-xs sm:text-sm font-semibold mt-0.5 text-white">Warga mengajukan permohonan melalui portal online. Klik di sini untuk memeriksa &amp; mengesahkan.</p>
                     </div>
                 </div>
-                <a href="{{ route('surat-pengantar.index', ['status' => 'menunggu_validasi']) }}" class="text-xs font-bold text-amber-800 hover:underline">
-                    Lihat Semua Ajuan &rarr;
-                </a>
+                <div class="flex items-center gap-1 text-xs font-bold bg-white text-amber-900 px-3.5 py-2 rounded-xl flex-shrink-0 group-hover:bg-amber-50 transition-colors">
+                    <span>Periksa</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </div>
             </div>
-
-            <div class="overflow-x-auto">
-                <table class="w-full text-xs text-left bg-white rounded-xl overflow-hidden border border-amber-200">
-                    <thead class="bg-amber-100/70 text-amber-900 font-bold uppercase text-[10px]">
-                        <tr>
-                            <th class="p-3">Kode Warga</th>
-                            <th class="p-3">Nama Pemohon &amp; NIK</th>
-                            <th class="p-3">Jenis Surat &amp; Keperluan</th>
-                            <th class="p-3">Tanggal Ajuan</th>
-                            <th class="p-3 text-center">Tindakan Pengurus</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-amber-100 font-medium">
-                        @foreach($pendingSurats as $ps)
-                        <tr class="hover:bg-amber-50/50">
-                            <td class="p-3 whitespace-nowrap font-mono font-bold text-blue-700">
-                                {{ $ps->qr_token }}
-                            </td>
-                            <td class="p-3">
-                                <div class="font-bold text-slate-900">{{ $ps->warga->nama_lengkap ?? 'Warga' }}</div>
-                                <div class="text-[11px] text-slate-500 font-mono">NIK: {{ $ps->warga->nik ?? '-' }}</div>
-                            </td>
-                            <td class="p-3">
-                                <span class="font-semibold text-slate-800 capitalize">{{ str_replace('_', ' ', $ps->jenis_surat) }}</span>
-                                <p class="text-slate-500 line-clamp-1">{{ $ps->keperluan }}</p>
-                            </td>
-                            <td class="p-3 whitespace-nowrap text-slate-500">
-                                {{ \Carbon\Carbon::parse($ps->tanggal_surat)->format('d/m/Y') }}
-                            </td>
-                            <td class="p-3 text-center whitespace-nowrap">
-                                <div class="flex items-center justify-center gap-1.5">
-                                    <form action="{{ route('surat-pengantar.validasi', $ps) }}" method="POST" class="inline">
-                                        @csrf
-                                        <button type="submit" 
-                                                onclick="return confirm('Sahkan surat untuk {{ $ps->warga->nama_lengkap ?? 'warga ini' }} sekarang?')"
-                                                class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-xs flex items-center gap-1 shadow-2xs">
-                                            <i data-lucide="check" class="w-3.5 h-3.5"></i>
-                                            <span>Sahkan &amp; Terbitkan</span>
-                                        </button>
-                                    </form>
-                                    <a href="{{ route('surat-pengantar.show', $ps) }}" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-semibold text-xs">
-                                        Periksa
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        </a>
     @endif
 
-    <!-- PUSAT BUKU REGISTER RESMI (SESUAI 8 TABEL ERD & LRS) -->
+    <!-- TOMBOL UTAMA: BUAT SURAT PENGANTAR (PALING BESAR & MUDAH DISENTUH) -->
     <div>
-        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
-            Buku Register Administrasi RT 005 / RW 013:
-        </h2>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            
-            <!-- Register 1: Persuratan Warga -->
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center font-bold">
-                            <i data-lucide="file-text" class="w-5 h-5"></i>
-                        </div>
-                        <span class="text-xs font-bold font-mono text-slate-400">Tabel: surat_pengantars</span>
+        <a href="{{ route('surat-pengantar.create') }}" 
+           class="group block bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-md hover:shadow-lg transition-all active:scale-[0.99] border-2 border-emerald-500">
+            <div class="flex items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/20 flex items-center justify-center text-white flex-shrink-0 group-hover:scale-105 transition-transform">
+                        <i data-lucide="file-plus-2" class="w-7 h-7"></i>
                     </div>
-                    <h3 class="font-bold text-slate-900 text-base">Pelayanan Surat Pengantar</h3>
-                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-                        Arsip pembuatan surat pengantar KTP, KK, SKTM, Domisili, dan surat kematian untuk warga.
-                    </p>
-                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                        <span class="text-slate-500">Total Terbit:</span>
-                        <span class="font-extrabold text-slate-900 text-sm">{{ $totalSuratPengantar }} Surat</span>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] font-black uppercase tracking-wider bg-white/20 px-2.5 py-0.5 rounded-full">Aksi Cepat</span>
+                            <span class="text-xs text-emerald-100 font-medium hidden sm:inline">Pelayanan Warga RT 005</span>
+                        </div>
+                        <h2 class="text-lg sm:text-2xl font-black tracking-tight text-white mt-0.5">
+                            + Buat Surat Pengantar Warga
+                        </h2>
+                        <p class="text-xs sm:text-sm text-emerald-100 mt-0.5 leading-relaxed">
+                            Ketik nama/NIK warga pemohon, pilih keperluan, bubuhkan TTD foto/QR, dan cetak surat dinas.
+                        </p>
                     </div>
                 </div>
-                <div class="mt-4 pt-3 border-t border-slate-100 flex gap-2">
-                    <a href="{{ route('surat-pengantar.index') }}" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-800 text-center font-bold py-2 rounded-xl text-xs transition-colors">
-                        Buka Register Surat &rarr;
-                    </a>
+                <div class="hidden sm:flex items-center gap-2 bg-white text-emerald-800 font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl shadow-xs group-hover:bg-emerald-50 transition-colors flex-shrink-0">
+                    <span>Buka Form</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </div>
             </div>
-
-            <!-- Register 2: Kependudukan (Warga & KK) -->
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center font-bold">
-                            <i data-lucide="users" class="w-5 h-5"></i>
-                        </div>
-                        <span class="text-xs font-bold font-mono text-slate-400">Tabel: wargas &amp; keluargas</span>
-                    </div>
-                    <h3 class="font-bold text-slate-900 text-base">Buku Induk Kependudukan</h3>
-                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-                        Pendataan seluruh warga, status tinggal tetap vs kontrak, data kartu keluarga, dan mutasi.
-                    </p>
-                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                        <span class="text-slate-500">Warga Terdaftar:</span>
-                        <span class="font-extrabold text-slate-900 text-sm">{{ $totalWargaAktif }} Jiwa ({{ $totalKk }} KK)</span>
-                    </div>
-                </div>
-                <div class="mt-4 pt-3 border-t border-slate-100 flex gap-2">
-                    <a href="{{ route('warga.index') }}" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-800 text-center font-bold py-2 rounded-xl text-xs transition-colors">
-                        Buku Warga &rarr;
-                    </a>
-                    <a href="{{ route('keluarga.index') }}" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-800 text-center font-bold py-2 rounded-xl text-xs transition-colors">
-                        Buku KK &rarr;
-                    </a>
-                </div>
-            </div>
-
-            <!-- Register 3: Keuangan (Iuran & Kas RT) -->
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold">
-                            <i data-lucide="wallet" class="w-5 h-5"></i>
-                        </div>
-                        <span class="text-xs font-bold font-mono text-slate-400">Tabel: iuran_wargas &amp; kas_rts</span>
-                    </div>
-                    <h3 class="font-bold text-slate-900 text-base">Kas RT &amp; Iuran Warga</h3>
-                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-                        Pencatatan penarikan iuran bulanan warga per rumah dan buku kas umum RT (pemasukan/pengeluaran).
-                    </p>
-                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                        <span class="text-slate-500">Saldo Kas RT:</span>
-                        <span class="font-extrabold text-emerald-700 text-sm">Rp {{ number_format($saldoKas, 0, ',', '.') }}</span>
-                    </div>
-                </div>
-                <div class="mt-4 pt-3 border-t border-slate-100 flex gap-2">
-                    <a href="{{ route('keuangan.iuran.index') }}" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-800 text-center font-bold py-2 rounded-xl text-xs transition-colors">
-                        Iuran Warga &rarr;
-                    </a>
-                    <a href="{{ route('keuangan.kas.index') }}" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-800 text-center font-bold py-2 rounded-xl text-xs transition-colors">
-                        Buku Kas &rarr;
-                    </a>
-                </div>
-            </div>
-
-            <!-- Register 4: Surat Masuk -->
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center font-bold">
-                            <i data-lucide="inbox" class="w-5 h-5"></i>
-                        </div>
-                        <span class="text-xs font-bold font-mono text-slate-400">Tabel: surat_masuks</span>
-                    </div>
-                    <h3 class="font-bold text-slate-900 text-base">Agenda Surat Masuk</h3>
-                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-                        Buku penerimaan surat dinas dari Kantor Kelurahan, Pengurus RW 013, Polsek, dan Puskesmas.
-                    </p>
-                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                        <span class="text-slate-500">Surat Diarsipkan:</span>
-                        <span class="font-extrabold text-slate-900 text-sm">{{ $totalSuratMasuk }} Surat</span>
-                    </div>
-                </div>
-                <div class="mt-4 pt-3 border-t border-slate-100">
-                    <a href="{{ route('surat-masuk.index') }}" class="w-full block bg-slate-100 hover:bg-slate-200 text-slate-800 text-center font-bold py-2 rounded-xl text-xs transition-colors">
-                        Buka Agenda Surat Masuk &rarr;
-                    </a>
-                </div>
-            </div>
-
-            <!-- Register 5: Pos Ronda & Keamanan -->
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center font-bold">
-                            <i data-lucide="shield" class="w-5 h-5"></i>
-                        </div>
-                        <span class="text-xs font-bold font-mono text-slate-400">Tabel: laporan_keamanans</span>
-                    </div>
-                    <h3 class="font-bold text-slate-900 text-base">Jurnal Ronda &amp; Keamanan</h3>
-                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-                        Catatan kegiatan ronda malam pos kamling, laporan tamu menginap 1x24 jam, dan kondusifitas lingkungan.
-                    </p>
-                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                        <span class="text-slate-500">Status Lingkungan:</span>
-                        <span class="font-extrabold text-emerald-700 text-sm">Kondusif &amp; Aman</span>
-                    </div>
-                </div>
-                <div class="mt-4 pt-3 border-t border-slate-100">
-                    <a href="{{ route('keamanan.index') }}" class="w-full block bg-slate-100 hover:bg-slate-200 text-slate-800 text-center font-bold py-2 rounded-xl text-xs transition-colors">
-                        Buku Jurnal Ronda &rarr;
-                    </a>
-                </div>
-            </div>
-
-            <!-- Register 6: Laporan Rekap ke Desa -->
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-10 h-10 rounded-xl bg-slate-100 text-slate-800 flex items-center justify-center font-bold">
-                            <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
-                        </div>
-                        <span class="text-xs font-bold font-mono text-slate-400">Pelaporan Dinas</span>
-                    </div>
-                    <h3 class="font-bold text-slate-900 text-base">Laporan Rekapitulasi Desa</h3>
-                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-                        Rekapitulasi mutasi bulanan (lahir, mati, datang, pindah) siap cetak untuk diserahkan ke kantor desa.
-                    </p>
-                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                        <span class="text-slate-500">Periode:</span>
-                        <span class="font-extrabold text-slate-900 text-sm">{{ \Carbon\Carbon::now()->translatedFormat('F Y') }}</span>
-                    </div>
-                </div>
-                <div class="mt-4 pt-3 border-t border-slate-100">
-                    <a href="{{ route('kependudukan.laporan-desa') }}" class="w-full block bg-slate-100 hover:bg-slate-200 text-slate-800 text-center font-bold py-2 rounded-xl text-xs transition-colors">
-                        Lihat Rekap Bulanan &rarr;
-                    </a>
-                </div>
-            </div>
-
-        </div>
+        </a>
     </div>
 
-    <!-- TABEL SURAT PENGANTAR TERBARU -->
-    <div class="bg-white rounded-2xl border border-slate-200 shadow-xs p-5 sm:p-6">
-        <div class="flex items-center justify-between pb-3 border-b border-slate-200 mb-4">
-            <div>
-                <h3 class="font-bold text-slate-900 text-base">Surat Pengantar Terbaru yang Diterbitkan</h3>
-                <p class="text-xs text-slate-500">Daftar surat pengantar keluar terbaru beserta kode warga untuk pengecekan mandiri</p>
-            </div>
-            <a href="{{ route('surat-pengantar.index') }}" class="text-xs font-bold text-blue-700 hover:underline">
-                Lihat Semua Arsip Surat &rarr;
-            </a>
+    <!-- KUMPULAN TOMBOL MENU DI TENGAH HALAMAN (GRID RESPONSIVE 2 KOLOM DI HP, 3-4 KOLOM DI DESKTOP) -->
+    <div>
+        <div class="flex items-center justify-between mb-3 px-1">
+            <h2 class="text-xs font-black uppercase tracking-wider text-slate-500">
+                Menu Kelola Sistem (8 Modul ERD &amp; LRS):
+            </h2>
+            <span class="text-[11px] text-slate-400 font-medium hidden sm:inline">Sentuh salah satu menu untuk masuk</span>
         </div>
 
-        <div class="overflow-x-auto">
-            <table class="w-full text-xs text-left">
-                <thead class="bg-slate-50 text-slate-600 font-bold uppercase text-[10px] border-b border-slate-200">
-                    <tr>
-                        <th class="p-3">Nomor &amp; Kode Surat</th>
-                        <th class="p-3">Warga Pemohon</th>
-                        <th class="p-3">Jenis &amp; Keperluan</th>
-                        <th class="p-3">Status</th>
-                        <th class="p-3 text-center">Aksi Cepat</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100 font-medium">
-                    @forelse($recentSurats as $rs)
-                    <tr class="hover:bg-slate-50/60">
-                        <td class="p-3 whitespace-nowrap">
-                            <span class="font-bold font-mono text-slate-900 block">{{ $rs->nomor_surat }}</span>
-                            <span class="font-mono text-[10px] text-blue-700 font-semibold bg-blue-50 px-1.5 py-0.2 rounded border border-blue-200">
-                                {{ $rs->qr_token }}
-                            </span>
-                        </td>
-                        <td class="p-3">
-                            <div class="font-bold text-slate-900">{{ $rs->warga->nama_lengkap ?? 'Warga' }}</div>
-                            <div class="text-[10px] text-slate-400 font-mono">NIK: {{ $rs->warga->nik ?? '-' }}</div>
-                        </td>
-                        <td class="p-3">
-                            <span class="capitalize text-slate-700 font-semibold">{{ str_replace('_', ' ', $rs->jenis_surat) }}</span>
-                            <p class="text-slate-500 line-clamp-1 text-[11px]">{{ $rs->keperluan }}</p>
-                        </td>
-                        <td class="p-3 whitespace-nowrap">
-                            @if($rs->status === 'menunggu_validasi')
-                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-300">
-                                    Menunggu Validasi
-                                </span>
-                            @else
-                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-300">
-                                    Sah / Selesai
-                                </span>
-                            @endif
-                        </td>
-                        <td class="p-3 text-center whitespace-nowrap">
-                            <div class="flex items-center justify-center gap-1">
-                                <a href="{{ route('surat-pengantar.show', $rs) }}" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold">
-                                    Detail
-                                </a>
-                                <a href="{{ route('surat-pengantar.print', $rs) }}" target="_blank" class="px-2.5 py-1 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg text-xs font-semibold border border-blue-200">
-                                    Cetak
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="5" class="p-6 text-center text-slate-400">Belum ada surat pengantar yang dibuat.</td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+
+            <!-- 1. Pelayanan Surat Pengantar -->
+            <a href="{{ route('surat-pengantar.index') }}" 
+               class="group bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition-all active:scale-[0.98] flex flex-col justify-between min-h-[140px] sm:min-h-[160px]">
+                <div class="space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <i data-lucide="file-text" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-blue-600 group-hover:translate-x-1 transition-all"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-blue-700 transition-colors leading-tight">
+                            Pelayanan Surat Pengantar
+                        </h3>
+                        <p class="text-[11px] text-slate-500 mt-1 line-clamp-2 leading-relaxed">
+                            Daftar arsip surat pengantar warga, kode pelacakan &amp; cetak
+                        </p>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                    <span class="text-slate-400">Total:</span>
+                    <span class="font-black text-slate-900">{{ $totalSuratPengantar }} Surat</span>
+                </div>
+            </a>
+
+            <!-- 2. Buku Data Warga (Buku Induk Kependudukan) -->
+            <a href="{{ route('warga.index') }}" 
+               class="group bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 hover:border-indigo-400 hover:shadow-md transition-all active:scale-[0.98] flex flex-col justify-between min-h-[140px] sm:min-h-[160px]">
+                <div class="space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                            <i data-lucide="users" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-indigo-600 group-hover:translate-x-1 transition-all"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-indigo-700 transition-colors leading-tight">
+                            Buku Induk Kependudukan
+                        </h3>
+                        <p class="text-[11px] text-slate-500 mt-1 line-clamp-2 leading-relaxed">
+                            Buku data kependudukan warga tetap, NIK, jenis kelamin &amp; mutasi
+                        </p>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                    <span class="text-slate-400">Total:</span>
+                    <span class="font-black text-slate-900">{{ $totalWargaAktif }} Jiwa</span>
+                </div>
+            </a>
+
+            <!-- 3. Buku Kartu Keluarga (Buku KK) -->
+            <a href="{{ route('keluarga.index') }}" 
+               class="group bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 hover:border-sky-400 hover:shadow-md transition-all active:scale-[0.98] flex flex-col justify-between min-h-[140px] sm:min-h-[160px]">
+                <div class="space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-sky-50 text-sky-700 flex items-center justify-center group-hover:bg-sky-600 group-hover:text-white transition-colors">
+                            <i data-lucide="home" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-sky-600 group-hover:translate-x-1 transition-all"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-sky-700 transition-colors leading-tight">
+                            Buku Kartu Keluarga
+                        </h3>
+                        <p class="text-[11px] text-slate-500 mt-1 line-clamp-2 leading-relaxed">
+                            Data Kepala Keluarga perumahan, No KK, Blok &amp; anggota keluarga
+                        </p>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                    <span class="text-slate-400">Total:</span>
+                    <span class="font-black text-slate-900">{{ $totalKk }} KK</span>
+                </div>
+            </a>
+
+            <!-- 4. Warga Kontrak & Kost -->
+            <a href="{{ route('warga.kontrak') }}" 
+               class="group bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 hover:border-amber-400 hover:shadow-md transition-all active:scale-[0.98] flex flex-col justify-between min-h-[140px] sm:min-h-[160px]">
+                <div class="space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                            <i data-lucide="key-round" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-amber-600 group-hover:translate-x-1 transition-all"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-amber-700 transition-colors leading-tight">
+                            Data Warga Kontrak
+                        </h3>
+                        <p class="text-[11px] text-slate-500 mt-1 line-clamp-2 leading-relaxed">
+                            Daftar penghuni sewa/kost, nama pemilik rumah kontrakan &amp; masa sewa
+                        </p>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                    <span class="text-slate-400">Total:</span>
+                    <span class="font-black text-amber-700">{{ $totalKkKontrak }} Rumah</span>
+                </div>
+            </a>
+
+            <!-- 5. Iuran Warga Bulanan -->
+            <a href="{{ route('keuangan.iuran.index') }}" 
+               class="group bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 hover:border-purple-400 hover:shadow-md transition-all active:scale-[0.98] flex flex-col justify-between min-h-[140px] sm:min-h-[160px]">
+                <div class="space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                            <i data-lucide="receipt" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-purple-600 group-hover:translate-x-1 transition-all"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-purple-700 transition-colors leading-tight">
+                            Iuran Warga Bulanan
+                        </h3>
+                        <p class="text-[11px] text-slate-500 mt-1 line-clamp-2 leading-relaxed">
+                            Penarikan iuran bulanan posyandu, sampah, kematian &amp; kas RW
+                        </p>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                    <span class="text-slate-400">Terkumpul:</span>
+                    <span class="font-black text-purple-700">Rp {{ number_format($iuranLunasBulanIni, 0, ',', '.') }}</span>
+                </div>
+            </a>
+
+            <!-- 6. Buku Kas RT -->
+            <a href="{{ route('keuangan.kas.index') }}" 
+               class="group bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 hover:border-emerald-400 hover:shadow-md transition-all active:scale-[0.98] flex flex-col justify-between min-h-[140px] sm:min-h-[160px]">
+                <div class="space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                            <i data-lucide="wallet" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-emerald-600 group-hover:translate-x-1 transition-all"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-emerald-700 transition-colors leading-tight">
+                            Buku Kas RT
+                        </h3>
+                        <p class="text-[11px] text-slate-500 mt-1 line-clamp-2 leading-relaxed">
+                            Pencatatan kas pemasukan, pengeluaran &amp; saldo otomatis RT 005
+                        </p>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                    <span class="text-slate-400">Saldo:</span>
+                    <span class="font-black text-emerald-700">Rp {{ number_format($saldoKas, 0, ',', '.') }}</span>
+                </div>
+            </a>
+
+            <!-- 7. Agenda Surat Masuk -->
+            <a href="{{ route('surat-masuk.index') }}" 
+               class="group bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 hover:border-rose-400 hover:shadow-md transition-all active:scale-[0.98] flex flex-col justify-between min-h-[140px] sm:min-h-[160px]">
+                <div class="space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-rose-50 text-rose-700 flex items-center justify-center group-hover:bg-rose-600 group-hover:text-white transition-colors">
+                            <i data-lucide="inbox" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-rose-600 group-hover:translate-x-1 transition-all"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-rose-700 transition-colors leading-tight">
+                            Agenda Surat Masuk
+                        </h3>
+                        <p class="text-[11px] text-slate-500 mt-1 line-clamp-2 leading-relaxed">
+                            Buku agenda arsip surat dinas dari Kantor Desa, RW, &amp; Instansi luar
+                        </p>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                    <span class="text-slate-400">Total:</span>
+                    <span class="font-black text-slate-900">{{ $totalSuratMasuk }} Surat</span>
+                </div>
+            </a>
+
+            <!-- 8. Jurnal Ronda & Keamanan -->
+            <a href="{{ route('keamanan.index') }}" 
+               class="group bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 hover:border-orange-400 hover:shadow-md transition-all active:scale-[0.98] flex flex-col justify-between min-h-[140px] sm:min-h-[160px]">
+                <div class="space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-orange-50 text-orange-700 flex items-center justify-center group-hover:bg-orange-600 group-hover:text-white transition-colors">
+                            <i data-lucide="shield-alert" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-orange-600 group-hover:translate-x-1 transition-all"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-orange-700 transition-colors leading-tight">
+                            Jurnal Ronda &amp; Keamanan
+                        </h3>
+                        <p class="text-[11px] text-slate-500 mt-1 line-clamp-2 leading-relaxed">
+                            Laporan ronda pos kamling malam, tamu 24 jam &amp; situasi lingkungan
+                        </p>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                    <span class="text-slate-400">Status:</span>
+                    <span class="font-black text-emerald-700">Aman / Kondusif</span>
+                </div>
+            </a>
+
+            <!-- 9. Laporan Rekapitulasi Desa -->
+            <a href="{{ route('kependudukan.laporan-desa') }}" 
+               class="group bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 hover:border-teal-400 hover:shadow-md transition-all active:scale-[0.98] flex flex-col justify-between min-h-[140px] sm:min-h-[160px]">
+                <div class="space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center group-hover:bg-teal-600 group-hover:text-white transition-colors">
+                            <i data-lucide="file-spreadsheet" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-teal-600 group-hover:translate-x-1 transition-all"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-teal-700 transition-colors leading-tight">
+                            Laporan Rekap Desa
+                        </h3>
+                        <p class="text-[11px] text-slate-500 mt-1 line-clamp-2 leading-relaxed">
+                            Rekapitulasi mutasi kependudukan bulanan siap cetak untuk diserahkan ke desa
+                        </p>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                    <span class="text-slate-400">Bulan:</span>
+                    <span class="font-black text-slate-900">{{ \Carbon\Carbon::now()->format('m / Y') }}</span>
+                </div>
+            </a>
+
+            <!-- 10. Buka Portal Publik Warga -->
+            <a href="{{ route('portal.warga') }}" 
+               target="_blank"
+               class="group bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition-all active:scale-[0.98] flex flex-col justify-between min-h-[140px] sm:min-h-[160px]">
+                <div class="space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <i data-lucide="external-link" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:text-blue-600 group-hover:translate-x-1 transition-all"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-blue-700 transition-colors leading-tight">
+                            Buka Portal Warga
+                        </h3>
+                        <p class="text-[11px] text-slate-500 mt-1 line-clamp-2 leading-relaxed">
+                            Cek tampilan website pencarian kode surat mandiri yang dilihat warga
+                        </p>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                    <span class="text-slate-400">Mode:</span>
+                    <span class="font-black text-blue-700">Publik &rarr;</span>
+                </div>
+            </a>
+
         </div>
     </div>
 
