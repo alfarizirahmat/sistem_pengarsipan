@@ -8,9 +8,10 @@ RUN apk add --no-cache \
     npm \
     libpng-dev \
     libzip-dev \
+    postgresql-dev \
     zip \
     unzip \
-    && docker-php-ext-install pdo pdo_mysql bcmath
+    && docker-php-ext-install pdo pdo_mysql pdo_pgsql bcmath
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -40,3 +41,4 @@ CMD php artisan migrate --force \
     && php artisan route:cache \
     && php artisan view:cache \
     && php artisan serve --host=0.0.0.0 --port=8000
+
