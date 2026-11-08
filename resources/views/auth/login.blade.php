@@ -89,103 +89,42 @@
             <!-- TAB 1: 1-Klik Masuk Pengurus -->
             <div x-show="tab === 'quick'" class="space-y-2.5">
                 <div class="text-center pb-2">
-                    <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Pilih Profil Pengurus untuk Masuk Langsung:</p>
+                    <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                        @if($demoUsers->count() === 1)
+                            Akun Pengurus Tersedia (1-Klik Masuk):
+                        @else
+                            Pilih Profil Pengurus untuk Masuk Langsung:
+                        @endif
+                    </p>
                 </div>
 
-                <!-- 1. Ketua RT -->
-                <a href="{{ route('quick-login', 'ketua_rt') }}" class="group block p-3.5 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 transition-all">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-lg bg-blue-700 text-white flex items-center justify-center text-lg font-bold flex-shrink-0">
-                                👑
-                            </div>
-                            <div>
-                                <div class="text-sm font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
-                                    Bapak Hartono
-                                    <span class="ml-1 text-[10px] font-bold uppercase text-blue-800 bg-blue-100 px-2 py-0.5 rounded-full">Ketua RT 005</span>
+                @forelse($demoUsers as $u)
+                    <a href="{{ route('quick-login', $u->role) }}" class="group block p-3.5 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 transition-all">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-blue-700 text-white flex items-center justify-center text-lg font-bold flex-shrink-0">
+                                    @if($u->role === 'ketua_rt') 👑
+                                    @elseif($u->role === 'sekretaris') 📝
+                                    @elseif($u->role === 'bendahara') 💰
+                                    @elseif($u->role === 'humas') 📢
+                                    @elseif($u->role === 'keamanan') 🛡️
+                                    @else 👤
+                                    @endif
                                 </div>
-                                <div class="text-xs text-slate-500 mt-0.5">Pengesahan Surat, Rekap Penduduk &amp; Laporan Desa</div>
-                            </div>
-                        </div>
-                        <i data-lucide="arrow-right" class="w-4 h-4 text-slate-400 group-hover:text-blue-700 group-hover:translate-x-1 transition-all flex-shrink-0"></i>
-                    </div>
-                </a>
-
-                <!-- 2. Sekretaris -->
-                <a href="{{ route('quick-login', 'sekretaris') }}" class="group block p-3.5 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 transition-all">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-lg bg-indigo-700 text-white flex items-center justify-center text-lg font-bold flex-shrink-0">
-                                📝
-                            </div>
-                            <div>
-                                <div class="text-sm font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
-                                    Bapak Ahmad Faisal
-                                    <span class="ml-1 text-[10px] font-bold uppercase text-indigo-800 bg-indigo-100 px-2 py-0.5 rounded-full">Sekretaris</span>
+                                <div>
+                                    <div class="text-sm font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
+                                        {{ $u->name }}
+                                        <span class="ml-1 text-[10px] font-bold uppercase text-blue-800 bg-blue-100 px-2 py-0.5 rounded-full">{{ $u->jabatan ?? ucfirst($u->role) }}</span>
+                                    </div>
+                                    <div class="text-xs text-slate-500 mt-0.5">{{ $u->email }}</div>
                                 </div>
-                                <div class="text-xs text-slate-500 mt-0.5">Pembuatan Surat, Agenda Surat Masuk &amp; Buku Warga</div>
                             </div>
+                            <i data-lucide="arrow-right" class="w-4 h-4 text-slate-400 group-hover:text-blue-700 group-hover:translate-x-1 transition-all flex-shrink-0"></i>
                         </div>
-                        <i data-lucide="arrow-right" class="w-4 h-4 text-slate-400 group-hover:text-blue-700 group-hover:translate-x-1 transition-all flex-shrink-0"></i>
-                    </div>
-                </a>
-
-                <!-- 3. Bendahara -->
-                <a href="{{ route('quick-login', 'bendahara') }}" class="group block p-3.5 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 transition-all">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-lg bg-emerald-700 text-white flex items-center justify-center text-lg font-bold flex-shrink-0">
-                                💰
-                            </div>
-                            <div>
-                                <div class="text-sm font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
-                                    Ibu Hj. Siti Nurjanah
-                                    <span class="ml-1 text-[10px] font-bold uppercase text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">Bendahara</span>
-                                </div>
-                                <div class="text-xs text-slate-500 mt-0.5">Buku Kas Keuangan RT, Saldo Kas Masuk &amp; Keluar</div>
-                            </div>
-                        </div>
-                        <i data-lucide="arrow-right" class="w-4 h-4 text-slate-400 group-hover:text-blue-700 group-hover:translate-x-1 transition-all flex-shrink-0"></i>
-                    </div>
-                </a>
-
-                <!-- 4. Humas -->
-                <a href="{{ route('quick-login', 'humas') }}" class="group block p-3.5 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 transition-all">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-lg bg-purple-700 text-white flex items-center justify-center text-lg font-bold flex-shrink-0">
-                                📢
-                            </div>
-                            <div>
-                                <div class="text-sm font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
-                                    Bapak Rudi Kurniawan
-                                    <span class="ml-1 text-[10px] font-bold uppercase text-purple-800 bg-purple-100 px-2 py-0.5 rounded-full">Humas</span>
-                                </div>
-                                <div class="text-xs text-slate-500 mt-0.5">Penarikan Iuran Warga Bulanan per Rumah</div>
-                            </div>
-                        </div>
-                        <i data-lucide="arrow-right" class="w-4 h-4 text-slate-400 group-hover:text-blue-700 group-hover:translate-x-1 transition-all flex-shrink-0"></i>
-                    </div>
-                </a>
-
-                <!-- 5. Keamanan -->
-                <a href="{{ route('quick-login', 'keamanan') }}" class="group block p-3.5 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 transition-all">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-lg bg-amber-700 text-white flex items-center justify-center text-lg font-bold flex-shrink-0">
-                                🛡️
-                            </div>
-                            <div>
-                                <div class="text-sm font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
-                                    Bapak Agus Santoso
-                                    <span class="ml-1 text-[10px] font-bold uppercase text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full">Keamanan</span>
-                                </div>
-                                <div class="text-xs text-slate-500 mt-0.5">Jadwal Ronda Malam, Tamu 1x24 Jam &amp; Siskamling</div>
-                            </div>
-                        </div>
-                        <i data-lucide="arrow-right" class="w-4 h-4 text-slate-400 group-hover:text-blue-700 group-hover:translate-x-1 transition-all flex-shrink-0"></i>
-                    </div>
-                </a>
+                    </a>
+                @empty
+                    <p class="text-center text-xs text-slate-500 py-4">Belum ada akun pengurus terdaftar. Silakan gunakan tab Masuk Manual.</p>
+                @endforelse
             </div>
 
             <!-- TAB 2: Masuk Manual (Email & Sandi) -->
