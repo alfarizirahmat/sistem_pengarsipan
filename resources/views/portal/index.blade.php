@@ -196,6 +196,34 @@
                                 </div>
                             </div>
 
+                            @if($foundSurat->file_dokumen)
+                                <div class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-4 sm:p-5 space-y-3">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-2">
+                                            <i data-lucide="file-check" class="w-5 h-5 text-emerald-700"></i>
+                                            <span class="font-bold text-slate-900 text-sm">Berkas Dokumen Asli dari Pak RT</span>
+                                        </div>
+                                        <a href="{{ asset($foundSurat->file_dokumen) }}" target="_blank"
+                                           class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-colors shadow-2xs">
+                                            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                                            <span>Unduh Berkas Asli</span>
+                                        </a>
+                                    </div>
+                                    @php
+                                        $fExt = strtolower(pathinfo($foundSurat->file_dokumen, PATHINFO_EXTENSION));
+                                    @endphp
+                                    @if(in_array($fExt, ['png', 'jpg', 'jpeg', 'webp']))
+                                        <div class="p-2 bg-white rounded-xl border border-emerald-200 flex items-center justify-center max-h-[450px] overflow-hidden">
+                                            <img src="{{ asset($foundSurat->file_dokumen) }}" alt="Dokumen Surat Warga" class="max-h-[430px] w-auto object-contain rounded-lg">
+                                        </div>
+                                    @elseif($fExt === 'pdf')
+                                        <div class="rounded-xl border border-emerald-200 overflow-hidden h-[380px] bg-white">
+                                            <iframe src="{{ asset($foundSurat->file_dokumen) }}" class="w-full h-full" frameborder="0"></iframe>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endif
+
                             <!-- Tombol Aksi Surat -->
                             <div class="pt-4 flex flex-col sm:flex-row gap-3 border-t border-slate-200">
                                 <a href="{{ route('portal.digital', $foundSurat->qr_token ?: $foundSurat->id) }}" 

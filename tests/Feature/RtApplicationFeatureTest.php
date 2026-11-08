@@ -323,4 +323,33 @@ class RtApplicationFeatureTest extends TestCase
             'status' => 'selesai',
         ]);
     }
+
+    public function test_rt_can_upload_document_and_generate_code_for_citizen(): void
+    {
+        $user = User::where('role', 'ketua_rt')->first();
+        $file = UploadedFile::fake()->create('surat_pengantar_resmi.pdf', 300, 'application/pdf');
+
+        $postData = [
+            'nomor_surat' => '777/RT.005/RW.013/XI/2026',
+            'nama_lengkap' => 'Warga Surat Siap',
+            'nik' => '3201556677880009',
+            'jenis_surat' => 'keterangan_domisili',
+            'tanggal_surat' => '2026-11-08',
+            'file_dokumen' => $file,
+        ];
+
+        $response = $this->actingAs($user)->post('/surat-pengantar', $postData);
+        $response->assertRedirect();
+
+        $surat = SuratPengantar::where('nomor_surat', '777/RT.005/RW.013/XI/2026')->first();
+        $this->assertNotNull($surat);
+        $this->assertNotNull($surat->qr_token);
+        $this->assertStringContainsString('surat_dokumen/', $surat->file_dokumen);
+
+        // Cek halaman portal warga dapat melacak dengan kode yang digenerate
+        $portalResponse = $this->get('/?kode='.$surat->qr_token);
+        $portalResponse->assertStatus(200);
+        $portalResponse->assertSee($surat->qr_token);
+        $portalResponse->assertSee('Warga Surat Siap');
+    }
 }

@@ -112,15 +112,16 @@ class SuratPengantarController extends Controller
             'pekerjaan' => ['nullable', 'string', 'max:255'],
             'alamat' => ['nullable', 'string', 'max:500'],
             'jenis_surat' => ['required', 'string'],
-            'keperluan' => ['required', 'string'],
+            'keperluan' => ['nullable', 'string'],
             'dokumen_hilang' => ['nullable', 'string', 'max:255'],
             'tanggal_surat' => ['required', 'date'],
             'berlaku_sampai' => ['nullable', 'date'],
-            'penandatangan_nama' => ['required', 'string'],
-            'penandatangan_jabatan' => ['required', 'string'],
-            'tanda_tangan_jenis' => ['nullable', 'in:manual,digital,qrcode,foto,pdf,upload'],
-            'tanda_tangan_digital' => ['nullable', 'string'],
+            'penandatangan_nama' => ['nullable', 'string'],
+            'penandatangan_jabatan' => ['nullable', 'string'],
+            'file_dokumen' => ['nullable', 'file', 'mimes:pdf,png,jpg,jpeg,webp', 'max:15360'],
             'tanda_tangan_file' => ['nullable', 'file', 'mimes:png,jpg,jpeg,pdf', 'max:5120'],
+            'tanda_tangan_jenis' => ['nullable', 'string'],
+            'tanda_tangan_digital' => ['nullable', 'string'],
             'lokasi_arsip_fisik' => ['nullable', 'string'],
             'catatan' => ['nullable', 'string'],
         ]);
@@ -135,33 +136,37 @@ class SuratPengantarController extends Controller
         $tanggal = Carbon::parse($validated['tanggal_surat']);
         $validated['tahun_arsip'] = $tanggal->year;
         $validated['status'] = 'selesai';
-        $validated['tanda_tangan_jenis'] = $validated['tanda_tangan_jenis'] ?? 'foto';
+        $validated['penandatangan_nama'] = ($validated['penandatangan_nama'] ?? null) ?: (auth()->user()->name ?? 'Ketua RT 005');
+        $validated['penandatangan_jabatan'] = ($validated['penandatangan_jabatan'] ?? null) ?: (auth()->user()->jabatan ?? 'Ketua RT 005');
 
-        // Jika ada unggahan berkas foto / PDF tanda tangan
+        if (empty($validated['keperluan'])) {
+            $validated['keperluan'] = 'Surat Pengantar RT 005 / RW 013 - '.ucwords(str_replace('_', ' ', $validated['jenis_surat']));
+        }
+
+        // Upload berkas tanda tangan jika ada
         if ($request->hasFile('tanda_tangan_file')) {
             $file = $request->file('tanda_tangan_file');
             $ext = strtolower($file->getClientOriginalExtension());
             $path = $file->store('signatures', 'public');
             $validated['tanda_tangan_digital'] = 'storage/'.$path;
             $validated['tanda_tangan_jenis'] = ($ext === 'pdf') ? 'pdf' : 'foto';
-        } elseif (! empty($request->input('tanda_tangan_digital'))) {
-            // Jika memilih foto tersimpan atau goresan kanvas
-            $validated['tanda_tangan_digital'] = $request->input('tanda_tangan_digital');
-            if ($validated['tanda_tangan_jenis'] === 'digital') {
-                $validated['tanda_tangan_jenis'] = 'foto';
-            }
-        } elseif ($validated['tanda_tangan_jenis'] === 'manual') {
-            $validated['tanda_tangan_digital'] = null;
         }
 
-        if (in_array($validated['tanda_tangan_jenis'], ['digital', 'qrcode', 'foto', 'pdf', 'upload']) || empty($validated['qr_token'] ?? null)) {
-            $validated['qr_token'] = 'BMI2-'.strtoupper(Str::random(6));
+        // Upload berkas dokumen surat jika ada
+        if ($request->hasFile('file_dokumen')) {
+            $file = $request->file('file_dokumen');
+            $path = $file->store('surat_dokumen', 'public');
+            $validated['file_dokumen'] = 'storage/'.$path;
         }
+
+        $qrToken = 'BMI2-'.strtoupper(Str::random(6));
+        $validated['qr_token'] = $qrToken;
 
         $surat = SuratPengantar::create($validated);
 
         return redirect()->route('surat-pengantar.show', $surat)
-            ->with('success', 'Surat pengantar nomor '.$surat->nomor_surat.' berhasil dibuat dengan Kode Warga: '.$surat->qr_token);
+            ->with('success', 'Dokumen Surat berhasil dimasukkan! Kode Surat Warga: '.$qrToken.'. Berikan kode ini kepada warga untuk pengecekan mandiri.')
+            ->with('kode_baru', $qrToken);
     }
 
     /**

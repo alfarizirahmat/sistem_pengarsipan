@@ -25,6 +25,7 @@ class SuratPengantar extends Model
         'tanda_tangan_jenis',
         'tanda_tangan_digital',
         'qr_token',
+        'file_dokumen',
         'status',
         'lokasi_arsip_fisik',
         'catatan',

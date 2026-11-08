@@ -35,8 +35,8 @@
             @endif
 
             @php
-                $linkWarga = route('portal.digital', $suratPengantar->qr_token ?: $suratPengantar->id);
-                $pesanWa = "Halo Bapak/Ibu " . ($suratPengantar->warga->nama_lengkap ?? 'Warga') . ", Surat Pengantar RT 005 RW 013 Anda telah selesai dibuat. Kode Surat Anda: *" . $suratPengantar->qr_token . "*. Tautan unduh: " . $linkWarga;
+                $linkWarga = route('portal.warga', ['kode' => $suratPengantar->qr_token]);
+                $pesanWa = "Halo Bapak/Ibu " . ($suratPengantar->warga->nama_lengkap ?? 'Warga') . ", Surat Pengantar RT 005 RW 013 Anda telah selesai dibuat. Kode Surat Anda: *" . $suratPengantar->qr_token . "*. Silakan periksa & unduh surat di: " . $linkWarga;
             @endphp
             <button type="button" 
                     onclick="navigator.clipboard.writeText('{{ addslashes($pesanWa) }}'); alert('Pesan WhatsApp siap kirim berhasil disalin!');"
@@ -47,10 +47,79 @@
 
             <a href="{{ route('surat-pengantar.print', $suratPengantar) }}" target="_blank" class="w-full sm:w-auto justify-center px-5 py-2.5 bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs rounded-xl shadow-xs transition-colors flex items-center gap-2">
                 <i data-lucide="printer" class="w-4 h-4"></i>
-                <span>Cetak Lembar Surat (A4)</span>
+                <span>Cetak Lembar Surat</span>
             </a>
         </div>
     </div>
+
+    <!-- KOTAK KODE SURAT WARGA (UNTUK DIBERIKAN KE PEMOHON) -->
+    <div class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white rounded-2xl p-5 sm:p-6 shadow-md">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="space-y-1">
+                <span class="text-[10px] font-black uppercase tracking-wider bg-white/20 px-2.5 py-0.5 rounded-full text-blue-100">
+                    Kode Surat Warga
+                </span>
+                <div class="flex items-center gap-3 mt-1">
+                    <span class="text-2xl sm:text-3xl font-black font-mono tracking-wider text-yellow-300">
+                        {{ $suratPengantar->qr_token }}
+                    </span>
+                    <button type="button" 
+                            onclick="navigator.clipboard.writeText('{{ $suratPengantar->qr_token }}'); alert('Kode surat berhasil disalin: {{ $suratPengantar->qr_token }}');"
+                            class="px-3 py-1 bg-white/20 hover:bg-white/30 text-white rounded-lg text-xs font-bold transition-colors">
+                        Salin Kode
+                    </button>
+                </div>
+                <p class="text-xs text-blue-100 max-w-xl">
+                    Berikan kode ini kepada warga (<strong>{{ $suratPengantar->warga->nama_lengkap ?? 'Pemohon' }}</strong>). Warga dapat memasukkan kode ini di portal website untuk memeriksa &amp; mengunduh dokumen surat.
+                </p>
+            </div>
+
+            <div class="flex items-center gap-2 flex-shrink-0">
+                <a href="https://wa.me/?text={{ urlencode($pesanWa) }}" target="_blank"
+                   class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-xs transition-colors flex items-center gap-2">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    <span>Kirim via WhatsApp</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JIKA ADA BERKAS DOKUMEN YANG DIUNGGAH OLEH PAK RT -->
+    @if($suratPengantar->file_dokumen)
+        <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-sm space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+                        <i data-lucide="file-check" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-sm font-bold text-slate-900">Berkas Dokumen Surat yang Diunggah</h2>
+                        <p class="text-xs text-slate-500">Berkas dokumen surat resmi dari Pak RT</p>
+                    </div>
+                </div>
+
+                <a href="{{ asset($suratPengantar->file_dokumen) }}" target="_blank" 
+                   class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-colors shadow-2xs">
+                    <i data-lucide="download" class="w-4 h-4"></i>
+                    <span>Unduh Dokumen Asli</span>
+                </a>
+            </div>
+
+            <!-- Preview Dokumen -->
+            @php
+                $ext = strtolower(pathinfo($suratPengantar->file_dokumen, PATHINFO_EXTENSION));
+            @endphp
+            @if(in_array($ext, ['png', 'jpg', 'jpeg', 'webp']))
+                <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-center max-h-[600px] overflow-hidden">
+                    <img src="{{ asset($suratPengantar->file_dokumen) }}" alt="Dokumen Surat" class="max-h-[580px] w-auto object-contain rounded-lg shadow-sm">
+                </div>
+            @elseif($ext === 'pdf')
+                <div class="border border-slate-200 rounded-xl overflow-hidden h-[500px]">
+                    <iframe src="{{ asset($suratPengantar->file_dokumen) }}" class="w-full h-full" frameborder="0"></iframe>
+                </div>
+            @endif
+        </div>
+    @endif
 
     <!-- Tampilan Langsung Lembar Surat Fisik (Format Tata Naskah Dinas Pemerintahan Indonesia) -->
     <div class="overflow-x-auto pb-2">
