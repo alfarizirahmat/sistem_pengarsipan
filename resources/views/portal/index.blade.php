@@ -322,21 +322,6 @@
                     </form>
                 </div>
             </div>
-
-            <!-- KOTAK INFORMASI SEKRETARIAT RT -->
-            <div class="mt-8 bg-slate-100/80 rounded-2xl p-5 border border-slate-200 text-xs text-slate-600 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <div class="space-y-1">
-                    <p class="font-bold text-slate-900 text-sm">Sekretariat Rukun Tetangga (RT) 005 / RW 013</p>
-                    <p>Perumahan Bumi Mutiara Indah II, RT 005 / RW 013</p>
-                    <p class="text-slate-500">Layanan pengesahan berkas &amp; siskamling lingkungan setiap hari kerja</p>
-                </div>
-                <div class="flex items-center gap-2 flex-shrink-0">
-                    <a href="{{ route('login') }}" class="bg-white border border-slate-300 hover:border-slate-400 text-slate-700 font-bold px-3.5 py-2 rounded-xl text-xs transition-colors shadow-2xs">
-                        Area Pengurus RT &rarr;
-                    </a>
-                </div>
-            </div>
-
         </div>
     </main>
 
