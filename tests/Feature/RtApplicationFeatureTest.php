@@ -283,6 +283,32 @@ class RtApplicationFeatureTest extends TestCase
         ]);
     }
 
+    public function test_citizen_can_apply_with_direct_name_and_nik_without_selecting(): void
+    {
+        $postData = [
+            'nama_lengkap' => 'Warga Baru Mandiri',
+            'nik' => '3201998877660001',
+            'jenis_surat' => 'ktp_baru',
+            'keperluan' => 'Perekaman KTP elektronik mandiri',
+            'no_whatsapp' => '089988776655',
+        ];
+
+        $response = $this->post('/ajukan-surat', $postData);
+
+        $response->assertRedirect();
+        $response->assertSessionHas('success_token');
+
+        $this->assertDatabaseHas('wargas', [
+            'nama_lengkap' => 'Warga Baru Mandiri',
+            'nik' => '3201998877660001',
+        ]);
+
+        $this->assertDatabaseHas('surat_pengantars', [
+            'status' => 'menunggu_validasi',
+            'keperluan' => 'Perekaman KTP elektronik mandiri',
+        ]);
+    }
+
     public function test_pengurus_can_validate_citizen_application(): void
     {
         $ketua = User::where('role', 'ketua_rt')->first();

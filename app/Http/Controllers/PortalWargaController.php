@@ -45,12 +45,20 @@ class PortalWargaController extends Controller
     public function ajukanSurat(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'warga_id' => ['required', 'exists:wargas,id'],
+            'nama_lengkap' => ['nullable', 'string', 'max:255'],
+            'nik' => ['nullable', 'string', 'max:20'],
+            'warga_id' => ['nullable', 'exists:wargas,id'],
             'jenis_surat' => ['required', 'string'],
             'keperluan' => ['required', 'string', 'max:500'],
             'dokumen_hilang' => ['nullable', 'string', 'max:255'],
             'no_whatsapp' => ['nullable', 'string', 'max:20'],
         ]);
+
+        if (empty($validated['nama_lengkap']) && empty($validated['nik']) && empty($validated['warga_id'])) {
+            return back()->withErrors(['nama_lengkap' => 'Silakan masukkan Nama Lengkap atau NIK pemohon.'])->withInput();
+        }
+
+        $warga = Warga::resolveFromInput($validated);
 
         $currentMonth = Carbon::now()->month;
         $currentYear = Carbon::now()->year;
@@ -73,7 +81,7 @@ class PortalWargaController extends Controller
 
         $surat = SuratPengantar::create([
             'nomor_surat' => $nomorSurat,
-            'warga_id' => $validated['warga_id'],
+            'warga_id' => $warga->id,
             'jenis_surat' => $validated['jenis_surat'],
             'keperluan' => $validated['keperluan'],
             'dokumen_hilang' => $validated['dokumen_hilang'] ?? null,

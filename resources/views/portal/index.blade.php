@@ -255,17 +255,32 @@
                 <div x-show="showForm" x-cloak class="pt-6">
                     <form action="{{ route('portal.ajukan') }}" method="POST" class="space-y-4">
                         @csrf
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1.5">
-                                Pilih Nama Pemohon (Warga RT 005) <span class="text-red-500">*</span>
-                            </label>
-                            <select name="warga_id" required class="w-full text-sm bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 text-slate-800">
-                                <option value="">-- Pilih Nama Warga Pemohon --</option>
-                                @foreach($wargas as $w)
-                                    <option value="{{ $w->id }}">{{ $w->nama_lengkap }} (NIK: {{ $w->nik }})</option>
-                                @endforeach
-                            </select>
-                            <p class="text-[11px] text-slate-500 mt-1">Jika nama belum terdaftar, silakan hubungi pengurus RT untuk pendaftaran data warga terlebih dahulu.</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1.5">
+                                    Nama Lengkap Pemohon <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" 
+                                       name="nama_lengkap" 
+                                       value="{{ old('nama_lengkap') }}"
+                                       placeholder="Tulis nama lengkap Anda" 
+                                       required
+                                       class="w-full text-sm bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 text-slate-800">
+                                <p class="text-[11px] text-slate-500 mt-1">Sesuai KTP atau identitas resmi Anda</p>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1.5">
+                                    NIK (Nomor Induk Kependudukan)
+                                </label>
+                                <input type="text" 
+                                       name="nik" 
+                                       value="{{ old('nik') }}"
+                                       maxlength="16"
+                                       placeholder="16 digit NIK (Bisa dimasukkan)" 
+                                       class="w-full text-sm bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 text-slate-800 font-mono">
+                                <p class="text-[11px] text-slate-500 mt-1">Dapat dikosongkan jika belum hafal NIK</p>
+                            </div>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">

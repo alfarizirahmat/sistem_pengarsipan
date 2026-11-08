@@ -105,7 +105,12 @@ class SuratPengantarController extends Controller
     {
         $validated = $request->validate([
             'nomor_surat' => ['required', 'string', 'unique:surat_pengantars,nomor_surat'],
-            'warga_id' => ['required', 'exists:wargas,id'],
+            'warga_id' => ['nullable', 'exists:wargas,id'],
+            'nama_lengkap' => ['nullable', 'string', 'max:255'],
+            'nik' => ['nullable', 'string', 'max:20'],
+            'jenis_kelamin' => ['nullable', 'in:L,P'],
+            'pekerjaan' => ['nullable', 'string', 'max:255'],
+            'alamat' => ['nullable', 'string', 'max:500'],
             'jenis_surat' => ['required', 'string'],
             'keperluan' => ['required', 'string'],
             'dokumen_hilang' => ['nullable', 'string', 'max:255'],
@@ -119,6 +124,13 @@ class SuratPengantarController extends Controller
             'lokasi_arsip_fisik' => ['nullable', 'string'],
             'catatan' => ['nullable', 'string'],
         ]);
+
+        if (empty($validated['warga_id']) && empty($validated['nama_lengkap']) && empty($validated['nik'])) {
+            return back()->withErrors(['nama_lengkap' => 'Silakan masukkan Nama Lengkap atau NIK pemohon.'])->withInput();
+        }
+
+        $warga = Warga::resolveFromInput($validated);
+        $validated['warga_id'] = $warga->id;
 
         $tanggal = Carbon::parse($validated['tanggal_surat']);
         $validated['tahun_arsip'] = $tanggal->year;

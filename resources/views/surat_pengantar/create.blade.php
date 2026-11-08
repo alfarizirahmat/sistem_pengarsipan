@@ -16,6 +16,13 @@
         penandatanganJabatan: '{{ old('penandatangan_jabatan', 'Ketua RT 005') }}',
         ttdJenis: '{{ old('tanda_tangan_jenis', 'foto') }}',
         selectedWargaId: '{{ old('warga_id', $selectedWargaId) }}',
+        namaLengkap: '{{ old('nama_lengkap', '') }}',
+        nik: '{{ old('nik', '') }}',
+        jenisKelamin: '{{ old('jenis_kelamin', 'L') }}',
+        tempatLahir: '{{ old('tempat_lahir', 'Bogor') }}',
+        tanggalLahir: '{{ old('tanggal_lahir', '1990-01-01') }}',
+        pekerjaan: '{{ old('pekerjaan', 'Wiraswasta') }}',
+        alamat: `{{ old('alamat', 'Perumahan Bumi Mutiara Indah II, RT 005 / RW 013') }}`,
         viewMode: (window.innerWidth >= 1024 ? 'split' : 'form'),
         
         // Preview Foto / Berkas TTD
@@ -24,23 +31,31 @@
         isPdf: false,
         presetSignature: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAACgCAYAAAAisjrVAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAFhElEQVR4nO3dUW7bOBQFUKfoArKrLCvIsrKr7CDzM5m6HsmWKYl87/EcoB8BipiiFF5dSm0uFwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACANi+jB9DL6+fH9/XXX2/v0xw7wBl+jR4AADlNESC37QOA/aYIkCVCBWCfaQMEgH0ECABNygeIrSqAc5QPkHuEC0C7qQMEgHalA8Q/HgQ4T+kAAeA8AgSAJtMFyO02lgfpAG3KBojnHwDnKhsgAJxLgADQpOS2zpbtK1tcAPtoIAA0ESAANBEgADT5PXoAR/NsYyzzD/OYtoH4B4XHM4cwl2kDhD6ECtRVKkBsn4wjKGA+pQKEMR4Ft3CBmqYOEAsdQLupA4T9bBvCvMoEiIWsv3tzrt1BfWUCpAoLLZCFAAno9fPjO3qQbGl8WgjUViJA9mxfRVnklkIj6oJruxC4XIoESGUZ2ggwJwESwJaAiBIiz7aPKA0POJ4ACejr7f1l7ZdgjVyAbV3FI5AZKX2AHLGoRb1LXjuWKOPbKur8Zjb6ZgIulwIBkt2jAIzSRrSPOLK8bEF9AiSJkW1EeMRw76ZBiDBC6gCZbWGL0kZa2Mbax3wRUeoAya41AHu2kdlCOpq1m4OlmwkhQ28C5F/Zfhh7tJGjwyPbHI+2Nj9CnCgESHJV3tTij2dah1BmpLQBkn1r5cjxn9FGss9vVloHmaQNEP7vqDZyZni4Y172TOtY+ju33+vo8cESAXKlwg9i5je1ZqV1kFXKC/TMO+QeWze9todaFqZRY5txsTw6OMwpvWkghT3bRixA/WgdVCBAJuBNrTj2POt4pMIWLLkIkM5G3eU/aiO9xzXjYqd1UE26ADl7oau+sG2ZLwvasc5sHUvf8/azj/z+cC1dgLDfGQtX6ziuv6642GkdVCZAOor2kHrp80ePqYqerWPpM27HcubnMa9UARJtAa7gekEzn8fQOphFqgDpZcY7uFGLW6W5Htk6lj7z+uvM80pcv0cPYBbaU133Fmfnmco0EIbLeLe89vrzjwgvKmScV3JJ00DcwRPBlkXYtcks0gRIZsIvt6137hHP69fb+8v1+F8/P74jjpOcbGGtUP/7ijbfj7aorkXYroIRUjQQd/D0krltrKnSQq6PIeP4K0oRIJkJv+1GLXTPtB3nr6+1cyNMYhAgTGm20MjWQp45P8JkHAFyR7YfOh6ruEVVxRHPvYRJX+EnePQW0J7PHz32rI6et9naxj3RrsnWc/Ns2Iw+zqo0EEoSGrHtbYLPholmco7wEzn6jkkDGaN17mxRPTbquuwR6ppJX6EbSOYFOPPYs9E24up9bjSTvkJPWJRFuGUcUcae1aP5Exr7nH19RmuCmsk5QjcQ5rX2Bly0hYk/Ioe6ZnKO0BMT5S7+2XFEGXd2La91muvtjrhOI4fGFprJPmEbiEWYrY3DtdFflSaomewTdgKiBcgz44k29sz8ethz7bmu78l+fjSTbaY86BZbf9CExzl+5tV8HsvLCo8Jk3XTHOheAoSqlq7ZKltURxMmfwv7DAQYw3OndZ6Z/K3cAZ1lS7PQPshKaOwzazMpcRC9PLtfXOUioT4vKxxnpjCxhQX8t4h5WWG/mba5Ug12tHsNQ/sA7qnYTDQQgA5am0nkIPk1egCZ7HlHHuDH19v7y8+f0WPZQwM5gO0roNWe37Q4mgABCCJbmAgQgIAy7GSEH+BWGdIaqC/Dwn8UD9EBaCJAAGgiQABoMs1e3ZH8v0EAGkgTQQEgQA4jVIDZCBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAtvsHi3ErT/W5y6IAAAAASUVORK5CYII=',
 
-        // Data warga untuk live preview
+        // Data warga untuk live preview / pencarian
         wargasList: {{ Js::from($wargas) }},
-        selectedWargaData: null,
 
         init() {
-            this.updateWargaData();
+            if (this.selectedWargaId && this.wargasList.length > 0) {
+                const found = this.wargasList.find(w => w.id == this.selectedWargaId);
+                if (found) {
+                    this.fillFromWarga(found);
+                }
+            }
             if (!this.signaturePreview) {
                 this.signaturePreview = this.presetSignature;
             }
         },
 
-        updateWargaData() {
-            if (this.selectedWargaId) {
-                this.selectedWargaData = this.wargasList.find(w => w.id == this.selectedWargaId);
-            } else {
-                this.selectedWargaData = this.wargasList.length > 0 ? this.wargasList[0] : null;
-            }
+        fillFromWarga(w) {
+            if (!w) return;
+            this.selectedWargaId = w.id;
+            this.namaLengkap = w.nama_lengkap;
+            this.nik = w.nik;
+            this.jenisKelamin = w.jenis_kelamin || 'L';
+            this.tempatLahir = w.tempat_lahir || 'Bogor';
+            this.tanggalLahir = w.tanggal_lahir ? w.tanggal_lahir.substring(0, 10) : '1990-01-01';
+            this.pekerjaan = w.pekerjaan || 'Wiraswasta';
+            this.alamat = (w.keluarga && w.keluarga.alamat) ? w.keluarga.alamat : 'Perumahan Bumi Mutiara Indah II, RT 005 / RW 013';
         },
         
         applyTemplate(type) {
@@ -255,42 +270,80 @@
                 <input type="hidden" name="tanda_tangan_jenis" :value="ttdJenis">
                 <input type="hidden" name="tanda_tangan_digital" id="tanda_tangan_digital_input" :value="signaturePreview">
 
-                <!-- BAGIAN 2: PILIH WARGA -->
+                <!-- BAGIAN 2: DATA WARGA PEMOHON -->
                 <div class="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/90 shadow-sm space-y-4">
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-7 h-7 rounded-xl bg-emerald-600 text-white font-black text-xs flex items-center justify-center shadow-md">2</span>
-                        <h2 class="text-sm font-black uppercase tracking-wider text-slate-900">Pilih Warga Pemohon</h2>
-                    </div>
-
-                    <div>
-                        <select name="warga_id" required x-model="selectedWargaId" @change="updateWargaData()"
-                            class="w-full px-4 py-3 bg-slate-50 border-2 border-slate-300 rounded-2xl text-sm font-bold text-slate-900 focus:outline-none focus:ring-4 focus:ring-emerald-100 focus:border-emerald-600 transition-all">
-                            <option value="">-- Klik untuk memilih nama warga RT 005 --</option>
-                            @foreach($wargas as $w)
-                                <option value="{{ $w->id }}" {{ (old('warga_id', $selectedWargaId) == $w->id) ? 'selected' : '' }}>
-                                    {{ $w->nama_lengkap }} (NIK: {{ $w->nik }}) - {{ $w->keluarga->alamat ?? 'Perumahan Bumi Mutiara Indah II' }} [{{ ucfirst($w->status_tinggal) }}]
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <!-- Ringkasan Warga Terpilih -->
-                    <template x-if="selectedWargaData">
-                        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-7 h-7 rounded-xl bg-emerald-600 text-white font-black text-xs flex items-center justify-center shadow-md">2</span>
                             <div>
-                                <span class="text-[11px] text-slate-400 font-bold block">Status Hubungan:</span>
-                                <span class="font-extrabold text-slate-800" x-text="selectedWargaData.status_hubungan_keluarga"></span>
-                            </div>
-                            <div>
-                                <span class="text-[11px] text-slate-400 font-bold block">Pekerjaan:</span>
-                                <span class="font-extrabold text-slate-800" x-text="selectedWargaData.pekerjaan"></span>
-                            </div>
-                            <div>
-                                <span class="text-[11px] text-slate-400 font-bold block">Status Tempat Tinggal:</span>
-                                <span class="font-extrabold text-emerald-800 capitalize" x-text="selectedWargaData.status_tinggal"></span>
+                                <h2 class="text-sm font-black uppercase tracking-wider text-slate-900">Identitas Warga Pemohon</h2>
+                                <p class="text-[11px] text-slate-500 font-medium">Ketik langsung Nama dan/atau NIK pemohon (tidak perlu memilih jika data belum terdaftar)</p>
                             </div>
                         </div>
-                    </template>
+                    </div>
+
+                    <input type="hidden" name="warga_id" :value="selectedWargaId">
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">
+                                Nama Lengkap Pemohon <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" 
+                                   name="nama_lengkap" 
+                                   x-model="namaLengkap" 
+                                   placeholder="Contoh: Budi Santoso" 
+                                   required
+                                   list="list-warga-nama"
+                                   class="w-full px-3.5 py-2.5 bg-slate-50 border-2 border-slate-300 rounded-xl text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all">
+                            <datalist id="list-warga-nama">
+                                @foreach($wargas as $w)
+                                    <option value="{{ $w->nama_lengkap }}">{{ $w->nik }}</option>
+                                @endforeach
+                            </datalist>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">
+                                NIK (Nomor Induk Kependudukan)
+                            </label>
+                            <input type="text" 
+                                   name="nik" 
+                                   x-model="nik" 
+                                   maxlength="16"
+                                   placeholder="Contoh: 320101XXXXXXXXXX" 
+                                   list="list-warga-nik"
+                                   class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-mono font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all">
+                            <datalist id="list-warga-nik">
+                                @foreach($wargas as $w)
+                                    <option value="{{ $w->nik }}">{{ $w->nama_lengkap }}</option>
+                                @endforeach
+                            </datalist>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Jenis Kelamin:</label>
+                            <select name="jenis_kelamin" x-model="jenisKelamin"
+                                    class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-emerald-500">
+                                <option value="L">Laki-laki</option>
+                                <option value="P">Perempuan</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Pekerjaan:</label>
+                            <input type="text" name="pekerjaan" x-model="pekerjaan" placeholder="Contoh: Karyawan Swasta"
+                                   class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-emerald-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Alamat Domisili:</label>
+                            <input type="text" name="alamat" x-model="alamat" placeholder="Contoh: Blok B2 No. 12"
+                                   class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-emerald-500">
+                        </div>
+                    </div>
                 </div>
 
                 <!-- BAGIAN 3: DETAIL ISI SURAT -->
@@ -514,47 +567,37 @@
                         <div class="grid grid-cols-12">
                             <span class="col-span-5 text-slate-600 font-medium">1. Nama Lengkap</span>
                             <span class="col-span-1">:</span>
-                            <strong class="col-span-6 uppercase text-slate-950 font-bold" x-text="selectedWargaData ? selectedWargaData.nama_lengkap : 'Nama Warga'"></strong>
+                            <strong class="col-span-6 uppercase text-slate-950 font-bold" x-text="namaLengkap || 'Nama Warga'"></strong>
                         </div>
                         <div class="grid grid-cols-12">
                             <span class="col-span-5 text-slate-600 font-medium">2. NIK</span>
                             <span class="col-span-1">:</span>
-                            <strong class="col-span-6 font-mono font-bold text-slate-950" x-text="selectedWargaData ? selectedWargaData.nik : '320101xxxxxxxxxx'"></strong>
+                            <strong class="col-span-6 font-mono font-bold text-slate-950" x-text="nik || '320101xxxxxxxxxx'"></strong>
                         </div>
                         <div class="grid grid-cols-12">
-                            <span class="col-span-5 text-slate-600 font-medium">3. Nomor Kartu Keluarga</span>
+                            <span class="col-span-5 text-slate-600 font-medium">3. Jenis Kelamin</span>
                             <span class="col-span-1">:</span>
-                            <span class="col-span-6 font-mono" x-text="selectedWargaData && selectedWargaData.keluarga ? selectedWargaData.keluarga.nomor_kk : '-'"></span>
+                            <span class="col-span-6" x-text="jenisKelamin === 'L' ? 'Laki-laki' : 'Perempuan'"></span>
                         </div>
                         <div class="grid grid-cols-12">
-                            <span class="col-span-5 text-slate-600 font-medium">4. Tempat, Tgl Lahir</span>
-                            <span class="col-span-1">:</span>
-                            <span class="col-span-6" x-text="selectedWargaData ? (selectedWargaData.tempat_lahir + ', ' + (selectedWargaData.tanggal_lahir ? selectedWargaData.tanggal_lahir.substring(0, 10) : '')) : '-'"></span>
-                        </div>
-                        <div class="grid grid-cols-12">
-                            <span class="col-span-5 text-slate-600 font-medium">5. Jenis Kelamin</span>
-                            <span class="col-span-1">:</span>
-                            <span class="col-span-6" x-text="selectedWargaData ? (selectedWargaData.jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan') : '-'"></span>
-                        </div>
-                        <div class="grid grid-cols-12">
-                            <span class="col-span-5 text-slate-600 font-medium">6. Kewarganegaraan</span>
+                            <span class="col-span-5 text-slate-600 font-medium">4. Kewarganegaraan</span>
                             <span class="col-span-1">:</span>
                             <span class="col-span-6">WNI</span>
                         </div>
                         <div class="grid grid-cols-12">
-                            <span class="col-span-5 text-slate-600 font-medium">7. Agama</span>
+                            <span class="col-span-5 text-slate-600 font-medium">5. Agama</span>
                             <span class="col-span-1">:</span>
-                            <span class="col-span-6" x-text="selectedWargaData ? selectedWargaData.agama : 'Islam'"></span>
+                            <span class="col-span-6">Islam</span>
                         </div>
                         <div class="grid grid-cols-12">
-                            <span class="col-span-5 text-slate-600 font-medium">8. Pekerjaan</span>
+                            <span class="col-span-5 text-slate-600 font-medium">6. Pekerjaan</span>
                             <span class="col-span-1">:</span>
-                            <span class="col-span-6" x-text="selectedWargaData ? selectedWargaData.pekerjaan : 'Wiraswasta'"></span>
+                            <span class="col-span-6" x-text="pekerjaan || 'Wiraswasta'"></span>
                         </div>
                         <div class="grid grid-cols-12">
-                            <span class="col-span-5 text-slate-600 font-medium">9. Alamat KTP / Domisili</span>
+                            <span class="col-span-5 text-slate-600 font-medium">7. Alamat Domisili</span>
                             <span class="col-span-1">:</span>
-                            <span class="col-span-6" x-text="selectedWargaData && selectedWargaData.keluarga ? selectedWargaData.keluarga.alamat : 'Perumahan Bumi Mutiara Indah II, RT 005 / RW 013'"></span>
+                            <span class="col-span-6" x-text="alamat || 'Perumahan Bumi Mutiara Indah II, RT 005 / RW 013'"></span>
                         </div>
                     </div>
 
@@ -581,7 +624,7 @@
                             <div class="h-12 flex items-end justify-center pb-1">
                                 <span class="text-[8px] text-slate-400 italic">[ Tanda Tangan ]</span>
                             </div>
-                            <span class="font-bold underline uppercase" x-text="selectedWargaData ? selectedWargaData.nama_lengkap : 'Warga'"></span>
+                            <span class="font-bold underline uppercase" x-text="namaLengkap || 'Warga'"></span>
                         </div>
                         
                         <div class="relative">
