@@ -37,8 +37,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen text-slate-800 antialiased font-sans flex flex-col justify-between bg-slate-100"
-      x-data="{ mobileNav: false }">
+<body class="min-h-screen text-slate-800 antialiased font-sans flex flex-col justify-between bg-slate-100">
 
     <div>
         <!-- TOP HEADER RESMI PENGURUS -->
@@ -69,16 +68,18 @@
                     </div>
 
                     <!-- USER INFO & SHORTCUTS -->
-                    <div class="flex items-center gap-3">
-                        <a href="{{ route('portal.warga') }}" 
-                           target="_blank"
-                           class="hidden md:inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-blue-700 hover:bg-slate-100 px-3 py-2 rounded-xl transition-colors border border-slate-200">
-                            <i data-lucide="globe" class="w-4 h-4 text-slate-400"></i>
-                            <span>Buka Portal Warga</span>
-                        </a>
+                    <div class="flex items-center gap-2 sm:gap-3">
+                        @unless(request()->routeIs('dashboard'))
+                            <a href="{{ route('dashboard') }}" 
+                               class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-blue-700 bg-slate-100 hover:bg-blue-50 px-3 py-2 rounded-xl transition-colors border border-slate-200">
+                                <i data-lucide="arrow-left" class="w-4 h-4 text-blue-700"></i>
+                                <span class="hidden sm:inline">Kembali ke</span>
+                                <span>Menu Utama</span>
+                            </a>
+                        @endunless
 
-                        <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs">
-                            <i data-lucide="user-check" class="w-4 h-4 text-blue-700"></i>
+                        <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+                            <i data-lucide="user-check" class="w-4 h-4 text-blue-700 flex-shrink-0"></i>
                             <div>
                                 <span class="font-bold text-slate-900 block leading-tight">{{ auth()->user()->name ?? 'Pengurus RT' }}</span>
                                 <span class="text-[10px] text-slate-500 block leading-none">{{ auth()->user()->jabatan ?? 'Ketua RT 005' }}</span>
@@ -93,113 +94,10 @@
                                 <i data-lucide="log-out" class="w-5 h-5"></i>
                             </button>
                         </form>
-
-                        <!-- Hamburger Button Mobile -->
-                        <button type="button" 
-                                @click="mobileNav = !mobileNav"
-                                class="lg:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-xl transition-colors">
-                            <i data-lucide="menu" class="w-6 h-6"></i>
-                        </button>
                     </div>
 
                 </div>
 
-                <!-- HORIZONTAL NAVIGATION TABS (DESKTOP) -->
-                <nav class="hidden lg:flex items-center gap-1 border-t border-slate-100 pt-1 pb-1 -mx-2">
-                    <a href="{{ route('surat-pengantar.index') }}" 
-                       class="px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-colors {{ request()->routeIs('surat-pengantar.*') ? 'bg-blue-700 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
-                        <i data-lucide="file-text" class="w-4 h-4"></i>
-                        <span>Pelayanan Surat</span>
-                        @php
-                            $pendingCount = \App\Models\SuratPengantar::where('status', 'menunggu_validasi')->count();
-                        @endphp
-                        @if($pendingCount > 0)
-                            <span class="px-1.5 py-0.2 rounded-full text-[10px] font-black {{ request()->routeIs('surat-pengantar.*') ? 'bg-white text-blue-800' : 'bg-amber-500 text-white' }}">
-                                {{ $pendingCount }}
-                            </span>
-                        @endif
-                    </a>
-
-                    <a href="{{ route('warga.index') }}" 
-                       class="px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-colors {{ request()->routeIs('warga.*') || request()->routeIs('keluarga.*') ? 'bg-blue-700 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
-                        <i data-lucide="users" class="w-4 h-4"></i>
-                        <span>Kependudukan (Warga &amp; KK)</span>
-                    </a>
-
-                    <a href="{{ route('keuangan.iuran.index') }}" 
-                       class="px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-colors {{ request()->routeIs('keuangan.iuran.*') ? 'bg-blue-700 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
-                        <i data-lucide="receipt" class="w-4 h-4"></i>
-                        <span>Iuran Warga</span>
-                    </a>
-
-                    <a href="{{ route('keuangan.kas.index') }}" 
-                       class="px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-colors {{ request()->routeIs('keuangan.kas.*') ? 'bg-blue-700 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
-                        <i data-lucide="wallet" class="w-4 h-4"></i>
-                        <span>Buku Kas RT</span>
-                    </a>
-
-                    <a href="{{ route('surat-masuk.index') }}" 
-                       class="px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-colors {{ request()->routeIs('surat-masuk.*') ? 'bg-blue-700 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
-                        <i data-lucide="inbox" class="w-4 h-4"></i>
-                        <span>Agenda Surat Masuk</span>
-                    </a>
-
-                    <a href="{{ route('keamanan.index') }}" 
-                       class="px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-colors {{ request()->routeIs('keamanan.*') ? 'bg-blue-700 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
-                        <i data-lucide="shield" class="w-4 h-4"></i>
-                        <span>Pos Ronda &amp; Keamanan</span>
-                    </a>
-
-                    <a href="{{ route('dashboard') }}" 
-                       class="px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-colors ml-auto {{ request()->routeIs('dashboard') ? 'bg-slate-900 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
-                        <i data-lucide="layout-grid" class="w-4 h-4"></i>
-                        <span>Ringkasan Data</span>
-                    </a>
-                </nav>
-
-            </div>
-
-            <!-- MOBILE NAV DRAWER -->
-            <div x-show="mobileNav" x-cloak class="lg:hidden border-t border-slate-200 bg-white px-4 py-3 space-y-1 shadow-lg">
-                <a href="{{ route('surat-pengantar.index') }}" class="flex items-center justify-between p-2.5 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-100">
-                    <span class="flex items-center gap-2.5">
-                        <i data-lucide="file-text" class="w-4 h-4 text-blue-700"></i>
-                        <span>Pelayanan Surat</span>
-                    </span>
-                    @if($pendingCount > 0)
-                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500 text-white">{{ $pendingCount }}</span>
-                    @endif
-                </a>
-                <a href="{{ route('warga.index') }}" class="flex items-center gap-2.5 p-2.5 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-100">
-                    <i data-lucide="users" class="w-4 h-4 text-blue-700"></i>
-                    <span>Kependudukan (Warga &amp; KK)</span>
-                </a>
-                <a href="{{ route('keuangan.iuran.index') }}" class="flex items-center gap-2.5 p-2.5 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-100">
-                    <i data-lucide="receipt" class="w-4 h-4 text-blue-700"></i>
-                    <span>Iuran Warga</span>
-                </a>
-                <a href="{{ route('keuangan.kas.index') }}" class="flex items-center gap-2.5 p-2.5 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-100">
-                    <i data-lucide="wallet" class="w-4 h-4 text-blue-700"></i>
-                    <span>Buku Kas RT</span>
-                </a>
-                <a href="{{ route('surat-masuk.index') }}" class="flex items-center gap-2.5 p-2.5 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-100">
-                    <i data-lucide="inbox" class="w-4 h-4 text-blue-700"></i>
-                    <span>Agenda Surat Masuk</span>
-                </a>
-                <a href="{{ route('keamanan.index') }}" class="flex items-center gap-2.5 p-2.5 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-100">
-                    <i data-lucide="shield" class="w-4 h-4 text-blue-700"></i>
-                    <span>Pos Ronda &amp; Keamanan</span>
-                </a>
-                <a href="{{ route('dashboard') }}" class="flex items-center gap-2.5 p-2.5 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-100">
-                    <i data-lucide="layout-grid" class="w-4 h-4 text-slate-700"></i>
-                    <span>Ringkasan Data</span>
-                </a>
-                <div class="border-t border-slate-100 pt-2 mt-2">
-                    <a href="{{ route('portal.warga') }}" target="_blank" class="flex items-center gap-2.5 p-2.5 rounded-xl text-xs font-semibold text-blue-700 hover:bg-blue-50">
-                        <i data-lucide="globe" class="w-4 h-4"></i>
-                        <span>Buka Portal Publik Warga</span>
-                    </a>
-                </div>
             </div>
         </header>
 
