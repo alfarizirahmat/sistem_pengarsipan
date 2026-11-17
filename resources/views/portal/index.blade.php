@@ -396,152 +396,81 @@
                 </div>
             </div>
 
-            <!-- SEKSI KONTAK PENGURUS RT & LAYANAN PENGADUAN WARGA (CP PENGADUAN) -->
-            <div class="mt-8 bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
-                <!-- Header Card -->
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
-                    <div>
-                        <div class="flex items-center gap-2 mb-1">
-                            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-50 text-emerald-800 border border-emerald-200">
-                                <i data-lucide="phone-call" class="w-3 h-3 text-emerald-600"></i>
-                                Layanan Pengaduan &amp; Bantuan Warga
-                            </span>
+            <!-- SEKSI KONTAK PENGURUS RT & LAYANAN PENGADUAN WARGA (SIMPLE & LANGSUNG WA) -->
+            <div class="mt-8 bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6 space-y-4">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i>
                         </div>
-                        <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight">
-                            Kontak Pengurus RT &amp; Layanan Pengaduan
-                        </h3>
-                        <p class="text-xs sm:text-sm text-slate-500 mt-0.5">
-                            RT 005 / RW 013 Perumahan Bumi Mutiara Indah II &bull; Hubungi kami jika membutuhkan bantuan, informasi, atau menyampaikan aduan lingkungan.
-                        </p>
+                        <div>
+                            <h3 class="font-extrabold text-slate-900 text-sm sm:text-base">
+                                Kontak Pengurus RT &amp; Layanan Pengaduan
+                            </h3>
+                            <p class="text-xs text-slate-400">Hubungi langsung via WhatsApp jika ada keperluan atau aduan</p>
+                        </div>
                     </div>
-
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 self-start sm:self-center">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                        Pelayanan Aktif
-                    </span>
                 </div>
 
-                <!-- Grid Kontak 3 Pilar (Ketua RT, Sekretariat, Pengaduan/Keamanan) -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- 3 Kolom Kontak Simple: Hanya Info Pokok & Tombol WA Langsung -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     
-                    <!-- KARTU 1: KETUA RT 005 -->
-                    <div class="bg-gradient-to-b from-blue-50/50 to-white rounded-2xl p-5 border border-blue-200/80 shadow-2xs flex flex-col justify-between space-y-4 hover:border-blue-300 transition-all">
-                        <div class="space-y-3">
-                            <div class="flex items-center justify-between">
-                                <span class="text-[10px] font-black uppercase tracking-wider text-blue-700 bg-blue-100/80 px-2.5 py-0.5 rounded-md">
-                                    Ketua RT 005
-                                </span>
-                                <span class="text-[11px] font-semibold text-slate-400">08:00 - 21:00 WIB</span>
-                            </div>
-                            <div>
-                                <h4 class="font-black text-slate-900 text-base">Bapak Hartono</h4>
-                                <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">
-                                    Pengesahan Surat Pengantar, Administrasi Kependudukan, &amp; Kebijakan Lingkungan RT 005.
-                                </p>
-                            </div>
-                            <div class="flex items-center gap-2 text-xs font-mono font-bold text-slate-800 bg-white p-2.5 rounded-xl border border-slate-200">
-                                <i data-lucide="phone" class="w-4 h-4 text-blue-600 flex-shrink-0"></i>
-                                <span>0812-3456-7890</span>
-                            </div>
+                    <!-- 1. KETUA RT -->
+                    <div class="p-4 bg-slate-50 hover:bg-emerald-50/40 rounded-xl border border-slate-200 hover:border-emerald-300 transition-all flex flex-col justify-between gap-3">
+                        <div>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-100/70 px-2 py-0.5 rounded">
+                                Ketua RT 005
+                            </span>
+                            <h4 class="font-black text-slate-900 text-sm mt-1.5">Bapak Hartono</h4>
+                            <p class="text-xs font-mono font-semibold text-slate-600 mt-0.5">0812-3456-7890</p>
                         </div>
-
-                        <div class="pt-2 flex flex-col gap-2">
-                            <a href="https://wa.me/6281234567890?text=Halo%20Pak%20RT%20005%20Bumi%20Mutiara%20Indah%20II,%20saya%20warga%20RT%20005%20ingin%20berkonsultasi%20mengenai%20pelayanan%20warga." 
-                               target="_blank" 
-                               class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 px-3 rounded-xl text-center flex items-center justify-center gap-2 shadow-xs transition-colors">
-                                <i data-lucide="message-circle" class="w-4 h-4"></i>
-                                <span>Hubungi via WhatsApp</span>
-                            </a>
-                            <a href="tel:081234567890" 
-                               class="w-full bg-white hover:bg-slate-50 text-slate-700 font-bold text-xs py-2 px-3 rounded-xl text-center border border-slate-200 flex items-center justify-center gap-1.5 transition-colors">
-                                <i data-lucide="phone-call" class="w-3.5 h-3.5 text-slate-500"></i>
-                                <span>Panggilan Telepon</span>
-                            </a>
-                        </div>
+                        <a href="https://wa.me/6281234567890?text=Halo%20Pak%20RT%20005,%20saya%20warga%20RT%20005%20Bumi%20Mutiara%20Indah%20II." 
+                           target="_blank" 
+                           class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 px-3 rounded-lg text-center flex items-center justify-center gap-2 shadow-xs transition-colors">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i>
+                            <span>Chat WA Ketua RT</span>
+                        </a>
                     </div>
 
-                    <!-- KARTU 2: SEKRETARIAT RT 005 -->
-                    <div class="bg-gradient-to-b from-slate-50/70 to-white rounded-2xl p-5 border border-slate-200 shadow-2xs flex flex-col justify-between space-y-4 hover:border-slate-300 transition-all">
-                        <div class="space-y-3">
-                            <div class="flex items-center justify-between">
-                                <span class="text-[10px] font-black uppercase tracking-wider text-slate-700 bg-slate-200/80 px-2.5 py-0.5 rounded-md">
-                                    Sekretariat RT
-                                </span>
-                                <span class="text-[11px] font-semibold text-slate-400">08:00 - 20:00 WIB</span>
-                            </div>
-                            <div>
-                                <h4 class="font-black text-slate-900 text-base">Layanan Administrasi</h4>
-                                <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">
-                                    Pendataan Warga Tetap/Kontrak, Verifikasi Berkas Surat, Buku Kas, &amp; Iuran RT.
-                                </p>
-                            </div>
-                            <div class="flex items-center gap-2 text-xs font-mono font-bold text-slate-800 bg-white p-2.5 rounded-xl border border-slate-200">
-                                <i data-lucide="file-text" class="w-4 h-4 text-slate-600 flex-shrink-0"></i>
-                                <span>0857-1234-5678</span>
-                            </div>
+                    <!-- 2. SEKRETARIAT -->
+                    <div class="p-4 bg-slate-50 hover:bg-emerald-50/40 rounded-xl border border-slate-200 hover:border-emerald-300 transition-all flex flex-col justify-between gap-3">
+                        <div>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-700 bg-slate-200/80 px-2 py-0.5 rounded">
+                                Sekretariat RT
+                            </span>
+                            <h4 class="font-black text-slate-900 text-sm mt-1.5">Layanan Surat &amp; Data</h4>
+                            <p class="text-xs font-mono font-semibold text-slate-600 mt-0.5">0857-1234-5678</p>
                         </div>
-
-                        <div class="pt-2">
-                            <a href="https://wa.me/6285712345678?text=Halo%20Sekretariat%20RT%20005%20Bumi%20Mutiara%20Indah%20II,%20saya%20ingin%20menanyakan%20perihal%20administrasi%20surat%20atau%20pendataan%20warga." 
-                               target="_blank" 
-                               class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs py-2.5 px-3 rounded-xl text-center flex items-center justify-center gap-2 shadow-xs transition-colors">
-                                <i data-lucide="message-square" class="w-4 h-4"></i>
-                                <span>Chat Sekretariat RT</span>
-                            </a>
-                        </div>
+                        <a href="https://wa.me/6285712345678?text=Halo%20Sekretariat%20RT%20005,%20saya%20ingin%20menanyakan%20perihal%20pelayanan%20surat." 
+                           target="_blank" 
+                           class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 px-3 rounded-lg text-center flex items-center justify-center gap-2 shadow-xs transition-colors">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i>
+                            <span>Chat WA Sekretariat</span>
+                        </a>
                     </div>
 
-                    <!-- KARTU 3: CP PENGADUAN, KEAMANAN & RONDA (24 JAM) -->
-                    <div class="bg-gradient-to-b from-amber-50/50 to-white rounded-2xl p-5 border border-amber-200/80 shadow-2xs flex flex-col justify-between space-y-4 hover:border-amber-300 transition-all">
-                        <div class="space-y-3">
+                    <!-- 3. CP PENGADUAN & RONDA -->
+                    <div class="p-4 bg-slate-50 hover:bg-amber-50/40 rounded-xl border border-slate-200 hover:border-amber-300 transition-all flex flex-col justify-between gap-3">
+                        <div>
                             <div class="flex items-center justify-between">
-                                <span class="text-[10px] font-black uppercase tracking-wider text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-md flex items-center gap-1">
-                                    <i data-lucide="shield-alert" class="w-3 h-3 text-amber-600"></i>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-amber-800 bg-amber-100 px-2 py-0.5 rounded">
                                     CP Pengaduan &amp; Ronda
                                 </span>
-                                <span class="text-[11px] font-black text-emerald-600 flex items-center gap-1">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                <span class="text-[10px] font-black text-emerald-600 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded">
                                     24 Jam
                                 </span>
                             </div>
-                            <div>
-                                <h4 class="font-black text-slate-900 text-base">Pos Keamanan &amp; Aduan</h4>
-                                <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">
-                                    Laporan gangguan ketertiban, lampu jalan, kebersihan lingkungan, atau situasi darurat warga.
-                                </p>
-                            </div>
-                            <div class="flex items-center gap-2 text-xs font-mono font-bold text-slate-800 bg-white p-2.5 rounded-xl border border-slate-200">
-                                <i data-lucide="bell-ring" class="w-4 h-4 text-amber-600 flex-shrink-0"></i>
-                                <span>0812-3456-7890 (Pos Ronda)</span>
-                            </div>
+                            <h4 class="font-black text-slate-900 text-sm mt-1.5">Pos Keamanan &amp; Aduan</h4>
+                            <p class="text-xs font-mono font-semibold text-slate-600 mt-0.5">0812-3456-7890</p>
                         </div>
-
-                        <div class="pt-2">
-                            <a href="https://wa.me/6281234567890?text=PENGADUAN%20WARGA%20RT%20005%20BUMI%20MUTIARA%20INDAH%20II:%0A-%20Nama%20Pelapor:%20%0A-%20Nomor%20Blok/Rumah:%20%0A-%20Isi%20Laporan%20/%20Aduan:%20" 
-                               target="_blank" 
-                               class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs py-2.5 px-3 rounded-xl text-center flex items-center justify-center gap-2 shadow-xs transition-colors">
-                                <i data-lucide="send" class="w-4 h-4"></i>
-                                <span>Kirim Pengaduan via WhatsApp</span>
-                            </a>
-                        </div>
+                        <a href="https://wa.me/6281234567890?text=PENGADUAN%20WARGA%20RT%20005%20BUMI%20MUTIARA%20INDAH%20II:%0A-%20Nama:%20%0A-%20Blok/No%20Rumah:%20%0A-%20Aduan:%20" 
+                           target="_blank" 
+                           class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 px-3 rounded-lg text-center flex items-center justify-center gap-2 shadow-xs transition-colors">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i>
+                            <span>Kirim WA Pengaduan</span>
+                        </a>
                     </div>
 
-                </div>
-
-                <!-- Info Alamat Fisik Sekretariat -->
-                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-600">
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center flex-shrink-0">
-                            <i data-lucide="map-pin" class="w-4 h-4"></i>
-                        </div>
-                        <div>
-                            <span class="font-bold text-slate-800 block text-xs">Lokasi Sekretariat Fisik RT 005 / RW 013:</span>
-                            <span class="text-slate-500">Perumahan Bumi Mutiara Indah II, Blok RT 005 / RW 013 (Pelayanan Tatap Muka: 19.30 - 21.00 WIB)</span>
-                        </div>
-                    </div>
-                    <span class="text-[11px] font-semibold text-slate-400 sm:text-right">
-                        Respon Cepat &bull; Ramah &bull; Transparan
-                    </span>
                 </div>
             </div>
 
