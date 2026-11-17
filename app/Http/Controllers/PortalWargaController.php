@@ -45,17 +45,23 @@ class PortalWargaController extends Controller
     public function ajukanSurat(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'nama_lengkap' => ['nullable', 'string', 'max:255'],
-            'nik' => ['nullable', 'string', 'max:20'],
+            'nama_lengkap' => ['required_without:warga_id', 'nullable', 'string', 'max:255'],
+            'nik' => ['required_without:warga_id', 'nullable', 'string', 'min:16', 'max:20'],
             'warga_id' => ['nullable', 'exists:wargas,id'],
             'jenis_surat' => ['required', 'string'],
             'keperluan' => ['required', 'string', 'max:500'],
             'dokumen_hilang' => ['nullable', 'string', 'max:255'],
             'no_whatsapp' => ['nullable', 'string', 'max:20'],
+        ], [
+            'nama_lengkap.required_without' => 'Nama lengkap pemohon wajib diisi.',
+            'nik.required_without' => 'Nomor Induk Kependudukan (NIK) 16 digit wajib diisi.',
+            'nik.min' => 'Nomor Induk Kependudukan (NIK) harus terdiri dari 16 digit angka.',
+            'jenis_surat.required' => 'Silakan pilih jenis pelayanan surat.',
+            'keperluan.required' => 'Keperluan surat wajib dijelaskan secara singkat.',
         ]);
 
         if (empty($validated['nama_lengkap']) && empty($validated['nik']) && empty($validated['warga_id'])) {
-            return back()->withErrors(['nama_lengkap' => 'Silakan masukkan Nama Lengkap atau NIK pemohon.'])->withInput();
+            return back()->withErrors(['nama_lengkap' => 'Silakan masukkan Nama Lengkap dan NIK pemohon.'])->withInput();
         }
 
         $warga = Warga::resolveFromInput($validated);

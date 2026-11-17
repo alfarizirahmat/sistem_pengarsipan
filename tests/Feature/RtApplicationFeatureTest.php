@@ -309,6 +309,31 @@ class RtApplicationFeatureTest extends TestCase
         ]);
     }
 
+    public function test_applying_surat_mandiri_requires_nik(): void
+    {
+        $postData = [
+            'nama_lengkap' => 'Warga Tanpa NIK',
+            'nik' => '', // NIK sengaja dikosongkan
+            'jenis_surat' => 'keterangan_domisili',
+            'keperluan' => 'Urusan bank',
+        ];
+
+        $response = $this->post('/ajukan-surat', $postData);
+        $response->assertSessionHasErrors(['nik']);
+    }
+
+    public function test_citizen_portal_displays_contact_person_and_pengaduan(): void
+    {
+        $response = $this->get('/');
+
+        $response->assertStatus(200);
+        $response->assertSee('Kontak Pengurus RT &amp; Layanan Pengaduan', false);
+        $response->assertSee('Bapak Hartono');
+        $response->assertSee('0812-3456-7890');
+        $response->assertSee('CP Pengaduan &amp; Ronda', false);
+        $response->assertSee('24 Jam');
+    }
+
     public function test_pengurus_can_validate_citizen_application(): void
     {
         $ketua = User::where('role', 'ketua_rt')->first();

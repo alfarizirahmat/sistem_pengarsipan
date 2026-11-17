@@ -115,14 +115,19 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 uppercase mb-1">
-                                    NIK (Nomor KTP)
+                                    NIK (Nomor KTP) <span class="text-red-500">*</span>
                                 </label>
                                 <input type="text" 
                                        name="nik" 
                                        x-model="nik" 
                                        value="{{ old('nik') }}"
+                                       required
+                                       minlength="16"
                                        maxlength="16"
-                                       placeholder="16 Digit NIK (Opsional)" 
+                                       pattern="[0-9]{16}"
+                                       inputmode="numeric"
+                                       oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                       placeholder="16 Digit NIK Pemohon" 
                                        class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-mono font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all">
                             </div>
 

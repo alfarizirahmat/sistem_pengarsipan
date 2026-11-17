@@ -35,7 +35,7 @@
     </style>
 </head>
 <body class="min-h-screen text-slate-800 antialiased font-sans flex flex-col justify-between"
-      x-data="{ showForm: false }">
+      x-data="{ showForm: {{ $errors->any() ? 'true' : 'false' }} }">
 
     <!-- HEADER RESMI -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs">
@@ -264,7 +264,7 @@
                 <div class="flex items-center justify-between pb-4 border-b border-slate-200">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center flex-shrink-0">
-                            <i data-lucide="send" class="w-5 h-5"></i>
+                            <i data-lucide="file-plus-2" class="w-5 h-5"></i>
                         </div>
                         <div>
                             <h3 class="font-bold text-slate-900 text-base">Butuh Surat Pengantar RT?</h3>
@@ -273,98 +273,278 @@
                     </div>
                     <button type="button" 
                             @click="showForm = !showForm" 
-                            class="px-4 py-2 rounded-xl text-xs font-bold transition-colors"
-                            :class="showForm ? 'bg-slate-100 text-slate-700 hover:bg-slate-200' : 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-xs'">
-                        <span x-text="showForm ? 'Tutup Formulir' : '+ Ajukan Sekarang'"></span>
+                            class="px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5"
+                            :class="showForm ? 'bg-slate-100 text-slate-700 hover:bg-slate-200' : 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-xs hover:shadow'">
+                        <i :data-lucide="showForm ? 'chevron-up' : 'plus'" class="w-4 h-4"></i>
+                        <span x-text="showForm ? 'Tutup Formulir' : 'Ajukan Permohonan Surat'"></span>
                     </button>
                 </div>
 
                 <!-- Formulir Pengajuan (Bisa di-toggle) -->
-                <div x-show="showForm" x-cloak class="pt-6">
-                    <form action="{{ route('portal.ajukan') }}" method="POST" class="space-y-4">
+                <div x-show="showForm" x-cloak class="pt-6 space-y-4">
+                    
+                    @if($errors->any())
+                        <div class="p-4 rounded-xl bg-red-50 border border-red-200 text-red-900">
+                            <div class="flex items-center gap-2 font-bold text-xs uppercase mb-1 text-red-700">
+                                <i data-lucide="alert-circle" class="w-4 h-4"></i>
+                                <span>Mohon lengkapi formulir dengan benar</span>
+                            </div>
+                            <ul class="list-disc list-inside text-xs text-red-600 space-y-0.5 mt-1">
+                                @foreach($errors->all() as $err)
+                                    <li>{{ $err }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <div class="p-4 rounded-xl bg-blue-50/80 border border-blue-200/80 text-blue-900 text-xs flex items-start gap-3">
+                        <i data-lucide="info" class="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5"></i>
+                        <div class="leading-relaxed">
+                            <strong class="font-bold">Informasi Pelayanan:</strong> Isi identitas Anda sesuai KTP/KK. Setelah permohonan diajukan, Pengurus RT 005 akan memeriksa data dan mengesahkan dokumen surat Anda. Anda akan memperoleh <strong>Kode Surat</strong> unik untuk memeriksa status dan mengunduh berkas surat resmi di website ini.
+                        </div>
+                    </div>
+
+                    <form action="{{ route('portal.ajukan') }}" method="POST" class="space-y-4 pt-1">
                         @csrf
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-xs font-bold text-slate-700 mb-1.5">
+                                <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">
                                     Nama Lengkap Pemohon <span class="text-red-500">*</span>
                                 </label>
                                 <input type="text" 
                                        name="nama_lengkap" 
                                        value="{{ old('nama_lengkap') }}"
-                                       placeholder="Tulis nama lengkap Anda" 
+                                       placeholder="Contoh: Budi Santoso" 
                                        required
-                                       class="w-full text-sm bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 text-slate-800">
-                                <p class="text-[11px] text-slate-500 mt-1">Sesuai KTP atau identitas resmi Anda</p>
+                                       class="w-full text-sm bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 text-slate-800 font-medium transition-all">
+                                <p class="text-[11px] text-slate-500 mt-1">Wajib diisi sesuai KTP atau kartu identitas resmi</p>
                             </div>
 
                             <div>
-                                <label class="block text-xs font-bold text-slate-700 mb-1.5">
-                                    NIK (Nomor Induk Kependudukan)
+                                <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">
+                                    NIK (Nomor Induk Kependudukan) <span class="text-red-500">*</span>
                                 </label>
                                 <input type="text" 
                                        name="nik" 
                                        value="{{ old('nik') }}"
+                                       required
+                                       minlength="16"
                                        maxlength="16"
-                                       placeholder="16 digit NIK (Bisa dimasukkan)" 
-                                       class="w-full text-sm bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 text-slate-800 font-mono">
-                                <p class="text-[11px] text-slate-500 mt-1">Dapat dikosongkan jika belum hafal NIK</p>
+                                       pattern="[0-9]{16}"
+                                       inputmode="numeric"
+                                       oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                       placeholder="16 digit NIK (Wajib diisi)" 
+                                       class="w-full text-sm bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 text-slate-800 font-mono font-medium transition-all">
+                                <p class="text-[11px] text-slate-500 mt-1">Wajib 16 digit angka sesuai KTP atau Kartu Keluarga Anda</p>
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-xs font-bold text-slate-700 mb-1.5">
+                                <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">
                                     Jenis Pelayanan Surat <span class="text-red-500">*</span>
                                 </label>
-                                <select name="jenis_surat" required class="w-full text-sm bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 text-slate-800">
-                                    <option value="ktp_baru">Pembuatan / Perpanjangan KTP</option>
-                                    <option value="perubahan_kk">Perubahan / Pembuatan Kartu Keluarga (KK)</option>
-                                    <option value="keterangan_domisili">Surat Keterangan Domisili Tinggal</option>
-                                    <option value="sktm">Surat Keterangan Tidak Mampu (SKTM)</option>
-                                    <option value="sku">Surat Keterangan Usaha (SKU)</option>
-                                    <option value="pindah_domisili">Surat Pengantar Pindah Keluar</option>
-                                    <option value="warga_datang">Surat Keterangan Warga Datang / Pindahan</option>
-                                    <option value="kehilangan_dokumen">Surat Keterangan Kehilangan Dokumen</option>
-                                    <option value="kematian">Surat Keterangan Kematian</option>
-                                    <option value="lainnya">Keperluan Lainnya</option>
+                                <select name="jenis_surat" required class="w-full text-sm bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 text-slate-800 font-medium transition-all">
+                                    <option value="keterangan_domisili" {{ old('jenis_surat') === 'keterangan_domisili' ? 'selected' : '' }}>Surat Keterangan Domisili Tinggal</option>
+                                    <option value="ktp_baru" {{ old('jenis_surat') === 'ktp_baru' ? 'selected' : '' }}>Pembuatan / Perpanjangan KTP</option>
+                                    <option value="perubahan_kk" {{ old('jenis_surat') === 'perubahan_kk' ? 'selected' : '' }}>Perubahan / Pembuatan Kartu Keluarga (KK)</option>
+                                    <option value="sktm" {{ old('jenis_surat') === 'sktm' ? 'selected' : '' }}>Surat Keterangan Tidak Mampu (SKTM)</option>
+                                    <option value="sku" {{ old('jenis_surat') === 'sku' ? 'selected' : '' }}>Surat Keterangan Usaha (SKU)</option>
+                                    <option value="pindah_domisili" {{ old('jenis_surat') === 'pindah_domisili' ? 'selected' : '' }}>Surat Pengantar Pindah Domisili</option>
+                                    <option value="warga_datang" {{ old('jenis_surat') === 'warga_datang' ? 'selected' : '' }}>Surat Keterangan Warga Datang / Kontrak</option>
+                                    <option value="kehilangan_dokumen" {{ old('jenis_surat') === 'kehilangan_dokumen' ? 'selected' : '' }}>Surat Keterangan Kehilangan Dokumen</option>
+                                    <option value="kematian" {{ old('jenis_surat') === 'kematian' ? 'selected' : '' }}>Surat Keterangan Kematian</option>
+                                    <option value="lainnya" {{ old('jenis_surat') === 'lainnya' ? 'selected' : '' }}>Keperluan Lainnya</option>
                                 </select>
                             </div>
 
                             <div>
-                                <label class="block text-xs font-bold text-slate-700 mb-1.5">
+                                <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">
                                     Nomor WhatsApp Anda (Opsional)
                                 </label>
                                 <input type="text" 
                                        name="no_whatsapp" 
+                                       value="{{ old('no_whatsapp') }}"
                                        placeholder="Contoh: 081234567890" 
-                                       class="w-full text-sm bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 text-slate-800">
-                                <p class="text-[11px] text-slate-500 mt-1">Untuk konfirmasi saat surat telah disahkan</p>
+                                       class="w-full text-sm bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 text-slate-800 font-medium transition-all">
+                                <p class="text-[11px] text-slate-500 mt-1">Untuk pemberitahuan status surat &amp; pengiriman kode pelacakan</p>
                             </div>
                         </div>
 
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1.5">
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5 uppercase tracking-wider">
                                 Keperluan Surat <span class="text-red-500">*</span>
                             </label>
                             <textarea name="keperluan" 
                                       rows="3" 
                                       required 
-                                      placeholder="Jelaskan secara singkat keperluan surat, contoh: Persyaratan pendaftaran sekolah anak / Persyaratan administrasi perbankan..."
-                                      class="w-full text-sm bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 text-slate-800"></textarea>
+                                      placeholder="Jelaskan secara singkat keperluan surat, contoh: Persyaratan pendaftaran sekolah anak / Persyaratan administrasi perbankan / Kelengkapan kerja..."
+                                      class="w-full text-sm bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 text-slate-800 font-medium transition-all">{{ old('keperluan') }}</textarea>
+                            <p class="text-[11px] text-slate-500 mt-1">Jelaskan tujuan atau instansi yang dituju secara ringkas dan jelas</p>
                         </div>
 
-                        <div class="pt-2 flex justify-end gap-2">
-                            <button type="button" @click="showForm = false" class="px-4 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-xl">
-                                Batal
+                        <div class="pt-3 flex flex-col-reverse sm:flex-row justify-end gap-2.5 border-t border-slate-100">
+                            <button type="button" @click="showForm = false" class="px-5 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors">
+                                Tutup Formulir
                             </button>
-                            <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-xs transition-colors flex items-center gap-2">
-                                <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                            <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs sm:text-sm px-6 py-3 rounded-xl shadow-xs hover:shadow-md transition-all active:scale-[0.99] flex items-center justify-center gap-2">
+                                <i data-lucide="send" class="w-4 h-4"></i>
                                 <span>Kirim Permohonan Surat</span>
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
+
+            <!-- SEKSI KONTAK PENGURUS RT & LAYANAN PENGADUAN WARGA (CP PENGADUAN) -->
+            <div class="mt-8 bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+                <!-- Header Card -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-50 text-emerald-800 border border-emerald-200">
+                                <i data-lucide="phone-call" class="w-3 h-3 text-emerald-600"></i>
+                                Layanan Pengaduan &amp; Bantuan Warga
+                            </span>
+                        </div>
+                        <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight">
+                            Kontak Pengurus RT &amp; Layanan Pengaduan
+                        </h3>
+                        <p class="text-xs sm:text-sm text-slate-500 mt-0.5">
+                            RT 005 / RW 013 Perumahan Bumi Mutiara Indah II &bull; Hubungi kami jika membutuhkan bantuan, informasi, atau menyampaikan aduan lingkungan.
+                        </p>
+                    </div>
+
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 self-start sm:self-center">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        Pelayanan Aktif
+                    </span>
+                </div>
+
+                <!-- Grid Kontak 3 Pilar (Ketua RT, Sekretariat, Pengaduan/Keamanan) -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    
+                    <!-- KARTU 1: KETUA RT 005 -->
+                    <div class="bg-gradient-to-b from-blue-50/50 to-white rounded-2xl p-5 border border-blue-200/80 shadow-2xs flex flex-col justify-between space-y-4 hover:border-blue-300 transition-all">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[10px] font-black uppercase tracking-wider text-blue-700 bg-blue-100/80 px-2.5 py-0.5 rounded-md">
+                                    Ketua RT 005
+                                </span>
+                                <span class="text-[11px] font-semibold text-slate-400">08:00 - 21:00 WIB</span>
+                            </div>
+                            <div>
+                                <h4 class="font-black text-slate-900 text-base">Bapak Hartono</h4>
+                                <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                                    Pengesahan Surat Pengantar, Administrasi Kependudukan, &amp; Kebijakan Lingkungan RT 005.
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-2 text-xs font-mono font-bold text-slate-800 bg-white p-2.5 rounded-xl border border-slate-200">
+                                <i data-lucide="phone" class="w-4 h-4 text-blue-600 flex-shrink-0"></i>
+                                <span>0812-3456-7890</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-2 flex flex-col gap-2">
+                            <a href="https://wa.me/6281234567890?text=Halo%20Pak%20RT%20005%20Bumi%20Mutiara%20Indah%20II,%20saya%20warga%20RT%20005%20ingin%20berkonsultasi%20mengenai%20pelayanan%20warga." 
+                               target="_blank" 
+                               class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 px-3 rounded-xl text-center flex items-center justify-center gap-2 shadow-xs transition-colors">
+                                <i data-lucide="message-circle" class="w-4 h-4"></i>
+                                <span>Hubungi via WhatsApp</span>
+                            </a>
+                            <a href="tel:081234567890" 
+                               class="w-full bg-white hover:bg-slate-50 text-slate-700 font-bold text-xs py-2 px-3 rounded-xl text-center border border-slate-200 flex items-center justify-center gap-1.5 transition-colors">
+                                <i data-lucide="phone-call" class="w-3.5 h-3.5 text-slate-500"></i>
+                                <span>Panggilan Telepon</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- KARTU 2: SEKRETARIAT RT 005 -->
+                    <div class="bg-gradient-to-b from-slate-50/70 to-white rounded-2xl p-5 border border-slate-200 shadow-2xs flex flex-col justify-between space-y-4 hover:border-slate-300 transition-all">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[10px] font-black uppercase tracking-wider text-slate-700 bg-slate-200/80 px-2.5 py-0.5 rounded-md">
+                                    Sekretariat RT
+                                </span>
+                                <span class="text-[11px] font-semibold text-slate-400">08:00 - 20:00 WIB</span>
+                            </div>
+                            <div>
+                                <h4 class="font-black text-slate-900 text-base">Layanan Administrasi</h4>
+                                <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                                    Pendataan Warga Tetap/Kontrak, Verifikasi Berkas Surat, Buku Kas, &amp; Iuran RT.
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-2 text-xs font-mono font-bold text-slate-800 bg-white p-2.5 rounded-xl border border-slate-200">
+                                <i data-lucide="file-text" class="w-4 h-4 text-slate-600 flex-shrink-0"></i>
+                                <span>0857-1234-5678</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-2">
+                            <a href="https://wa.me/6285712345678?text=Halo%20Sekretariat%20RT%20005%20Bumi%20Mutiara%20Indah%20II,%20saya%20ingin%20menanyakan%20perihal%20administrasi%20surat%20atau%20pendataan%20warga." 
+                               target="_blank" 
+                               class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs py-2.5 px-3 rounded-xl text-center flex items-center justify-center gap-2 shadow-xs transition-colors">
+                                <i data-lucide="message-square" class="w-4 h-4"></i>
+                                <span>Chat Sekretariat RT</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- KARTU 3: CP PENGADUAN, KEAMANAN & RONDA (24 JAM) -->
+                    <div class="bg-gradient-to-b from-amber-50/50 to-white rounded-2xl p-5 border border-amber-200/80 shadow-2xs flex flex-col justify-between space-y-4 hover:border-amber-300 transition-all">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[10px] font-black uppercase tracking-wider text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-md flex items-center gap-1">
+                                    <i data-lucide="shield-alert" class="w-3 h-3 text-amber-600"></i>
+                                    CP Pengaduan &amp; Ronda
+                                </span>
+                                <span class="text-[11px] font-black text-emerald-600 flex items-center gap-1">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    24 Jam
+                                </span>
+                            </div>
+                            <div>
+                                <h4 class="font-black text-slate-900 text-base">Pos Keamanan &amp; Aduan</h4>
+                                <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                                    Laporan gangguan ketertiban, lampu jalan, kebersihan lingkungan, atau situasi darurat warga.
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-2 text-xs font-mono font-bold text-slate-800 bg-white p-2.5 rounded-xl border border-slate-200">
+                                <i data-lucide="bell-ring" class="w-4 h-4 text-amber-600 flex-shrink-0"></i>
+                                <span>0812-3456-7890 (Pos Ronda)</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-2">
+                            <a href="https://wa.me/6281234567890?text=PENGADUAN%20WARGA%20RT%20005%20BUMI%20MUTIARA%20INDAH%20II:%0A-%20Nama%20Pelapor:%20%0A-%20Nomor%20Blok/Rumah:%20%0A-%20Isi%20Laporan%20/%20Aduan:%20" 
+                               target="_blank" 
+                               class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs py-2.5 px-3 rounded-xl text-center flex items-center justify-center gap-2 shadow-xs transition-colors">
+                                <i data-lucide="send" class="w-4 h-4"></i>
+                                <span>Kirim Pengaduan via WhatsApp</span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Info Alamat Fisik Sekretariat -->
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-600">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="map-pin" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <span class="font-bold text-slate-800 block text-xs">Lokasi Sekretariat Fisik RT 005 / RW 013:</span>
+                            <span class="text-slate-500">Perumahan Bumi Mutiara Indah II, Blok RT 005 / RW 013 (Pelayanan Tatap Muka: 19.30 - 21.00 WIB)</span>
+                        </div>
+                    </div>
+                    <span class="text-[11px] font-semibold text-slate-400 sm:text-right">
+                        Respon Cepat &bull; Ramah &bull; Transparan
+                    </span>
+                </div>
+            </div>
+
         </div>
     </main>
 
@@ -373,6 +553,10 @@
         <p class="font-medium text-slate-700">
             Perancangan Sistem Informasi Pendataan dan Pelayanan Warga Berbasis Web
         </p>
+        <p class="mt-0.5">
+            RT 005 RW 013 Perumahan Bumi Mutiara Indah II &copy; {{ date('Y') }}
+        </p>
+    </footer>
         <p class="mt-0.5">
             RT 005 RW 013 Perumahan Bumi Mutiara Indah II &copy; {{ date('Y') }}
         </p>
