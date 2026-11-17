@@ -123,7 +123,7 @@
     </div>
 
     <!-- LEMBAR SURAT RESMI (FORMAT TATA NASKAH DINAS PEMERINTAHAN INDONESIA) -->
-    <div class="surat-kertas max-w-3xl mx-auto bg-white p-8 sm:p-14 border border-slate-300 shadow-md text-black leading-relaxed">
+    <div class="surat-kertas max-w-3xl mx-auto bg-white p-4 sm:p-8 md:p-14 border border-slate-300 shadow-md text-black leading-relaxed">
         
         <!-- KOP SURAT RESMI RT 005 / RW 013 -->
         <div class="text-center pb-2 border-b-[3px] border-black">
@@ -150,11 +150,11 @@
         </p>
 
         <!-- TABEL IDENTITAS PEMOHON -->
-        <div class="text-sm mb-4 pl-2 sm:pl-6">
-            <table class="w-full text-sm">
+        <div class="text-xs sm:text-sm mb-4 pl-1 sm:pl-6 overflow-x-auto">
+            <table class="w-full text-xs sm:text-sm">
                 <tbody>
                     <tr class="align-top">
-                        <td class="w-36 sm:w-44 py-1">Nama Lengkap</td>
+                        <td class="w-28 sm:w-44 py-1 font-medium sm:font-normal">Nama Lengkap</td>
                         <td class="w-3 py-1">:</td>
                         <td class="py-1 font-bold">{{ $suratPengantar->warga->nama_lengkap ?? '-' }}</td>
                     </tr>
