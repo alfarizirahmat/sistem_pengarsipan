@@ -35,7 +35,7 @@
     </style>
 </head>
 <body class="min-h-screen text-slate-800 antialiased font-sans flex flex-col justify-between"
-      x-data="{ showForm: {{ $errors->any() ? 'true' : 'false' }} }">
+      x-data="{ showForm: {{ ($errors->any() || request()->has('form')) ? 'true' : 'false' }} }">
 
     <!-- HEADER RESMI -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs">
