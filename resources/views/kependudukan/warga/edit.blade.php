@@ -152,12 +152,24 @@
                 </div>
             </div>
 
-            <div class="pt-4 border-t border-slate-100 flex flex-col-reverse sm:flex-row items-center justify-end gap-3">
-                <a href="{{ route('warga.index') }}" class="w-full sm:w-auto text-center px-4 py-2.5 border border-slate-300 text-slate-700 text-xs font-semibold rounded-xl hover:bg-slate-50">Batal</a>
-                <button type="submit" class="w-full sm:w-auto justify-center px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-md transition-colors">
-                    Perbarui Data Warga
+            <div class="pt-4 border-t border-slate-100 flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
+                <button type="submit" form="delete-warga-form" class="w-full sm:w-auto px-4 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold rounded-xl border border-rose-200 transition-colors flex items-center justify-center gap-1.5">
+                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    <span>Hapus Warga Ini</span>
                 </button>
+
+                <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+                    <a href="{{ route('warga.index') }}" class="w-full sm:w-auto text-center px-4 py-2.5 border border-slate-300 text-slate-700 text-xs font-semibold rounded-xl hover:bg-slate-50">Batal</a>
+                    <button type="submit" class="w-full sm:w-auto justify-center px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-md transition-colors">
+                        Perbarui Data Warga
+                    </button>
+                </div>
             </div>
+        </form>
+
+        <form id="delete-warga-form" action="{{ route('warga.destroy', $warga) }}" method="POST" class="hidden" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data warga ini? Data yang dihapus tidak dapat dikembalikan.')">
+            @csrf
+            @method('DELETE')
         </form>
     </div>
 

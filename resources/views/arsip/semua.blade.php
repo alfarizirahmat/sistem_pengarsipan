@@ -89,14 +89,18 @@
         <form action="{{ route('arsip.semua') }}" method="GET" class="grid grid-cols-1 sm:grid-cols-4 gap-3">
             <input type="hidden" name="kategori" value="{{ $kategori }}">
             
-            <div class="sm:col-span-3">
-                <div class="relative">
+            <div class="sm:col-span-3 flex gap-2">
+                <div class="relative flex-grow">
                     <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                         <i data-lucide="search" class="w-5 h-5"></i>
                     </span>
                     <input type="text" name="search" value="{{ $search }}" placeholder="Cari nama warga, instansi, nomor surat, atau perihal surat..."
                         class="w-full pl-11 pr-4 py-3 bg-slate-50 border-2 border-slate-300 rounded-2xl text-sm font-bold text-slate-900 focus:outline-none focus:ring-4 focus:ring-emerald-100 focus:border-emerald-600">
                 </div>
+                <button type="submit" class="px-5 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-2xl shadow-xs transition-colors flex items-center gap-1.5 flex-shrink-0">
+                    <i data-lucide="search" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">Cari</span>
+                </button>
             </div>
 
             <div>

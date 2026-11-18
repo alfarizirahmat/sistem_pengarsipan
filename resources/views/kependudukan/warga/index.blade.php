@@ -129,6 +129,14 @@
                                 <a href="{{ route('warga.edit', $w) }}" class="p-1.5 bg-slate-100 hover:bg-blue-100 text-slate-700 hover:text-blue-800 rounded-lg text-xs font-bold" title="Edit Data">
                                     <i data-lucide="pencil" class="w-4 h-4"></i>
                                 </a>
+
+                                <form action="{{ route('warga.destroy', $w) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data warga {{ addslashes($w->nama_lengkap) }}? Data yang dihapus tidak dapat dikembalikan.')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="p-1.5 bg-slate-100 hover:bg-rose-100 text-slate-700 hover:text-rose-700 rounded-lg text-xs font-bold transition-colors" title="Hapus Data Warga">
+                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>

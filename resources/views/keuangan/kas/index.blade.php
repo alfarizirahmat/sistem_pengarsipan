@@ -164,28 +164,28 @@
 
                     <div>
                         <label class="block text-xs font-extrabold text-slate-700 uppercase mb-1">Kategori Penggunaan Uang:</label>
-                        <select name="kategori" required class="w-full px-3.5 py-2.5 bg-slate-50 border-2 border-slate-300 rounded-xl text-sm font-bold">
-                            <template x-if="jenisTransaksi === 'pemasukan'">
-                                <optgroup label="Pemasukan">
-                                    <option value="iuran_warga">Setoran Iuran Warga Bulanan</option>
-                                    <option value="bantuan_desa">Bantuan Pemerintah Desa</option>
-                                    <option value="donasi">Sumbangan / Donasi Sukarela</option>
-                                    <option value="saldo_awal">Saldo Pindahan Kas</option>
-                                    <option value="lainnya">Pemasukan Lainnya</option>
-                                </optgroup>
-                            </template>
-                            <template x-if="jenisTransaksi === 'pengeluaran'">
-                                <optgroup label="Pengeluaran">
-                                    <option value="keamanan_ronda">Perlengkapan Pos Ronda & Senter</option>
-                                    <option value="posyandu">Bantuan Posyandu Balita</option>
-                                    <option value="santunan_kematian">Santunan Wafat / Pemakaman</option>
-                                    <option value="operasional_rt">ATK & Kertas Surat RT</option>
-                                    <option value="perbaikan_lingkungan">Kerja Bakti Saluran Air / Parit</option>
-                                    <option value="kebersihan_sampah">Kebersihan & Sampah Lingkungan</option>
-                                    <option value="lainnya">Pengeluaran Lainnya</option>
-                                </optgroup>
-                            </template>
-                        </select>
+                        <!-- Pilihan Kategori untuk Pemasukan -->
+                        <div x-show="jenisTransaksi === 'pemasukan'">
+                            <select name="kategori" :disabled="jenisTransaksi !== 'pemasukan'" required class="w-full px-3.5 py-2.5 bg-slate-50 border-2 border-slate-300 rounded-xl text-sm font-bold">
+                                <option value="iuran_warga">Setoran Iuran Warga Bulanan</option>
+                                <option value="bantuan_desa">Bantuan Pemerintah Desa</option>
+                                <option value="donasi">Sumbangan / Donasi Sukarela</option>
+                                <option value="saldo_awal">Saldo Pindahan Kas</option>
+                                <option value="lainnya">Pemasukan Lainnya</option>
+                            </select>
+                        </div>
+                        <!-- Pilihan Kategori untuk Pengeluaran -->
+                        <div x-show="jenisTransaksi === 'pengeluaran'">
+                            <select name="kategori" :disabled="jenisTransaksi !== 'pengeluaran'" required class="w-full px-3.5 py-2.5 bg-slate-50 border-2 border-slate-300 rounded-xl text-sm font-bold">
+                                <option value="keamanan_ronda">Perlengkapan Pos Ronda & Senter</option>
+                                <option value="posyandu">Bantuan Posyandu Balita</option>
+                                <option value="santunan_kematian">Santunan Wafat / Pemakaman</option>
+                                <option value="operasional_rt">ATK & Kertas Surat RT</option>
+                                <option value="perbaikan_lingkungan">Kerja Bakti Saluran Air / Parit</option>
+                                <option value="kebersihan_sampah">Kebersihan & Sampah Lingkungan</option>
+                                <option value="lainnya">Pengeluaran Lainnya</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div>

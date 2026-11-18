@@ -197,6 +197,15 @@
                                     class="px-2.5 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg text-xs font-semibold flex items-center gap-1 border border-blue-200 transition-colors" title="Buka format cetak A4">
                                     <i data-lucide="printer" class="w-3.5 h-3.5"></i>
                                 </a>
+
+                                <!-- Tombol Hapus Surat -->
+                                <form action="{{ route('surat-pengantar.destroy', $s) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus arsip surat pengantar ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="p-1.5 bg-slate-100 hover:bg-rose-100 text-slate-500 hover:text-rose-700 rounded-lg text-xs font-semibold transition-colors" title="Hapus Surat">
+                                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>

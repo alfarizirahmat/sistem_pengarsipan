@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Keluarga;
 use App\Models\SuratMasuk;
 use App\Models\SuratPengantar;
 use App\Models\User;
@@ -376,5 +377,59 @@ class RtApplicationFeatureTest extends TestCase
         $portalResponse->assertStatus(200);
         $portalResponse->assertSee($surat->qr_token);
         $portalResponse->assertSee('Warga Surat Siap');
+    }
+
+    public function test_warga_can_be_deleted(): void
+    {
+        $user = User::where('role', 'ketua_rt')->first();
+        $keluarga = Keluarga::first();
+        $warga = Warga::create([
+            'keluarga_id' => $keluarga->id,
+            'nama_lengkap' => 'Warga Percobaan Hapus',
+            'nik' => '3201999988887777',
+            'jenis_kelamin' => 'L',
+            'tempat_lahir' => 'Karawang',
+            'tanggal_lahir' => '1995-05-15',
+            'agama' => 'Islam',
+            'pekerjaan' => 'Karyawan',
+            'status_perkawinan' => 'Belum Kawin',
+            'status_hubungan_keluarga' => 'Anak',
+            'status_tinggal' => 'tetap',
+            'status_kependudukan' => 'aktif',
+        ]);
+
+        $response = $this->actingAs($user)->delete('/kependudukan/warga/'.$warga->id);
+        $response->assertRedirect(route('warga.index'));
+        $this->assertDatabaseMissing('wargas', ['id' => $warga->id]);
+    }
+
+    public function test_surat_pengantar_can_be_deleted(): void
+    {
+        $user = User::where('role', 'ketua_rt')->first();
+        $surat = SuratPengantar::first();
+
+        $response = $this->actingAs($user)->delete('/surat-pengantar/'.$surat->id);
+        $response->assertRedirect(route('surat-pengantar.index'));
+        $this->assertDatabaseMissing('surat_pengantars', ['id' => $surat->id]);
+    }
+
+    public function test_kas_transaction_can_be_stored_and_deleted(): void
+    {
+        $user = User::where('role', 'bendahara')->first();
+
+        $postData = [
+            'tanggal' => '2026-11-18',
+            'jenis' => 'pemasukan',
+            'kategori' => 'donasi',
+            'nominal' => 250000,
+            'keterangan' => 'Donasi warga untuk pos ronda',
+        ];
+
+        $response = $this->actingAs($user)->post('/keuangan/kas', $postData);
+        $response->assertRedirect();
+        $this->assertDatabaseHas('kas_rts', [
+            'nominal' => 250000,
+            'keterangan' => 'Donasi warga untuk pos ronda',
+        ]);
     }
 }
