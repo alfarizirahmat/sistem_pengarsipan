@@ -170,22 +170,50 @@ class SuratPengantarController extends Controller
     }
 
     /**
-     * Validasi dan Sahkan Surat Permohonan Warga
+     * Validasi dan Sahkan Surat Permohonan Warga (Beserta Unggah Berkas Dokumen Surat Jadi dari RT)
      */
     public function validasi(Request $request, SuratPengantar $suratPengantar): RedirectResponse
     {
         $user = $request->user();
         $token = $suratPengantar->qr_token ?: ('BMI2-'.strtoupper(Str::random(6)));
 
-        $suratPengantar->update([
+        $updateData = [
             'status' => 'selesai',
-            'penandatangan_nama' => $user->name,
-            'penandatangan_jabatan' => $user->jabatan ?: 'Ketua RT 005',
+            'penandatangan_nama' => $request->input('penandatangan_nama') ?: ($user->name ?? 'Ketua RT 005'),
+            'penandatangan_jabatan' => $request->input('penandatangan_jabatan') ?: ($user->jabatan ?? 'Ketua RT 005'),
             'qr_token' => $token,
             'tanda_tangan_jenis' => $suratPengantar->tanda_tangan_jenis ?: 'qrcode',
-        ]);
+        ];
 
-        return redirect()->back()->with('success', 'Surat berhasil divalidasi & disahkan! Berikan Kode Warga: '.$token.' kepada pemohon.');
+        if ($request->filled('nomor_surat')) {
+            $updateData['nomor_surat'] = $request->input('nomor_surat');
+        }
+
+        if ($request->filled('tanggal_surat')) {
+            $updateData['tanggal_surat'] = $request->input('tanggal_surat');
+            $updateData['tahun_arsip'] = Carbon::parse($request->input('tanggal_surat'))->year;
+        }
+
+        if ($request->filled('lokasi_arsip_fisik')) {
+            $updateData['lokasi_arsip_fisik'] = $request->input('lokasi_arsip_fisik');
+        }
+
+        if ($request->filled('catatan')) {
+            $updateData['catatan'] = $request->input('catatan');
+        }
+
+        if ($request->hasFile('file_dokumen')) {
+            $request->validate([
+                'file_dokumen' => ['file', 'mimes:pdf,jpg,jpeg,png,webp', 'max:15360'],
+            ]);
+            $file = $request->file('file_dokumen');
+            $path = $file->store('surat_dokumen', 'public');
+            $updateData['file_dokumen'] = 'storage/'.$path;
+        }
+
+        $suratPengantar->update($updateData);
+
+        return redirect()->back()->with('success', 'Dokumen surat berhasil dimasukkan & surat resmi disahkan! Warga sekarang sudah dapat melihat dan mengunduh berkas surat melalui portal.');
     }
 
     /**

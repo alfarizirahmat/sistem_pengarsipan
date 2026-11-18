@@ -41,6 +41,7 @@
 </head>
 <body class="p-3 sm:p-8 text-slate-800 font-sans min-h-screen">
 
+@if($suratPengantar->status === 'selesai')
     <!-- BAR AKSI DI ATAS (NON-PRINT) -->
     <div class="max-w-3xl mx-auto mb-6 bg-white p-4 rounded-2xl shadow-sm border border-slate-200 no-print flex flex-col sm:flex-row items-center justify-between gap-3">
         <div class="flex items-center gap-3">
@@ -64,27 +65,17 @@
 
     <!-- BANNER VERIFIKASI KEABSAHAN (NON-PRINT) -->
     <div class="max-w-3xl mx-auto mb-6 no-print space-y-4">
-        @if($suratPengantar->status === 'selesai')
-            <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 flex items-center justify-between gap-3 shadow-xs">
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="shield-check" class="w-5 h-5"></i>
-                    </div>
-                    <div>
-                        <p class="font-bold text-sm">Dokumen Terverifikasi &amp; Sah</p>
-                        <p class="text-xs text-emerald-700">Diterbitkan dan disahkan secara resmi oleh Pengurus RT 005 / RW 013 Perumahan Bumi Mutiara Indah II.</p>
-                    </div>
+        <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 flex items-center justify-between gap-3 shadow-xs">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center flex-shrink-0">
+                    <i data-lucide="shield-check" class="w-5 h-5"></i>
                 </div>
-            </div>
-        @else
-            <div class="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 flex items-center gap-3 shadow-xs">
-                <i data-lucide="clock" class="w-5 h-5 text-amber-600 flex-shrink-0"></i>
                 <div>
-                    <p class="font-bold text-sm">Status: Menunggu Validasi Pengurus</p>
-                    <p class="text-xs text-amber-700">Permohonan surat sedang diperiksa oleh Pengurus RT 005. Silakan cek kembali dalam waktu dekat.</p>
+                    <p class="font-bold text-sm">Dokumen Terverifikasi &amp; Sah</p>
+                    <p class="text-xs text-emerald-700">Diterbitkan dan disahkan secara resmi oleh Pengurus RT 005 / RW 013 Perumahan Bumi Mutiara Indah II.</p>
                 </div>
             </div>
-        @endif
+        </div>
 
         @if($suratPengantar->file_dokumen)
             @php
@@ -271,6 +262,83 @@
             <span>Masa berlaku: s.d {{ $suratPengantar->berlaku_sampai ? \Carbon\Carbon::parse($suratPengantar->berlaku_sampai)->translatedFormat('d F Y') : '30 Hari sejak diterbitkan' }}</span>
         </div>
     </div>
+
+@else
+    <!-- TAMPILAN JIKA SURAT MASIH DALAM PROSES (BELUM SELESAI / BELUM DISAHKAN) -->
+    <div class="max-w-2xl mx-auto my-8 bg-white rounded-3xl p-6 sm:p-10 border border-amber-200 shadow-md space-y-6">
+        <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+            <a href="{{ route('portal.warga') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+                <span>Kembali ke Portal Warga</span>
+            </a>
+            <div class="text-xs">
+                <span class="text-slate-500">Kode Unik:</span>
+                <span class="font-mono font-bold text-amber-800 bg-amber-100 px-2.5 py-1 rounded-md border border-amber-300">{{ $suratPengantar->qr_token }}</span>
+            </div>
+        </div>
+
+        <div class="text-center space-y-3 py-2">
+            <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-3xl flex items-center justify-center mx-auto shadow-inner">
+                <i data-lucide="clock" class="w-8 h-8"></i>
+            </div>
+            <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300">
+                Status: Menunggu Pembuatan dari RT
+            </span>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Surat Sedang Diproses Pengurus RT</h2>
+            <p class="text-xs sm:text-sm text-slate-600 max-w-lg mx-auto leading-relaxed">
+                Permohonan surat pengantar untuk sdr/i <strong>{{ $suratPengantar->warga->nama_lengkap ?? 'Pemohon' }}</strong> saat ini masih dalam antrean pembuatan, tanda tangan, dan verifikasi oleh Pengurus RT 005 RW 013.
+            </p>
+        </div>
+
+        <!-- Rincian Pengajuan Singkat -->
+        <div class="bg-slate-50 rounded-2xl p-4 sm:p-5 border border-slate-200 text-xs sm:text-sm space-y-2.5">
+            <div class="flex justify-between py-1 border-b border-slate-200/60">
+                <span class="text-slate-500">Nama Pemohon:</span>
+                <span class="font-bold text-slate-900">{{ $suratPengantar->warga->nama_lengkap ?? '-' }}</span>
+            </div>
+            <div class="flex justify-between py-1 border-b border-slate-200/60">
+                <span class="text-slate-500">NIK:</span>
+                <span class="font-mono font-bold text-slate-900">{{ $suratPengantar->warga->nik ?? '-' }}</span>
+            </div>
+            <div class="flex justify-between py-1 border-b border-slate-200/60">
+                <span class="text-slate-500">Jenis Layanan:</span>
+                <span class="font-bold text-slate-900 capitalize">{{ str_replace('_', ' ', $suratPengantar->jenis_surat) }}</span>
+            </div>
+            <div class="flex justify-between py-1 border-b border-slate-200/60">
+                <span class="text-slate-500">Keperluan:</span>
+                <span class="font-semibold text-slate-800 text-right max-w-xs">{{ $suratPengantar->keperluan }}</span>
+            </div>
+            <div class="flex justify-between py-1">
+                <span class="text-slate-500">Tanggal Pengajuan:</span>
+                <span class="font-semibold text-slate-800">{{ \Carbon\Carbon::parse($suratPengantar->tanggal_surat)->translatedFormat('d F Y') }}</span>
+            </div>
+        </div>
+
+        <div class="p-4 bg-amber-50 rounded-2xl border border-amber-200 text-xs text-amber-900 leading-relaxed space-y-1">
+            <strong class="font-bold block text-amber-950 flex items-center gap-1.5">
+                <i data-lucide="info" class="w-4 h-4 text-amber-600"></i> Informasi Pelayanan:
+            </strong>
+            <p>
+                Lembar surat resmi dan file scan dokumen asli belum diterbitkan karena menunggu Pak RT membuat dan mengunggah berkas yang sudah ditandatangani. Silakan cek kembali dalam waktu dekat dengan memasukkan kode pelacakan Anda di portal website.
+            </p>
+        </div>
+
+        <div class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+            <a href="{{ route('portal.warga') }}" class="px-5 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl text-center transition-colors">
+                &larr; Kembali ke Portal Warga
+            </a>
+
+            @php
+                $pesanTanyaRt = "Halo Pak RT 005 RW 013, saya ingin menanyakan permohonan surat pengantar atas nama *" . ($suratPengantar->warga->nama_lengkap ?? 'Warga') . "* (NIK: " . ($suratPengantar->warga->nik ?? '-') . ") dengan Kode: *" . $suratPengantar->qr_token . "* untuk keperluan: " . $suratPengantar->keperluan . ". Apakah surat sudah selesai dibuat? Terima kasih.";
+            @endphp
+            <a href="https://wa.me/6281234567890?text={{ urlencode($pesanTanyaRt) }}" target="_blank"
+               class="inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-5 py-3 rounded-xl shadow-xs transition-colors">
+                <i data-lucide="message-circle" class="w-4 h-4"></i>
+                <span>Tanya Status ke WhatsApp RT</span>
+            </a>
+        </div>
+    </div>
+@endif
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {

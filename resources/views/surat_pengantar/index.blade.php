@@ -3,7 +3,7 @@
 @section('title', 'Pelayanan Surat Pengantar Warga')
 
 @section('content')
-<div class="space-y-6" x-data="{ showModal: false, activeSurat: null }">
+<div class="space-y-6" x-data="{ showModal: false, activeSurat: null, showUploadModal: false, uploadSurat: null }">
 
     <!-- Header & Tombol Tambah Surat -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
@@ -160,22 +160,42 @@
                         <td class="px-5 py-4 text-center whitespace-nowrap">
                             <div class="flex items-center justify-center gap-1.5">
                                 @if($s->status === 'menunggu_validasi')
-                                    <!-- Tombol Validasi / Sahkan -->
-                                    <form action="{{ route('surat-pengantar.validasi', $s) }}" method="POST" class="inline">
-                                        @csrf
-                                        <button type="submit" 
-                                                onclick="return confirm('Sahkan surat pengantar untuk {{ $s->warga->nama_lengkap ?? 'warga ini' }}?')"
-                                                class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold flex items-center gap-1 shadow-2xs transition-colors">
-                                            <i data-lucide="check" class="w-3.5 h-3.5"></i>
-                                            <span>Sahkan</span>
+                                    <!-- Tombol Masukkan Surat RT yang Sudah Dibuat -->
+                                    <button type="button" 
+                                            @click="uploadSurat = {{ Js::from($s) }}; showUploadModal = true" 
+                                            class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 shadow-2xs transition-colors whitespace-nowrap"
+                                            title="Unggah / Masukkan Dokumen Surat Jadi dari Pak RT">
+                                        <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+                                        <span>+ Masukkan Surat RT</span>
+                                    </button>
+                                @else
+                                    @if($s->file_dokumen)
+                                        <button type="button" 
+                                                @click="uploadSurat = {{ Js::from($s) }}; showUploadModal = true" 
+                                                class="px-2 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded-lg text-xs font-semibold flex items-center gap-1 border border-emerald-200 transition-colors"
+                                                title="Ganti Berkas Dokumen Surat RT">
+                                            <i data-lucide="file-check" class="w-3.5 h-3.5 text-emerald-600"></i>
+                                            <span class="text-[10px]">Ganti Berkas</span>
                                         </button>
-                                    </form>
+                                    @else
+                                        <button type="button" 
+                                                @click="uploadSurat = {{ Js::from($s) }}; showUploadModal = true" 
+                                                class="px-2 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold flex items-center gap-1 transition-colors"
+                                                title="Unggah Berkas Dokumen Surat RT">
+                                            <i data-lucide="upload" class="w-3.5 h-3.5 text-slate-500"></i>
+                                            <span class="text-[10px]">+ Berkas</span>
+                                        </button>
+                                    @endif
                                 @endif
 
                                 <!-- Tombol Salin Pesan WA -->
                                 @php
-                                    $linkWarga = route('portal.digital', $s->qr_token ?: $s->id);
-                                    $pesanWa = "Halo Bapak/Ibu " . ($s->warga->nama_lengkap ?? 'Warga') . ", Surat Pengantar RT 005 RW 013 Anda telah selesai dibuat. Kode Surat Anda: *" . $s->qr_token . "*. Anda dapat melihat & mengunduh surat resmi digital melalui tautan berikut: " . $linkWarga;
+                                    $linkWarga = route('portal.warga', ['kode' => $s->qr_token]);
+                                    if ($s->status === 'selesai') {
+                                        $pesanWa = "Halo Bapak/Ibu " . ($s->warga->nama_lengkap ?? 'Warga') . ", Surat Pengantar RT 005 RW 013 Anda telah selesai dibuat & disahkan oleh Pak RT. Kode Surat: *" . $s->qr_token . "*. Silakan periksa & unduh berkas surat di: " . $linkWarga;
+                                    } else {
+                                        $pesanWa = "Halo Bapak/Ibu " . ($s->warga->nama_lengkap ?? 'Warga') . ", Permohonan Surat Pengantar RT 005 RW 013 Anda telah kami terima dan sedang diproses oleh Pak RT. Kode Pelacakan: *" . $s->qr_token . "*. Silakan pantau status di: " . $linkWarga;
+                                    }
                                 @endphp
                                 <button type="button" 
                                         onclick="navigator.clipboard.writeText('{{ addslashes($pesanWa) }}'); alert('Teks pesan WhatsApp berhasil disalin ke clipboard! Silakan paste langsung di chat warga.');"
@@ -329,6 +349,107 @@
                     </div>
                 </div>
             </div>
+
+        </div>
+    </div>
+
+    <!-- MODAL MASUKKAN SURAT YANG SUDAH DIBIKIN OLEH RT (ADMIN) -->
+    <div x-show="showUploadModal" x-cloak 
+         class="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 sm:p-6"
+         style="background-color: rgba(15, 23, 42, 0.75); backdrop-filter: blur(4px);">
+        
+        <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 w-full max-w-2xl overflow-hidden my-8"
+             @click.away="showUploadModal = false">
+             
+            <!-- Header Modal -->
+            <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-emerald-600 flex items-center justify-center text-white flex-shrink-0">
+                        <i data-lucide="upload" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-black text-sm sm:text-base text-white">Masukkan Dokumen Surat Jadi dari RT</h3>
+                        <p class="text-xs text-slate-400">Unggah berkas resmi (PDF / Foto Scan) untuk disahkan & diterbitkan ke warga</p>
+                    </div>
+                </div>
+                <button type="button" @click="showUploadModal = false" class="p-1.5 text-slate-400 hover:text-white rounded-lg">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Body Modal -->
+            <template x-if="uploadSurat">
+                <form :action="'{{ url('surat-pengantar') }}/' + uploadSurat.id + '/validasi'" 
+                      method="POST" 
+                      enctype="multipart/form-data" 
+                      class="p-6 space-y-4">
+                    @csrf
+
+                    <!-- Ringkasan Pemohon -->
+                    <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                        <div>
+                            <span class="text-slate-400 block font-semibold">Nama Pemohon:</span>
+                            <span class="font-extrabold text-slate-900 text-sm" x-text="uploadSurat.warga ? uploadSurat.warga.nama_lengkap : 'Warga'"></span>
+                            <span class="text-slate-500 block font-mono" x-text="'NIK: ' + (uploadSurat.warga ? uploadSurat.warga.nik : '-')"></span>
+                        </div>
+                        <div>
+                            <span class="text-slate-400 block font-semibold">Jenis & Keperluan Surat:</span>
+                            <span class="font-bold text-blue-700 uppercase" x-text="uploadSurat.jenis_surat ? uploadSurat.jenis_surat.replace(/_/g, ' ') : '-'"></span>
+                            <p class="text-slate-600 italic mt-0.5 line-clamp-2" x-text="uploadSurat.keperluan"></p>
+                        </div>
+                    </div>
+
+                    <!-- Input Form -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nomor Surat Resmi <span class="text-red-500">*</span></label>
+                            <input type="text" name="nomor_surat" :value="uploadSurat.nomor_surat" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-mono font-bold text-slate-900 focus:ring-2 focus:ring-blue-600">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Tanggal Surat <span class="text-red-500">*</span></label>
+                            <input type="date" name="tanggal_surat" :value="uploadSurat.tanggal_surat ? uploadSurat.tanggal_surat.substring(0, 10) : '{{ date('Y-m-d') }}'" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-900 focus:ring-2 focus:ring-blue-600">
+                        </div>
+                    </div>
+
+                    <!-- Area Unggah Berkas Dokumen -->
+                    <div class="p-4 bg-emerald-50/50 rounded-2xl border-2 border-dashed border-emerald-300 space-y-2">
+                        <div class="flex items-center justify-between">
+                            <label class="block text-xs font-black uppercase text-emerald-900">
+                                Berkas Dokumen Surat yang Dibuat RT (PDF / Foto Scan)
+                            </label>
+                            <template x-if="uploadSurat.file_dokumen">
+                                <span class="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
+                                    Sudah Ada Berkas Sebelumnya
+                                </span>
+                            </template>
+                        </div>
+                        <p class="text-[11px] text-slate-500 leading-relaxed">
+                            Pilih file scan surat/dokumen yang sudah ditandatangani dan dicap oleh Pak RT. Setelah disimpan, warga dapat langsung mengunduh berkas ini di website melalui kode pelacakan mereka.
+                        </p>
+                        <input type="file" name="file_dokumen" accept=".pdf,.png,.jpg,.jpeg,.webp" class="w-full text-xs text-slate-600 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-emerald-600 file:text-white hover:file:bg-emerald-700 cursor-pointer">
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nama Penandatangan</label>
+                            <input type="text" name="penandatangan_nama" :value="uploadSurat.penandatangan_nama || '{{ auth()->user()->name ?? 'Bapak Hartono' }}'" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-medium">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Jabatan Penandatangan</label>
+                            <input type="text" name="penandatangan_jabatan" :value="uploadSurat.penandatangan_jabatan || '{{ auth()->user()->jabatan ?? 'Ketua RT 005' }}'" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-medium">
+                        </div>
+                    </div>
+
+                    <!-- Tombol Aksi Modal -->
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-end gap-2">
+                        <button type="button" @click="showUploadModal = false" class="px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl">Batal</button>
+                        <button type="submit" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-xl shadow-md flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4"></i>
+                            <span>Simpan & Terbitkan ke Warga</span>
+                        </button>
+                    </div>
+                </form>
+            </template>
 
         </div>
     </div>

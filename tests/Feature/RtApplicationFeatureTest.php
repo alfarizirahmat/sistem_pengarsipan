@@ -432,4 +432,62 @@ class RtApplicationFeatureTest extends TestCase
             'keterangan' => 'Donasi warga untuk pos ronda',
         ]);
     }
+
+    public function test_citizen_application_is_waiting_for_rt_and_not_immediately_completed(): void
+    {
+        // 1. Warga mengajukan surat secara mandiri
+        $ajukanResponse = $this->post('/ajukan-surat', [
+            'nama_lengkap' => 'Warga Mandiri Tes',
+            'nik' => '3201123456789099',
+            'jenis_surat' => 'keterangan_domisili',
+            'keperluan' => 'Untuk kelengkapan berkas bank',
+        ]);
+
+        $ajukanResponse->assertRedirect();
+
+        $surat = SuratPengantar::where('keperluan', 'Untuk kelengkapan berkas bank')->latest()->first();
+        $this->assertNotNull($surat);
+        $this->assertEquals('menunggu_validasi', $surat->status);
+
+        // 2. Pada portal warga, surat TIDAK langsung selesai
+        $portalResponse = $this->get('/?kode='.$surat->qr_token);
+        $portalResponse->assertStatus(200);
+        $portalResponse->assertSee('Surat Sedang Dalam Proses Pembuatan oleh Pengurus RT');
+        $portalResponse->assertDontSee('Buka Lembar Surat Resmi');
+
+        // 3. Pada halaman surat-digital, lembar resmi dan tanda tangan belum diterbitkan
+        $digitalResponse = $this->get('/surat-digital/'.$surat->qr_token);
+        $digitalResponse->assertStatus(200);
+        $digitalResponse->assertSee('Surat Sedang Diproses Pengurus RT');
+        $digitalResponse->assertDontSee('Dokumen Terverifikasi');
+
+        // 4. Pengurus RT memvalidasi dan memasukkan dokumen surat jadi
+        $user = User::where('role', 'ketua_rt')->first();
+        $file = UploadedFile::fake()->create('surat_rt_sudah_jadi.pdf', 250, 'application/pdf');
+
+        $validasiResponse = $this->actingAs($user)->post('/surat-pengantar/'.$surat->id.'/validasi', [
+            'nomor_surat' => $surat->nomor_surat,
+            'tanggal_surat' => '2026-11-18',
+            'penandatangan_nama' => 'Bapak Hartono',
+            'penandatangan_jabatan' => 'Ketua RT 005',
+            'file_dokumen' => $file,
+        ]);
+
+        $validasiResponse->assertRedirect();
+
+        $surat->refresh();
+        $this->assertEquals('selesai', $surat->status);
+        $this->assertNotNull($surat->file_dokumen);
+
+        // 5. Setelah RT memasukkan surat jadi, warga sekarang dapat membuka surat resmi
+        $portalAfterResponse = $this->get('/?kode='.$surat->qr_token);
+        $portalAfterResponse->assertStatus(200);
+        $portalAfterResponse->assertSee('Buka Lembar Surat Resmi');
+        $portalAfterResponse->assertSee('Berkas Dokumen Asli dari Pak RT');
+
+        $digitalAfterResponse = $this->get('/surat-digital/'.$surat->qr_token);
+        $digitalAfterResponse->assertStatus(200);
+        $digitalAfterResponse->assertSee('Dokumen Terverifikasi');
+        $digitalAfterResponse->assertSee('SURAT PENGANTAR');
+    }
 }

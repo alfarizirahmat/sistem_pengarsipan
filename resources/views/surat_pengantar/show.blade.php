@@ -23,20 +23,19 @@
 
         <div class="flex items-center gap-3 w-full sm:w-auto">
             @if($suratPengantar->status === 'menunggu_validasi')
-                <form action="{{ route('surat-pengantar.validasi', $suratPengantar) }}" method="POST" class="w-full sm:w-auto">
-                    @csrf
-                    <button type="submit" 
-                            onclick="return confirm('Sahkan surat pengantar ini sekarang?')"
-                            class="w-full sm:w-auto justify-center px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-xs transition-colors flex items-center gap-2">
-                        <i data-lucide="check-circle" class="w-4 h-4"></i>
-                        <span>Sahkan Surat Ini</span>
-                    </button>
-                </form>
+                <a href="#form-upload-rt" class="w-full sm:w-auto justify-center px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-xs transition-colors flex items-center gap-2">
+                    <i data-lucide="upload-cloud" class="w-4 h-4"></i>
+                    <span>+ Masukkan Surat RT</span>
+                </a>
             @endif
 
             @php
                 $linkWarga = route('portal.warga', ['kode' => $suratPengantar->qr_token]);
-                $pesanWa = "Halo Bapak/Ibu " . ($suratPengantar->warga->nama_lengkap ?? 'Warga') . ", Surat Pengantar RT 005 RW 013 Anda telah selesai dibuat. Kode Surat Anda: *" . $suratPengantar->qr_token . "*. Silakan periksa & unduh surat di: " . $linkWarga;
+                if ($suratPengantar->status === 'selesai') {
+                    $pesanWa = "Halo Bapak/Ibu " . ($suratPengantar->warga->nama_lengkap ?? 'Warga') . ", Surat Pengantar RT 005 RW 013 Anda telah selesai dibuat & disahkan oleh Pak RT. Kode Surat Anda: *" . $suratPengantar->qr_token . "*. Silakan periksa & unduh surat di: " . $linkWarga;
+                } else {
+                    $pesanWa = "Halo Bapak/Ibu " . ($suratPengantar->warga->nama_lengkap ?? 'Warga') . ", Permohonan Surat Pengantar RT 005 RW 013 Anda sedang dalam proses pembuatan oleh Pak RT. Kode Pelacakan Anda: *" . $suratPengantar->qr_token . "*. Silakan pantau status di: " . $linkWarga;
+                }
             @endphp
             <button type="button" 
                     onclick="navigator.clipboard.writeText('{{ addslashes($pesanWa) }}'); alert('Pesan WhatsApp siap kirim berhasil disalin!');"
@@ -51,6 +50,71 @@
             </a>
         </div>
     </div>
+
+    @if($suratPengantar->status === 'menunggu_validasi')
+        <!-- KARTU FORMULIR MASUKKAN SURAT JADI DARI RT -->
+        <div id="form-upload-rt" class="bg-amber-50 rounded-2xl border-2 border-amber-300 p-5 sm:p-6 shadow-sm space-y-4">
+            <div class="flex items-start gap-3.5">
+                <div class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center flex-shrink-0 mt-0.5 shadow-sm">
+                    <i data-lucide="upload-cloud" class="w-5 h-5"></i>
+                </div>
+                <div class="flex-1">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <h3 class="text-base font-extrabold text-amber-950">Surat Belum Selesai (Menunggu Dokumen Surat Jadi RT)</h3>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300">
+                            <i data-lucide="clock" class="w-3.5 h-3.5"></i> Menunggu Validasi
+                        </span>
+                    </div>
+                    <p class="text-xs text-amber-800 mt-1 leading-relaxed">
+                        Surat ini baru diajukan oleh pemohon dan belum diterbitkan ke portal warga. Silakan masukkan nomor surat, tanggal, serta berkas foto/scan surat jadi yang telah ditandatangani dan dicap oleh Pak RT. Setelah disimpan, status akan berubah menjadi selesai dan warga dapat mengunduh suratnya di portal.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Form Langsung Masukkan Surat Jadi RT -->
+            <form action="{{ route('surat-pengantar.validasi', $suratPengantar) }}" method="POST" enctype="multipart/form-data" class="bg-white p-5 rounded-2xl border border-amber-200/80 shadow-xs space-y-4">
+                @csrf
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nomor Surat Resmi <span class="text-red-500">*</span></label>
+                        <input type="text" name="nomor_surat" value="{{ $suratPengantar->nomor_surat }}" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-mono font-bold text-slate-900 focus:ring-2 focus:ring-blue-600">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Tanggal Surat <span class="text-red-500">*</span></label>
+                        <input type="date" name="tanggal_surat" value="{{ \Carbon\Carbon::parse($suratPengantar->tanggal_surat)->toDateString() }}" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-900 focus:ring-2 focus:ring-blue-600">
+                    </div>
+                </div>
+
+                <div class="p-4 bg-emerald-50/60 rounded-2xl border-2 border-dashed border-emerald-300 space-y-2">
+                    <label class="block text-xs font-black uppercase text-emerald-950">
+                        Berkas Dokumen Surat Jadi dari RT (PDF / Foto Scan)
+                    </label>
+                    <p class="text-[11px] text-slate-600 leading-relaxed">
+                        Pilih file scan atau foto surat yang sudah ditandatangani dan dicap stempel oleh Pak RT (Maks 15 MB).
+                    </p>
+                    <input type="file" name="file_dokumen" accept=".pdf,.png,.jpg,.jpeg,.webp" class="w-full text-xs text-slate-600 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-emerald-600 file:text-white hover:file:bg-emerald-700 cursor-pointer">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nama Penandatangan</label>
+                        <input type="text" name="penandatangan_nama" value="{{ $suratPengantar->penandatangan_nama ?: (auth()->user()->name ?? 'Bapak Hartono') }}" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-medium">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Jabatan Penandatangan</label>
+                        <input type="text" name="penandatangan_jabatan" value="{{ $suratPengantar->penandatangan_jabatan ?: 'Ketua RT 005' }}" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-medium">
+                    </div>
+                </div>
+
+                <div class="pt-2 flex justify-end">
+                    <button type="submit" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-xl shadow-md flex items-center gap-2 transition-all">
+                        <i data-lucide="check-circle" class="w-4 h-4"></i>
+                        <span>Simpan Dokumen &amp; Sahkan Surat ke Warga</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    @endif
 
     <!-- KOTAK KODE SURAT WARGA (UNTUK DIBERIKAN KE PEMOHON) -->
     <div class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white rounded-2xl p-5 sm:p-6 shadow-md">
@@ -138,10 +202,17 @@
         <div class="min-w-[310px] bg-white rounded-3xl border border-slate-300 shadow-md p-4 sm:p-14 max-w-4xl mx-auto font-serif text-slate-900 relative">
         
         <!-- Watermark Arsip Digital Resmi -->
-        <div class="absolute top-6 right-6 border border-blue-300 bg-blue-50/70 text-blue-800 px-3 py-1.5 rounded-xl font-sans text-xs font-bold flex items-center gap-2">
-            <i data-lucide="check-circle" class="w-4 h-4 text-blue-600"></i>
-            <span>Arsip Sah RT 005 / RW 013 | {{ $suratPengantar->qr_token }}</span>
-        </div>
+        @if($suratPengantar->status === 'selesai')
+            <div class="absolute top-6 right-6 border border-emerald-300 bg-emerald-50 text-emerald-800 px-3 py-1.5 rounded-xl font-sans text-xs font-bold flex items-center gap-2">
+                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>
+                <span>Arsip Sah RT 005 / RW 013 | {{ $suratPengantar->qr_token }}</span>
+            </div>
+        @else
+            <div class="absolute top-6 right-6 border border-amber-300 bg-amber-50 text-amber-800 px-3 py-1.5 rounded-xl font-sans text-xs font-bold flex items-center gap-2">
+                <i data-lucide="clock" class="w-4 h-4 text-amber-600"></i>
+                <span>Draft Permohonan (Belum Disahkan)</span>
+            </div>
+        @endif
 
         <!-- KOP SURAT RT 005 / RW 013 RESMI -->
         <div class="flex items-center justify-between pb-2 pt-6 sm:pt-0 border-b-[3px] border-black">
